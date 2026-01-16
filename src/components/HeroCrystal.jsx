@@ -213,7 +213,7 @@ function BrandText() {
         <group position={[0, 0, -3]}>
             {/* KSENIYA - top line, K partially cut off at left edge */}
             <Text
-                position={[-8, 1.5, 0]}
+                position={[-8, 0.9, 0]}
                 fontSize={2.8}
                 font="/fonts/HelveticaNeueBold.woff"
                 color="#ffffff"
@@ -226,7 +226,7 @@ function BrandText() {
 
             {/* ARTMAN - bottom line, A partially cut off at left edge */}
             <Text
-                position={[-8, -2.0, 0]}
+                position={[-8, -1.4, 0]}
                 fontSize={2.8}
                 font="/fonts/HelveticaNeueBold.woff"
                 color="#ffffff"
