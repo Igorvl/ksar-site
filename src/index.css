@@ -1,68 +1,145 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+/* ============================================
+   KSAR.ME - Kseniya Artman Portfolio
+   Global Styles & Design System
+   ============================================ */
+
+/* === FONTS === */
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('/fonts/HelveticaNeueBold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/SpaceMono-Regular.woff') format('woff');
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/Manrope-VariableFont_wght.woff') format('woff');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+/* === CSS VARIABLES === */
+:root {
+  /* Colors */
+  --color-bg: #000000;
+  --color-fg: #ffffff;
+  --color-muted: #666666;
+  --color-accent: #888888;
+
+  /* Typography */
+  --font-hero: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  --font-nav: 'Space Mono', monospace;
+  --font-label: 'Manrope', sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === RESET === */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family: var(--font-nav);
+  background-color: var(--color-bg);
+  color: var(--color-fg);
   min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: none;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  cursor: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* === SELECTION === */
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-fg);
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-fg);
+}
+
+/* === UTILITY CLASSES === */
+.font-hero {
+  font-family: var(--font-hero);
+  font-weight: 700;
+}
+
+.font-nav {
+  font-family: var(--font-nav);
+  font-weight: 400;
+}
+
+.font-label {
+  font-family: var(--font-label);
+  font-weight: 400;
+}
+
+/* === ROOT CONTAINER === */
+#root {
+  min-height: 100vh;
+  position: relative;
 }

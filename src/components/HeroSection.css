@@ -1,0 +1,350 @@
+/* ============================================
+   HERO SECTION STYLES
+   ============================================ */
+
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* === CORNER FRAMES === */
+.hero-frame {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.hero-frame::before,
+.hero-frame::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.hero-frame--top-left {
+    top: 2rem;
+    left: 2rem;
+}
+
+.hero-frame--top-left::before {
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+}
+
+.hero-frame--top-left::after {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+}
+
+.hero-frame--top-right {
+    top: 2rem;
+    right: 2rem;
+}
+
+.hero-frame--top-right::before {
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+}
+
+.hero-frame--top-right::after {
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+}
+
+.hero-frame--bottom-left {
+    bottom: 2rem;
+    left: 2rem;
+}
+
+.hero-frame--bottom-left::before {
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+}
+
+.hero-frame--bottom-left::after {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+}
+
+.hero-frame--bottom-right {
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.hero-frame--bottom-right::before {
+    bottom: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+}
+
+.hero-frame--bottom-right::after {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+}
+
+/* === NAVIGATION === */
+.hero-nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3rem;
+    z-index: 20;
+}
+
+.hero-nav--top {
+    top: 2.5rem;
+}
+
+.hero-nav--bottom {
+    bottom: 2.5rem;
+}
+
+.hero-nav__link {
+    font-family: var(--font-nav);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    transition: color var(--transition-fast);
+}
+
+.hero-nav__link:hover {
+    color: #fff;
+}
+
+.hero-nav__label {
+    font-family: var(--font-label);
+    font-size: 0.6rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
+.hero-nav__label--vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+}
+
+.hero-nav__label--center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+}
+
+.hero-nav__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hero-nav__cta-text {
+    font-family: var(--font-nav);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-fast);
+}
+
+.hero-nav__cta:hover .hero-nav__cta-text {
+    color: #fff;
+}
+
+.hero-nav__cta-line {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.hero-nav__right-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+}
+
+/* === HERO CONTENT === */
+.hero-content {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === HERO TITLE === */
+.hero-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.hero-title__line {
+    font-family: var(--font-hero);
+    font-size: clamp(8rem, 20vw, 22rem);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    /* Text extends beyond left edge */
+    margin-left: -0.5vw;
+}
+
+/* === HERO CRYSTAL === */
+.hero-crystal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 80vh;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Fullscreen variant - 3D text is inside scene */
+.hero-crystal--fullscreen {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+/* === HERO INFO PANELS === */
+.hero-info {
+    position: absolute;
+    z-index: 15;
+    max-width: 200px;
+}
+
+.hero-info--right {
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+}
+
+.hero-info--left {
+    left: 3rem;
+    bottom: 25%;
+}
+
+.hero-info__text {
+    font-family: var(--font-nav);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+}
+
+.hero-info__coords {
+    font-family: var(--font-nav);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.25rem;
+}
+
+.hero-info__version {
+    font-family: var(--font-nav);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 1rem;
+}
+
+.hero-info__meta {
+    font-family: var(--font-label);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 0.5rem;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1200px) {
+    .hero-title__line {
+        font-size: clamp(5rem, 15vw, 12rem);
+    }
+
+    .hero-info--right,
+    .hero-info--left {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-nav {
+        padding: 0 1.5rem;
+    }
+
+    .hero-title__line {
+        font-size: clamp(3rem, 12vw, 6rem);
+    }
+
+    .hero-frame {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hero-frame--top-left,
+    .hero-frame--bottom-left {
+        left: 1rem;
+    }
+
+    .hero-frame--top-right,
+    .hero-frame--bottom-right {
+        right: 1rem;
+    }
+
+    .hero-frame--top-left,
+    .hero-frame--top-right {
+        top: 1rem;
+    }
+
+    .hero-frame--bottom-left,
+    .hero-frame--bottom-right {
+        bottom: 1rem;
+    }
+}

@@ -1,0 +1,6 @@
+.home-page {
+    min-height: 100vh;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
