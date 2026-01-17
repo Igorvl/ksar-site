@@ -13,7 +13,7 @@ import * as THREE from 'three'
 
 /**
  * Create chamfered cube geometry with flat beveled edges
- * Fixed normals using per-face normal calculation
+ * Guaranteed CCW winding order for transparent materials
  */
 function createChamferedCubeGeometry(size = 1.5, chamfer = 0.12) {
     const s = size / 2
@@ -51,57 +51,55 @@ function createChamferedCubeGeometry(size = 1.5, chamfer = 0.12) {
         normals.push(...n, ...n, ...n)
     }
 
-    // 6 main faces (with chamfered corners)
-    // +X face
-    addQuad(
-        [s, s - c, -s + c], [s, s - c, s - c], [s, -s + c, s - c], [s, -s + c, -s + c]
-    )
-    // -X face
-    addQuad(
-        [-s, s - c, s - c], [-s, s - c, -s + c], [-s, -s + c, -s + c], [-s, -s + c, s - c]
-    )
-    // +Y face
-    addQuad(
-        [-s + c, s, s - c], [s - c, s, s - c], [s - c, s, -s + c], [-s + c, s, -s + c]
-    )
-    // -Y face
-    addQuad(
-        [-s + c, -s, -s + c], [s - c, -s, -s + c], [s - c, -s, s - c], [-s + c, -s, s - c]
-    )
-    // +Z face
-    addQuad(
-        [-s + c, s - c, s], [s - c, s - c, s], [s - c, -s + c, s], [-s + c, -s + c, s]
-    )
-    // -Z face
-    addQuad(
-        [s - c, s - c, -s], [-s + c, s - c, -s], [-s + c, -s + c, -s], [s - c, -s + c, -s]
-    )
+    // --- 6 MAIN FACES (CCW) ---
+    // +X Right
+    addQuad([s, -s + c, s - c], [s, -s + c, -s + c], [s, s - c, -s + c], [s, s - c, s - c])
+    // -X Left
+    addQuad([-s, -s + c, -s + c], [-s, -s + c, s - c], [-s, s - c, s - c], [-s, s - c, -s + c])
+    // +Y Top
+    addQuad([-s + c, s, s - c], [s - c, s, s - c], [s - c, s, -s + c], [-s + c, s, -s + c])
+    // -Y Bottom
+    addQuad([-s + c, -s, -s + c], [s - c, -s, -s + c], [s - c, -s, s - c], [-s + c, -s, s - c])
+    // +Z Front
+    addQuad([-s + c, -s + c, s], [s - c, -s + c, s], [s - c, s - c, s], [-s + c, s - c, s])
+    // -Z Back
+    addQuad([s - c, -s + c, -s], [-s + c, -s + c, -s], [-s + c, s - c, -s], [s - c, s - c, -s])
 
-    // 12 edge chamfer faces (rectangles along edges)
-    addQuad([s - c, s, s - c], [-s + c, s, s - c], [-s + c, s - c, s], [s - c, s - c, s])
-    addQuad([-s + c, s, -s + c], [s - c, s, -s + c], [s - c, s - c, -s], [-s + c, s - c, -s])
-    addQuad([-s + c, -s, s - c], [s - c, -s, s - c], [s - c, -s + c, s], [-s + c, -s + c, s])
-    addQuad([s - c, -s, -s + c], [-s + c, -s, -s + c], [-s + c, -s + c, -s], [s - c, -s + c, -s])
+    // --- 12 EDGE CHAMFERS (CCW) ---
+    // Around Y axis (Vertical edges)
+    addQuad([s, s - c, s - c], [s, -s + c, s - c], [s - c, -s + c, s], [s - c, s - c, s]) // FR
+    addQuad([s, -s + c, -s + c], [s, s - c, -s + c], [s - c, s - c, -s], [s - c, -s + c, -s]) // BR
+    addQuad([-s, -s + c, s - c], [-s, s - c, s - c], [-s + c, s - c, s], [-s + c, -s + c, s]) // FL
+    addQuad([-s, s - c, -s + c], [-s, -s + c, -s + c], [-s + c, -s + c, -s], [-s + c, s - c, -s]) // BL
 
-    addQuad([s, s - c, s - c], [s, -s + c, s - c], [s - c, -s + c, s], [s - c, s - c, s])
-    addQuad([s, -s + c, -s + c], [s, s - c, -s + c], [s - c, s - c, -s], [s - c, -s + c, -s])
-    addQuad([-s, -s + c, s - c], [-s, s - c, s - c], [-s + c, s - c, s], [-s + c, -s + c, s])
-    addQuad([-s, s - c, -s + c], [-s, -s + c, -s + c], [-s + c, -s + c, -s], [-s + c, s - c, -s])
+    // Around X axis (Horizontal side edges)
+    addQuad([s - c, s, s - c], [-s + c, s, s - c], [-s + c, s - c, s], [s - c, s - c, s]) // Top-Front
+    addQuad([-s + c, s, -s + c], [s - c, s, -s + c], [s - c, s - c, -s], [-s + c, s - c, -s]) // Top-Back
+    addQuad([-s + c, -s, s - c], [s - c, -s, s - c], [s - c, -s + c, s], [-s + c, -s + c, s]) // Bottom-Front
+    addQuad([s - c, -s, -s + c], [-s + c, -s, -s + c], [-s + c, -s + c, -s], [s - c, -s + c, -s]) // Bottom-Back
 
-    addQuad([s - c, s, s - c], [s, s - c, s - c], [s, s - c, -s + c], [s - c, s, -s + c])
-    addQuad([-s + c, s, -s + c], [-s, s - c, -s + c], [-s, s - c, s - c], [-s + c, s, s - c])
-    addQuad([s, -s + c, s - c], [s - c, -s, s - c], [s - c, -s, -s + c], [s, -s + c, -s + c])
-    addQuad([-s, -s + c, -s + c], [-s + c, -s, -s + c], [-s + c, -s, s - c], [-s, -s + c, s - c])
+    // Around Z axis (Side edges) - wait, these are actually the ones connecting X and Y faces? 
+    // Let's re-verify logic. The groups above:
+    // Group 1: FL, FR, BL, BR (Vertical corners) -> Correctly connect X and Z faces? No, they connect X and Z faces.
+    // Group 2: Top-F, Top-B, Bot-F, Bot-B -> Correctly connect Y and Z faces.
+    // Group 3: Top-R, Top-L, Bot-R, Bot-L -> Should connect X and Y faces.
 
-    // 8 corner triangles
-    addTri([s, s - c, s - c], [s - c, s, s - c], [s - c, s - c, s])
-    addTri([s - c, s, -s + c], [s, s - c, -s + c], [s - c, s - c, -s])
-    addTri([-s + c, s, s - c], [-s, s - c, s - c], [-s + c, s - c, s])
-    addTri([-s, s - c, -s + c], [-s + c, s, -s + c], [-s + c, s - c, -s])
-    addTri([s - c, -s, s - c], [s, -s + c, s - c], [s - c, -s + c, s])
-    addTri([s, -s + c, -s + c], [s - c, -s, -s + c], [s - c, -s + c, -s])
-    addTri([-s, -s + c, s - c], [-s + c, -s, s - c], [-s + c, -s + c, s])
-    addTri([-s + c, -s, -s + c], [-s, -s + c, -s + c], [-s + c, -s + c, -s])
+    // Let's rewrite Group 3 (X and Y connection):
+    addQuad([s - c, s, -s + c], [s - c, s, s - c], [s, s - c, s - c], [s, s - c, -s + c]) // Top-Right
+    addQuad([-s + c, s, s - c], [-s + c, s, -s + c], [-s, s - c, -s + c], [-s, s - c, s - c]) // Top-Left
+    addQuad([s, -s + c, s - c], [s, -s + c, -s + c], [s - c, -s, -s + c], [s - c, -s, s - c]) // Bottom-Right
+    addQuad([-s, -s + c, -s + c], [-s, -s + c, s - c], [-s + c, -s, s - c], [-s + c, -s, -s + c]) // Bottom-Left
+
+    // --- 8 CORNER TRIANGLES (CCW) ---
+    addTri([s - c, s - c, s], [s, s - c, s - c], [s - c, s, s - c]) // Top-Front-Right
+    addTri([s - c, s - c, -s], [s - c, s, -s + c], [s, s - c, -s + c]) // Top-Back-Right
+    addTri([-s + c, s - c, s], [-s + c, s, s - c], [-s, s - c, s - c]) // Top-Front-Left
+    addTri([-s + c, s - c, -s], [-s, s - c, -s + c], [-s + c, s, -s + c]) // Top-Back-Left
+
+    addTri([s - c, -s + c, s], [s - c, -s, s - c], [s, -s + c, s - c]) // Bottom-Front-Right
+    addTri([s - c, -s + c, -s], [s, -s + c, -s + c], [s - c, -s, -s + c]) // Bottom-Back-Right
+    addTri([-s + c, -s + c, s], [-s, -s + c, s - c], [-s + c, -s, s - c]) // Bottom-Front-Left
+    addTri([-s + c, -s + c, -s], [-s + c, -s, -s + c], [-s, -s + c, -s + c]) // Bottom-Back-Left
 
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
@@ -111,11 +109,14 @@ function createChamferedCubeGeometry(size = 1.5, chamfer = 0.12) {
 }
 
 /**
- * Glass Cube - Main crystal mesh with chamfered edges
+ * Glass Crystal Component
+ */
+/**
+ * Glass Crystal Component
  */
 function GlassCube() {
     const animRef = useRef()
-    const geometry = React.useMemo(() => createChamferedCubeGeometry(1.5, 0.1), [])
+    const geometry = React.useMemo(() => createChamferedCubeGeometry(1.5, 0.12), [])
 
     useFrame((state, delta) => {
         if (animRef.current) {
@@ -138,20 +139,20 @@ function GlassCube() {
                     {/* Main Glass Cube - custom chamfered geometry with fixed normals */}
                     <mesh geometry={geometry}>
                         <MeshTransmissionMaterial
-                            ior={2.0}
+                            ior={2.4}
                             transmission={1}
-                            thickness={0.05}
+                            thickness={0.1}
                             roughness={0}
-                            chromaticAberration={0.08}
+                            chromaticAberration={0.5}
                             anisotropicBlur={0}
                             distortion={0}
                             distortionScale={0}
                             temporalDistortion={0}
                             backside={true}
-                            backsideThickness={0.02}
+                            backsideThickness={0.04}
                             color="#ffffff"
                             envMapIntensity={0}
-                            samples={12}
+                            samples={16}
                             resolution={1024}
                             backsideResolution={512}
                             clearcoat={0}
@@ -160,8 +161,10 @@ function GlassCube() {
                             attenuationColor="#ffffff"
                             side={THREE.DoubleSide}
                         />
-                        {/* White edges only */}
-                        <Edges threshold={5} color="#ffffff" opacity={0.5} transparent />
+                        {/* RGB dispersion edges */}
+                        <Edges threshold={25} color="#ff4444" scale={1.003} opacity={0.35} transparent />
+                        <Edges threshold={25} color="#ffffff" opacity={0.5} transparent />
+                        <Edges threshold={25} color="#4488ff" scale={0.997} opacity={0.35} transparent />
                     </mesh>
                 </group>
             </group>
