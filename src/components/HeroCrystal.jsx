@@ -221,20 +221,43 @@ function GlassCube() {
 
     // Geometry for the rainbow effect on edges
     const chamferGeometry = React.useMemo(() => createChamfersOnlyGeometry(1.5, 0.12), [])
-    const rainbowTexture = React.useMemo(() => generateRainbowTexture(), [])
+
+    // Texture needs to wrap for scrolling animation
+    const rainbowTexture = React.useMemo(() => {
+        const tex = generateRainbowTexture()
+        tex.wrapS = THREE.RepeatWrapping
+        tex.wrapT = THREE.RepeatWrapping
+        return tex
+    }, [])
 
     useFrame((state, delta) => {
         if (animRef.current) {
-            // Slow elegant rotation around world Y (vertical)
-            animRef.current.rotation.y -= delta * 0.08
+            // 1. Continuous slow rotation
+            animRef.current.rotation.y -= delta * 0.05
+
+            // 2. Mouse Interaction: Subtle tilt based on pointer position
+            // We lerp (smoothly transition) to the target rotation
+            const targetX = state.pointer.y * 0.15 // Tilt up/down
+            const targetZ = -state.pointer.x * 0.15 // Tilt left/right
+
+            // Apply tilt on top of the base rotation logic (requires careful group structure or additive rotation)
+            // Ideally, we'd apply this to an inner or outer group to avoid conflicting with the Y rotation.
+            // But here, since we write to rotation.x and z directly, it's fine.
+            animRef.current.rotation.x = THREE.MathUtils.lerp(animRef.current.rotation.x, targetX, 0.1)
+            animRef.current.rotation.z = THREE.MathUtils.lerp(animRef.current.rotation.z, targetZ, 0.1)
+        }
+
+        // 3. Alive Dispersion: Slowly scroll the rainbow texture to simulate shifting light
+        if (rainbowTexture) {
+            rainbowTexture.offset.x += delta * 0.2
         }
     })
 
     return (
         <Float
-            speed={0.6}
-            rotationIntensity={0.05}
-            floatIntensity={0.1}
+            speed={0.8}
+            rotationIntensity={0.2}
+            floatIntensity={0.3}
         >
             <group ref={animRef}>
                 <group rotation={[-Math.atan(1 / Math.SQRT2), 0, Math.PI / 4]} scale={[1.8, 1.8, 1.8]}>
