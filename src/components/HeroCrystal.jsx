@@ -141,30 +141,41 @@ function GlassCube() {
                         <MeshTransmissionMaterial
                             ior={2.4}
                             transmission={1}
-                            thickness={0.1}
+                            thickness={0.15}
                             roughness={0}
-                            chromaticAberration={0.5}
-                            anisotropicBlur={0}
-                            distortion={0}
-                            distortionScale={0}
+                            chromaticAberration={1.0}
+                            anisotropicBlur={0.1}
+                            distortion={0.2}
+                            distortionScale={0.3}
                             temporalDistortion={0}
                             backside={true}
-                            backsideThickness={0.04}
+                            backsideThickness={0.05}
                             color="#ffffff"
-                            envMapIntensity={0}
+                            envMapIntensity={0.5}
                             samples={16}
                             resolution={1024}
                             backsideResolution={512}
-                            clearcoat={0}
+                            clearcoat={0.5}
                             clearcoatRoughness={0}
                             attenuationDistance={Infinity}
                             attenuationColor="#ffffff"
                             side={THREE.DoubleSide}
                         />
-                        {/* RGB dispersion edges */}
-                        <Edges threshold={25} color="#ff4444" scale={1.003} opacity={0.35} transparent />
-                        <Edges threshold={25} color="#ffffff" opacity={0.5} transparent />
-                        <Edges threshold={25} color="#4488ff" scale={0.997} opacity={0.35} transparent />
+                        {/* FULL SPECTRUM RAINBOW DISPERSION EDGES */}
+                        {/* Red - Outer */}
+                        <Edges threshold={25} color="#ff0000" scale={1.006} opacity={0.4} transparent />
+                        {/* Orange */}
+                        <Edges threshold={25} color="#ffa500" scale={1.004} opacity={0.4} transparent />
+                        {/* Yellow */}
+                        <Edges threshold={25} color="#ffff00" scale={1.002} opacity={0.4} transparent />
+                        {/* White/Green - Center */}
+                        <Edges threshold={25} color="#ccffcc" scale={1.000} opacity={0.6} transparent />
+                        {/* Cyan */}
+                        <Edges threshold={25} color="#00ffff" scale={0.998} opacity={0.4} transparent />
+                        {/* Blue */}
+                        <Edges threshold={25} color="#0000ff" scale={0.996} opacity={0.4} transparent />
+                        {/* Violet - Inner */}
+                        <Edges threshold={25} color="#8b00ff" scale={0.994} opacity={0.4} transparent />
                     </mesh>
                 </group>
             </group>
