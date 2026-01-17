@@ -232,22 +232,32 @@ function GlassCube() {
 
     useFrame((state, delta) => {
         if (animRef.current) {
-            // 1. Continuous slow rotation
-            animRef.current.rotation.y -= delta * 0.05
+            // 1. Base auto-rotation (slow)
+            const autoSpeed = 0.05
+            // Using elapsed time ensures consistent speed regardless of framerate
+            const currentAutoRot = state.clock.elapsedTime * autoSpeed
 
-            // 2. Mouse Interaction: Subtle tilt based on pointer position
-            // We lerp (smoothly transition) to the target rotation
-            const targetX = state.pointer.y * 0.15 // Tilt up/down
-            const targetZ = -state.pointer.x * 0.15 // Tilt left/right
+            // 2. Mouse Interaction: Rotate around vertical axis ONLY (Y-axis)
+            // Use smooth lerp for mouse influence to avoid jitter
+            // Target rotation = Base Auto + Mouse X influence
+            const mouseInfluence = state.pointer.x * 0.8 // Sensitivity
 
-            // Apply tilt on top of the base rotation logic (requires careful group structure or additive rotation)
-            // Ideally, we'd apply this to an inner or outer group to avoid conflicting with the Y rotation.
-            // But here, since we write to rotation.x and z directly, it's fine.
-            animRef.current.rotation.x = THREE.MathUtils.lerp(animRef.current.rotation.x, targetX, 0.1)
-            animRef.current.rotation.z = THREE.MathUtils.lerp(animRef.current.rotation.z, targetZ, 0.1)
+            // Smoothly blend to the target Y rotation
+            // We use a separate variable or apply directly? 
+            // Applying directly to .y with lerp effectively smoothens the mouse input
+            // But we need to mix 'auto' (continuous) and 'mouse' (static offset).
+
+            const targetY = currentAutoRot + mouseInfluence
+
+            // Lerp current rotation to target (smoothing the mouse movement)
+            animRef.current.rotation.y = THREE.MathUtils.lerp(animRef.current.rotation.y, targetY, 0.1)
+
+            // STRICTLY ZERO TILT on other axes
+            animRef.current.rotation.x = 0
+            animRef.current.rotation.z = 0
         }
 
-        // 3. Alive Dispersion: Slowly scroll the rainbow texture to simulate shifting light
+        // 3. Alive Dispersion: texture animation
         if (rainbowTexture) {
             rainbowTexture.offset.x += delta * 0.2
         }
@@ -256,8 +266,8 @@ function GlassCube() {
     return (
         <Float
             speed={0.8}
-            rotationIntensity={0.2}
-            floatIntensity={0.3}
+            rotationIntensity={0} // STOP tilting/wobbling
+            floatIntensity={0.3} // Keep vertical floating
         >
             <group ref={animRef}>
                 <group rotation={[-Math.atan(1 / Math.SQRT2), 0, Math.PI / 4]} scale={[1.8, 1.8, 1.8]}>
