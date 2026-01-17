@@ -111,12 +111,117 @@ function createChamferedCubeGeometry(size = 1.5, chamfer = 0.12) {
 /**
  * Glass Crystal Component
  */
+// --- HELPER: Generate Rainbow Gradient Texture ---
+function generateRainbowTexture() {
+    const canvas = document.createElement('canvas')
+    canvas.width = 256
+    canvas.height = 1
+    const context = canvas.getContext('2d')
+    const gradient = context.createLinearGradient(0, 0, 256, 0)
+    // Spectrum: Violet -> Blue -> Cyan -> Green -> Yellow -> Orange -> Red
+    gradient.addColorStop(0.0, '#8b00ff') // Violet
+    gradient.addColorStop(0.15, '#0000ff') // Blue
+    gradient.addColorStop(0.3, '#00ffff') // Cyan
+    gradient.addColorStop(0.5, '#00ff00') // Green
+    gradient.addColorStop(0.7, '#ffff00') // Yellow
+    gradient.addColorStop(0.85, '#ffa500') // Orange
+    gradient.addColorStop(1.0, '#ff0000') // Red
+
+    context.fillStyle = gradient
+    context.fillRect(0, 0, 256, 1)
+
+    const texture = new THREE.CanvasTexture(canvas)
+    texture.needsUpdate = true
+    return texture
+}
+
+/**
+ * Create geometry ONLY for the chamfer faces with UVs for gradient mapping
+ */
+function createChamfersOnlyGeometry(size = 1.5, chamfer = 0.12) {
+    const s = size / 2
+    const c = chamfer
+
+    const positions = []
+    const uvs = []
+
+    // Helper to add a quad with UVs mapped across the width (0->1)
+    // We want the gradient to flow "across" the chamfer strip, not along it.
+    // So V coordinate goes from 0 to 1 across the width. U goes 0 to 1 along length.
+    const addChamferQuad = (v0, v1, v2, v3) => {
+        // Tri 1: v0, v1, v2
+        positions.push(...v0, ...v1, ...v2)
+        uvs.push(0, 0, 1, 0, 1, 1) // V varies 0->1? No, let's map simply: 
+
+        // Actually, simple planar mapping might be tricky. Let's explicitly define corners.
+        // v0, v3 are "inner" edge? v1, v2 are "outer"? 
+        // Let's assume v0-v1 is "width".
+        // Let's try uniform mapping:
+        // v0 (0,0), v1(1,0), v2(1,1), v3(0,1) -> Gradient along U (0->1)
+    }
+
+    // Let's manually map UVs so the gradient (U axis of texture) maps to the WIDTH of the chamfer.
+    // The texture creates a gradient from U=0 to U=1.
+    // So we need 0 at one side of the edge, and 1 at the other.
+
+    const addQ = (v0, v1, v2, v3) => {
+        // Triangle 1: v0, v1, v2. v0->v1 is ONE SIDE (Long edge?), v1->v2 is SHORT (Width?)
+        // Let's look at the calls below.
+        // e.g. Y-axis chamfer: [s, s-c, s-c], [s, -s+c, s-c], [s-c, -s+c, s], [s-c, s-c, s]
+        // v0(top-right-back), v1(bott-right-back), v2(bott-front-right), v3(top-front-right)
+        // v0 and v3 have same Y (top). v1 and v2 have same Y (bottom).
+        // So v0-v3 is TOP width. v1-v2 is BOTTOM width.
+        // v0-v1 is LENGTH.
+
+        // We want gradient ACROSS the width. So U=0 at v0/v1, U=1 at v3/v2.
+
+        // Tri 1: v0(0,0), v1(0,1), v2(1,1)
+        positions.push(...v0, ...v1, ...v2)
+        uvs.push(0, 0, 0, 1, 1, 1)
+
+        // Tri 2: v0(0,0), v2(1,1), v3(1,0)
+        positions.push(...v0, ...v2, ...v3)
+        uvs.push(0, 0, 1, 1, 1, 0)
+    }
+
+    // --- 12 EDGE CHAMFERS ONLY ---
+    // Around Y axis (Vertical edges)
+    addQ([s, s - c, s - c], [s, -s + c, s - c], [s - c, -s + c, s], [s - c, s - c, s])
+    addQ([s, -s + c, -s + c], [s, s - c, -s + c], [s - c, s - c, -s], [s - c, -s + c, -s])
+    // Note: Winding order here matters less for UVs but good to keep consistency.
+    // For UVs + gradient, we just need visual coverage.
+    addQ([-s, -s + c, s - c], [-s, s - c, s - c], [-s + c, s - c, s], [-s + c, -s + c, s])
+    addQ([-s, s - c, -s + c], [-s, -s + c, -s + c], [-s + c, -s + c, -s], [-s + c, s - c, -s])
+
+    // Around X axis
+    addQ([s - c, s, s - c], [-s + c, s, s - c], [-s + c, s - c, s], [s - c, s - c, s])
+    addQ([-s + c, s, -s + c], [s - c, s, -s + c], [s - c, s - c, -s], [-s + c, s - c, -s])
+    addQ([-s + c, -s, s - c], [s - c, -s, s - c], [s - c, -s + c, s], [-s + c, -s + c, s])
+    addQ([s - c, -s, -s + c], [-s + c, -s, -s + c], [-s + c, -s + c, -s], [s - c, -s + c, -s])
+
+    // Around Z axis (Connecting X-Y)
+    addQ([s - c, s, -s + c], [s - c, s, s - c], [s, s - c, s - c], [s, s - c, -s + c])
+    addQ([-s + c, s, s - c], [-s + c, s, -s + c], [-s, s - c, -s + c], [-s, s - c, s - c])
+    addQ([s, -s + c, s - c], [s, -s + c, -s + c], [s - c, -s, -s + c], [s - c, -s, s - c])
+    addQ([-s, -s + c, -s + c], [-s, -s + c, s - c], [-s + c, -s, s - c], [-s + c, -s, -s + c])
+
+    const geometry = new THREE.BufferGeometry()
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2))
+
+    return geometry
+}
+
 /**
  * Glass Crystal Component
  */
 function GlassCube() {
     const animRef = useRef()
     const geometry = React.useMemo(() => createChamferedCubeGeometry(1.5, 0.12), [])
+
+    // Geometry for the rainbow effect on edges
+    const chamferGeometry = React.useMemo(() => createChamfersOnlyGeometry(1.5, 0.12), [])
+    const rainbowTexture = React.useMemo(() => generateRainbowTexture(), [])
 
     useFrame((state, delta) => {
         if (animRef.current) {
@@ -131,20 +236,18 @@ function GlassCube() {
             rotationIntensity={0.05}
             floatIntensity={0.1}
         >
-            {/* Outer group: Animation - rotates around WORLD Y axis (vertical spin) */}
             <group ref={animRef}>
-                {/* Inner group: Tilt to stand on corner */}
-                {/* arctan(1/sqrt(2)) ≈ 35.26° for vertex-down orientation */}
                 <group rotation={[-Math.atan(1 / Math.SQRT2), 0, Math.PI / 4]} scale={[1.8, 1.8, 1.8]}>
-                    {/* Main Glass Cube - custom chamfered geometry with fixed normals */}
+
+                    {/* 1. MAIN GLASS BODY */}
                     <mesh geometry={geometry}>
                         <MeshTransmissionMaterial
                             ior={2.4}
                             transmission={1}
                             thickness={0.15}
                             roughness={0}
-                            chromaticAberration={1.0}
-                            anisotropicBlur={0.1}
+                            chromaticAberration={0.6}
+                            anisotropicBlur={0.2}
                             distortion={0.2}
                             distortionScale={0.3}
                             temporalDistortion={0}
@@ -161,22 +264,24 @@ function GlassCube() {
                             attenuationColor="#ffffff"
                             side={THREE.DoubleSide}
                         />
-                        {/* FULL SPECTRUM RAINBOW DISPERSION EDGES */}
-                        {/* Red - Outer */}
-                        <Edges threshold={25} color="#ff0000" scale={1.006} opacity={0.4} transparent />
-                        {/* Orange */}
-                        <Edges threshold={25} color="#ffa500" scale={1.004} opacity={0.4} transparent />
-                        {/* Yellow */}
-                        <Edges threshold={25} color="#ffff00" scale={1.002} opacity={0.4} transparent />
-                        {/* White/Green - Center */}
-                        <Edges threshold={25} color="#ccffcc" scale={1.000} opacity={0.6} transparent />
-                        {/* Cyan */}
-                        <Edges threshold={25} color="#00ffff" scale={0.998} opacity={0.4} transparent />
-                        {/* Blue */}
-                        <Edges threshold={25} color="#0000ff" scale={0.996} opacity={0.4} transparent />
-                        {/* Violet - Inner */}
-                        <Edges threshold={25} color="#8b00ff" scale={0.994} opacity={0.4} transparent />
                     </mesh>
+
+                    {/* 2. RAINBOW CHAMFERS GLOW */}
+                    {/* Rendered slightly larger to avoid Z-fighting, with additive blending */}
+                    <mesh geometry={chamferGeometry} scale={[1.002, 1.002, 1.002]}>
+                        <meshBasicMaterial
+                            map={rainbowTexture}
+                            transparent
+                            opacity={0.8}
+                            blending={THREE.AdditiveBlending}
+                            side={THREE.DoubleSide}
+                            depthWrite={false}
+                        />
+                    </mesh>
+
+                    {/* 3. ADDITIONAL SHARP HIGHLIGHTS (White only) */}
+                    <Edges threshold={25} color="#ffffff" opacity={0.4} transparent />
+
                 </group>
             </group>
         </Float>
