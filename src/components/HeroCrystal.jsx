@@ -277,7 +277,7 @@ function GlassCube() {
                         <MeshTransmissionMaterial
                             ior={2.4}
                             transmission={1}
-                            thickness={0.2}
+                            thickness={0}
                             roughness={0}
                             chromaticAberration={0.5}
                             anisotropicBlur={0}

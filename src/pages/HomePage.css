@@ -1,6 +1,320 @@
+/**
+ * HomePage Styles
+ * Шрифты и позиционирование как на /crystal
+ * 12-column grid, responsive
+ */
+
+/* === PAGE CONTAINER === */
 .home-page {
-    min-height: 100vh;
-    background: #000;
     position: relative;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #000;
     overflow: hidden;
+}
+
+/* === BACKGROUND GLOW === */
+.home-glow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 50%;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%,
+            rgba(30, 60, 120, 0.4) 0%,
+            rgba(20, 40, 80, 0.2) 40%,
+            transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ============================================
+   CORNER NAVIGATION (Fixed Positioning)
+   Шрифт: Space Mono (--font-nav)
+   ============================================ */
+.corner-nav {
+    position: fixed;
+    z-index: 100;
+}
+
+.corner-nav--top-left {
+    top: 2.5rem;
+    left: 3rem;
+}
+
+.corner-nav--top-right {
+    top: 2.5rem;
+    right: 3rem;
+}
+
+.corner-nav--bottom-left {
+    bottom: 2.5rem;
+    left: 3rem;
+}
+
+.corner-nav--bottom-right {
+    bottom: 2.5rem;
+    right: 3rem;
+}
+
+.nav-link {
+    font-family: var(--font-nav);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+/* ============================================
+   SIDE VERTICAL TEXT (Fixed Positioning)
+   Шрифт: Manrope (--font-label)
+   SYNTHETIC - колонка 3 (16.67% от левого края)
+   ARCHITECT - колонка 10 (75% от левого края)
+   ============================================ */
+
+/* SYNTHETIC - column 3, top, vertical */
+.side-text--left {
+    position: fixed;
+    top: 2.5rem;
+    left: calc((2 / 12) * 100%);
+    /* Column 3 start = after 2 columns */
+    z-index: 50;
+}
+
+/* ARCHITECT - column 10, bottom, vertical */
+.side-text--right {
+    position: fixed;
+    bottom: 2.5rem;
+    left: calc((9 / 12) * 100%);
+    /* Column 10 start = after 9 columns */
+    z-index: 50;
+}
+
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: var(--font-label);
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.side-text--left .vertical-text {
+    transform: rotate(180deg);
+}
+
+/* ============================================
+   HERO TITLE
+   Позиционирование текста: СТРОГО ПО ЦЕНТРУ ЭКРАНА
+   ============================================ */
+
+.hero-title {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* 
+ * HERO NAME 
+ * Шрифт: Helvetica Neue Bold (--font-hero)
+ * Позиция: текст начинается за левым краем экрана (как на /crystal)
+ */
+.hero-name {
+    font-family: var(--font-hero);
+    font-size: clamp(8rem, 19vw, 22rem);
+    font-weight: 700;
+    line-height: 0.75;
+    letter-spacing: 0;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin: 0;
+    /* First letters K and A are ~50% outside left edge */
+    margin-left: -7vw;
+}
+
+.hero-name__first,
+.hero-name__last {
+    display: block;
+}
+
+.hero-name__first {
+    letter-spacing: -0.015em;
+}
+
+/* ============================================
+   INFO PANEL (Right Side - Fixed)
+   Шрифт: Space Mono (--font-nav)
+   ============================================ */
+.info-panel {
+    position: fixed;
+    top: 50%;
+    right: 3rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: right;
+    z-index: 50;
+    max-width: 200px;
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-family: var(--font-nav);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* ============================================
+   META PANEL (Bottom Left - Fixed)
+   Шрифт: Space Mono (--font-nav)
+   ============================================ */
+.meta-panel {
+    position: fixed;
+    bottom: 25%;
+    left: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    z-index: 50;
+}
+
+.meta-text {
+    font-family: var(--font-nav);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+.meta-text:last-child {
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 1rem;
+}
+
+/* ============================================
+   CTA PANEL (Bottom Center - Fixed)
+   Шрифт: Space Mono (--font-nav)
+   ============================================ */
+.cta-panel {
+    position: fixed;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+}
+
+.cta-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-fast);
+}
+
+.cta-link:hover {
+    color: #fff;
+}
+
+.cta-text {
+    font-family: var(--font-nav);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.cta-line {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Tablets & Small Laptops */
+@media (max-width: 1200px) {
+    .hero-name {
+        font-size: clamp(5rem, 15vw, 12rem);
+    }
+
+    .info-panel,
+    .meta-panel {
+        display: none;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+
+    .corner-nav--top-left,
+    .corner-nav--bottom-left {
+        left: 1.5rem;
+    }
+
+    .corner-nav--top-right,
+    .corner-nav--bottom-right {
+        right: 1.5rem;
+    }
+
+    .hero-name {
+        font-size: clamp(3rem, 12vw, 6rem);
+    }
+
+    .side-text {
+        display: none;
+    }
+}
+
+/* Phones */
+@media (max-width: 575px) {
+
+    .corner-nav--top-left,
+    .corner-nav--top-right {
+        top: 1rem;
+    }
+
+    .corner-nav--bottom-left,
+    .corner-nav--bottom-right {
+        bottom: 1rem;
+    }
+
+    .corner-nav--top-left,
+    .corner-nav--bottom-left {
+        left: 1rem;
+    }
+
+    .corner-nav--top-right,
+    .corner-nav--bottom-right {
+        right: 1rem;
+    }
+
+    .cta-panel {
+        bottom: 3rem;
+    }
 }

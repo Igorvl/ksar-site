@@ -1,0 +1,8 @@
+/**
+ * CrystalDemo Page Styles
+ */
+.crystal-demo-page {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--color-bg);
+}
