@@ -244,21 +244,21 @@ function GlassCube() {
                         <MeshTransmissionMaterial
                             ior={2.4}
                             transmission={1}
-                            thickness={0.15}
+                            thickness={0.06}
                             roughness={0}
                             chromaticAberration={0.6}
-                            anisotropicBlur={0.2}
+                            anisotropicBlur={0.05}
                             distortion={0.2}
                             distortionScale={0.3}
                             temporalDistortion={0}
                             backside={true}
-                            backsideThickness={0.05}
+                            backsideThickness={0.03}
                             color="#ffffff"
                             envMapIntensity={0.5}
                             samples={16}
                             resolution={1024}
                             backsideResolution={512}
-                            clearcoat={0.5}
+                            clearcoat={0}
                             clearcoatRoughness={0}
                             attenuationDistance={Infinity}
                             attenuationColor="#ffffff"
