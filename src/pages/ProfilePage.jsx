@@ -26,7 +26,7 @@ export default function ProfilePage() {
                 <a href="/online" className="nav-link font-nav">ONLINE</a>
             </nav>
             <nav className="corner-nav corner-nav--bottom-left">
-                <a href="/profile" className="nav-link font-nav nav-link--active">PROFILE</a>
+                <a href="/" className="nav-link font-nav">HOME</a>
             </nav>
             <nav className="corner-nav corner-nav--bottom-right">
                 <a href="/contact" className="nav-link font-nav">CONTACT</a>
