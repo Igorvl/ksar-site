@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<style type="text/css">
+	.st0{fill:none;stroke:#F0F2ED;stroke-width:1;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#F0F2ED;stroke-width:0.5;stroke-miterlimit:10;}
+</style>
+<g>
+	<!-- Inner cross (thicker) -->
+	<line class="st0" x1="62" y1="50" x2="38" y2="50"/>
+	<line class="st0" x1="50" y1="38" x2="50" y2="62"/>
+</g>
+<g>
+	<!-- Outer cross (thinner) -->
+	<line class="st1" x1="90" y1="50" x2="10" y2="50"/>
+	<line class="st1" x1="50" y1="10" x2="50" y2="90"/>
+</g>
+</svg>

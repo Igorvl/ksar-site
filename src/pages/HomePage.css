@@ -30,6 +30,54 @@
 }
 
 /* ============================================
+   CORNER CROSSHAIRS (SVG)
+   Позиция: по центру колонок 1 и 12
+   ============================================ */
+.crosshair {
+    position: fixed;
+    width: 90px;
+    height: 90px;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.5;
+}
+
+/* Top-left: center of column 1, 45° diagonal from corner */
+.crosshair--top-left {
+    top: 4.17vw;
+    left: 4.17vw;
+    transform: translate(-50%, -50%);
+}
+
+/* Top-right: center of column 12, 45° diagonal from corner */
+.crosshair--top-right {
+    top: 4.17vw;
+    right: 4.17vw;
+    transform: translate(50%, -50%);
+}
+
+/* Bottom-left: center of column 1, 45° diagonal from corner */
+.crosshair--bottom-left {
+    bottom: 4.17vw;
+    left: 4.17vw;
+    transform: translate(-50%, 50%);
+}
+
+/* Bottom-right: center of column 12, 45° diagonal from corner */
+.crosshair--bottom-right {
+    bottom: 4.17vw;
+    right: 4.17vw;
+    transform: translate(50%, 50%);
+}
+
+/* Hide on small screens */
+@media (max-width: 768px) {
+    .crosshair {
+        display: none;
+    }
+}
+
+/* ============================================
    CORNER NAVIGATION (Fixed Positioning)
    Шрифт: Space Mono (--font-nav)
    ============================================ */
@@ -38,24 +86,30 @@
     z-index: 100;
 }
 
+/* PROJECTS - column 2 */
 .corner-nav--top-left {
     top: 2.5rem;
-    left: 3rem;
+    left: calc((1.5 / 12) * 100%);
 }
 
+/* ONLINE - column 11 */
 .corner-nav--top-right {
     top: 2.5rem;
-    right: 3rem;
+    left: calc((10.5 / 12) * 100%);
+    transform: translateX(-50%);
 }
 
+/* PROFILE - column 2 */
 .corner-nav--bottom-left {
     bottom: 2.5rem;
-    left: 3rem;
+    left: calc((1.5 / 12) * 100%);
 }
 
+/* CONTACT - column 11 */
 .corner-nav--bottom-right {
     bottom: 2.5rem;
-    right: 3rem;
+    left: calc((10.5 / 12) * 100%);
+    transform: translateX(-50%);
 }
 
 .nav-link {
@@ -78,12 +132,14 @@
    ARCHITECT - колонка 10 (75% от левого края)
    ============================================ */
 
-/* SYNTHETIC - column 3, top, vertical */
+/* SYNTHETIC - right edge of column 3, top, vertical */
 .side-text--left {
     position: fixed;
-    top: 2.5rem;
-    left: calc((2 / 12) * 100%);
-    /* Column 3 start = after 2 columns */
+    top: 3.4rem;
+    left: calc((3 / 12) * 100%);
+    /* Right edge of column 3 = 25% */
+    transform: translateX(-100%);
+    /* Align right edge to this position */
     z-index: 50;
 }
 
@@ -109,6 +165,21 @@
 
 .side-text--left .vertical-text {
     transform: rotate(180deg);
+}
+
+/* Corner line next to SYNTHETIC */
+.corner-line {
+    position: fixed;
+    pointer-events: none;
+    z-index: 40;
+}
+
+.corner-line--top {
+    top: 3.3rem;
+    left: calc((3 / 11.5) * 100%);
+    width: 58vw;
+    height: auto;
+    opacity: 0.5;
 }
 
 /* ============================================
@@ -163,14 +234,15 @@
 .info-panel {
     position: fixed;
     top: 50%;
-    right: 3rem;
+    right: -4rem;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
     gap: 1rem;
     text-align: right;
     z-index: 50;
-    max-width: 200px;
+    max-width: 600px;
+    flex-wrap: nowrap;
 }
 
 .info-block {
@@ -181,7 +253,7 @@
 
 .info-label {
     font-family: var(--font-nav);
-    font-size: 0.55rem;
+    font-size: 0.3rem;
     letter-spacing: 0.1em;
     color: rgba(255, 255, 255, 0.4);
     line-height: 1.8;
@@ -194,8 +266,8 @@
    ============================================ */
 .meta-panel {
     position: fixed;
-    bottom: 25%;
-    left: 3rem;
+    bottom: 12%;
+    left: calc((2 / 10) * 100%);
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -204,7 +276,7 @@
 
 .meta-text {
     font-family: var(--font-nav);
-    font-size: 0.6rem;
+    font-size: 0.3rem;
     letter-spacing: 0.1em;
     color: rgba(255, 255, 255, 0.5);
     margin: 0;

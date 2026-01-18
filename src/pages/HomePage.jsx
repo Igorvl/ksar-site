@@ -11,6 +11,12 @@ export default function HomePage() {
             {/* Background Glow Effect */}
             <div className="home-glow" aria-hidden="true" />
 
+            {/* === CORNER CROSSHAIRS (SVG) === */}
+            <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
+            <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
+            <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
+            <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
+
             {/* === CORNER NAVIGATION === */}
             <nav className="corner-nav corner-nav--top-left">
                 <a href="/projects" className="nav-link font-nav">PROJECTS</a>
@@ -33,6 +39,9 @@ export default function HomePage() {
                 <span className="vertical-text font-nav">ARCHITECT</span>
             </div>
 
+            {/* === CORNER LINE (from SYNTHETIC to right) === */}
+            <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
+
             {/* === HERO TITLE (Fixed Center) === */}
             <div className="hero-title">
                 <h1 className="hero-name font-hero">
@@ -43,26 +52,16 @@ export default function HomePage() {
 
             {/* === INFO BLOCK (Right Side) === */}
             <aside className="info-panel">
-                <div className="info-block">
-                    <p className="info-label font-nav">VISUAL UNIVERSE, BESPOKE</p>
-                    <p className="info-label font-nav">CRYSTAL SPACES, MY SINGAPORE,</p>
-                    <p className="info-label font-nav">SOPHISTICATED</p>
-                </div>
-                <div className="info-block">
-                    <p className="info-label font-nav">LA GALLERY | DESIGN COMPLETE</p>
-                    <p className="info-label font-nav">ARTROOM | DIGITAL PRINT STUDIO</p>
-                    <p className="info-label font-nav">BESPOKE | LS</p>
-                </div>
-                <div className="info-block">
-                    <p className="info-label font-nav">EXTERIOR</p>
-                </div>
+                <p className="info-label font-nav">SYSTEM_OVERRIDE: INITIATED // PROTOCOL: ABYSSAL_09 // RENDERING_ENVIRONMENT: DARK_MODE</p>
+                <p className="info-label font-nav">// LATENCY: 0.00MS // SUBJECT: KSENIYA_ARTMAN // STATUS: ONLINE // DATA_STREAM:</p>
+                <p className="info-label font-nav">UNSTABLE // UPLOAD_COMPLETE // ACCESSING_ARCHIVE_FILES...</p>
             </aside>
 
-            {/* === META TEXT (Bottom Left) === */}
+            {/* === META TEXT (Column 3 - right of PROFILE) === */}
             <div className="meta-panel">
-                <p className="meta-text font-nav">07 04.0607 N 101.1307</p>
-                <p className="meta-text font-nav">NEW WORLD</p>
-                <p className="meta-text font-nav">VERSION 1.0</p>
+                <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
+                <p className="meta-text font-nav">new desition</p>
+                <p className="meta-text font-nav">VERSION: 1.0</p>
             </div>
 
             {/* === CTA (Bottom Center) === */}
