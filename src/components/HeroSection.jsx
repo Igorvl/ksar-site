@@ -82,9 +82,16 @@ function HeroSection() {
                     <span className="hero-nav__cta-line" />
                 </a>
                 <div className="hero-nav__right-group">
-                    <span className="hero-nav__label hero-nav__label--vertical">
-                        ARCHITECT
-                    </span>
+                    <div className="hero-nav__architect-wrapper">
+                        <img
+                            src="/lineV.svg"
+                            alt=""
+                            className="hero-nav__line-vertical"
+                        />
+                        <span className="hero-nav__label hero-nav__label--vertical">
+                            ARCHITECT
+                        </span>
+                    </div>
                     <a href="#contact" className="hero-nav__link">
                         CONTACT
                     </a>

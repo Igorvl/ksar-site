@@ -36,6 +36,7 @@ export default function HomePage() {
                 <span className="vertical-text font-nav">SYNTHETIC</span>
             </div>
             <div className="side-text side-text--right">
+                <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
                 <span className="vertical-text font-nav">ARCHITECT</span>
             </div>
 
@@ -59,6 +60,7 @@ export default function HomePage() {
 
             {/* === META TEXT (Column 3 - right of PROFILE) === */}
             <div className="meta-panel">
+                <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
                 <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
                 <p className="meta-text font-nav">new desition</p>
                 <p className="meta-text font-nav">VERSION: 1.0</p>
