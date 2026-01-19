@@ -3,9 +3,13 @@
  * Two-screen layout with scroll
  * Each section has its own UI elements (crosshairs, nav, texts)
  */
+import { useState } from 'react'
 import './ProfilePage.css'
+import ContactModal from '../components/ContactModal'
 
 export default function ProfilePage() {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     return (
         <main className="profile-page">
             {/* === SCREEN 1: HERO === */}
@@ -388,11 +392,20 @@ export default function ProfilePage() {
                         <span className="contact-label font-nav">// READY TO INITIALIZE?</span>
                     </header>
 
-                    <a href="mailto:init@ksar.me" className="contact-email font-hero">
+                    <button
+                        className="contact-email font-hero"
+                        onClick={() => setIsModalOpen(true)}
+                    >
                         INIT@KSAR.ME
-                    </a>
+                    </button>
                 </div>
             </section>
+
+            {/* Contact Modal */}
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </main>
     )
 }
