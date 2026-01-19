@@ -1,8 +1,9 @@
 /**
  * ProfilePage Styles
- * Two-screen layout with scroll
- * Each section has its own UI elements
- * 12-column grid, responsive (>=0.5% market share)
+ * Five-screen layout with snap scroll
+ * STATIC ELEMENTS use position: fixed (don't scroll)
+ * SCROLLABLE SECTIONS contain only unique content
+ * 12-column grid, responsive (>=0.2% market share)
  */
 
 /* === PAGE CONTAINER (Scrollable) === */
@@ -15,7 +16,7 @@
 }
 
 /* ============================================
-   SECTION BASE STYLES
+   SECTION BASE STYLES (Scrollable)
    ============================================ */
 .profile-section {
     position: relative;
@@ -65,9 +66,12 @@
 }
 
 /* ============================================
-   SCREEN 2: ALGORITHM SECTION
+   SCREEN 2+: OTHER SECTIONS
    ============================================ */
-.profile-section--algorithm {
+.profile-section--algorithm,
+.profile-section--protocol,
+.profile-section--services,
+.profile-section--contact {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,7 +79,8 @@
 }
 
 /* ============================================
-   CORNER CROSSHAIRS (SVG) - Per Section
+   FIXED CROSSHAIRS (position: fixed)
+   Animated, 45° diagonal placement
    ============================================ */
 @keyframes crosshairPulseTopLeft {
 
@@ -133,37 +138,37 @@
     }
 }
 
-.profile-section .crosshair {
-    position: absolute;
+.fixed-crosshair {
+    position: fixed;
     width: 90px;
     height: 90px;
     pointer-events: none;
-    z-index: 10;
+    z-index: 1000;
     opacity: 0.5;
 }
 
-.profile-section .crosshair--top-left {
+.fixed-crosshair--top-left {
     top: 4.17vw;
     left: 4.17vw;
     transform: translate(-50%, -50%);
     animation: crosshairPulseTopLeft 5s ease-in-out infinite;
 }
 
-.profile-section .crosshair--top-right {
+.fixed-crosshair--top-right {
     top: 4.17vw;
     right: 4.17vw;
     transform: translate(50%, -50%);
     animation: crosshairPulseTopRight 5s ease-in-out infinite;
 }
 
-.profile-section .crosshair--bottom-left {
+.fixed-crosshair--bottom-left {
     bottom: 4.17vw;
     left: 4.17vw;
     transform: translate(-50%, 50%);
     animation: crosshairPulseBottomLeft 5s ease-in-out infinite;
 }
 
-.profile-section .crosshair--bottom-right {
+.fixed-crosshair--bottom-right {
     bottom: 4.17vw;
     right: 4.17vw;
     transform: translate(50%, 50%);
@@ -171,67 +176,70 @@
 }
 
 /* ============================================
-   CORNER NAVIGATION - Per Section
+   FIXED CORNER NAVIGATION (position: fixed)
    ============================================ */
-.profile-section .corner-nav {
-    position: absolute;
-    z-index: 100;
+.fixed-nav {
+    position: fixed;
+    z-index: 1000;
 }
 
-.profile-section .corner-nav--top-left {
+.fixed-nav--top-left {
     top: 2.5rem;
     left: calc((1.5 / 12) * 100%);
 }
 
-.profile-section .corner-nav--top-right {
+.fixed-nav--top-right {
     top: 2.5rem;
     left: calc((10.5 / 12) * 100%);
     transform: translateX(-50%);
 }
 
-.profile-section .corner-nav--bottom-left {
+.fixed-nav--bottom-left {
     bottom: 2.5rem;
     left: calc((1.5 / 12) * 100%);
 }
 
-.profile-section .corner-nav--bottom-right {
+.fixed-nav--bottom-right {
     bottom: 2.5rem;
     left: calc((10.5 / 12) * 100%);
     transform: translateX(-50%);
 }
 
-.profile-section .nav-link {
+.fixed-nav .nav-link,
+.profile-page .nav-link {
     font-family: var(--font-nav);
     font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
     transition: color var(--transition-fast);
 }
 
-.profile-section .nav-link:hover {
+.fixed-nav .nav-link:hover,
+.profile-page .nav-link:hover {
     color: #fff;
 }
 
 /* ============================================
-   SIDE VERTICAL TEXT - Per Section
+   FIXED SIDE VERTICAL TEXT (position: fixed)
    ============================================ */
-.profile-section .side-text--left {
-    position: absolute;
+.fixed-side-text--left {
+    position: fixed;
     top: 3.4rem;
     left: calc((3 / 12) * 100%);
     transform: translateX(-100%);
-    z-index: 50;
+    z-index: 1000;
 }
 
-.profile-section .side-text--right {
-    position: absolute;
+.fixed-side-text--right {
+    position: fixed;
     bottom: 2.5rem;
     left: calc((9 / 12) * 100%);
-    z-index: 50;
+    z-index: 1000;
 }
 
-.profile-section .vertical-text {
+.profile-page .vertical-text {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     font-family: var(--font-label);
@@ -240,18 +248,19 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.5);
+    transition: opacity 0.5s ease;
 }
 
-.profile-section .side-text--left .vertical-text {
+.fixed-side-text--left .vertical-text {
     transform: rotate(180deg);
 }
 
-.profile-section .side-text--right .vertical-text {
+.fixed-side-text--right .vertical-text {
     transform: rotate(180deg);
 }
 
 /* Vertical line */
-.profile-section .line-vertical {
+.profile-page .line-vertical {
     position: absolute;
     top: auto;
     left: -50%;
@@ -262,8 +271,35 @@
     opacity: 0.7;
 }
 
+/* ============================================
+   FIXED CORNER LINE (position: fixed)
+   ============================================ */
+.fixed-corner-line {
+    position: fixed;
+    top: 3.3rem;
+    left: calc((3 / 11.5) * 100%);
+    width: 58vw;
+    height: auto;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* ============================================
+   FIXED META PANEL (position: fixed)
+   ============================================ */
+.fixed-meta-panel {
+    position: fixed;
+    bottom: 10%;
+    left: calc((2 / 9) * 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    z-index: 1000;
+}
+
 /* Horizontal line from left edge */
-.profile-section .line-horizontal {
+.fixed-meta-panel .line-horizontal {
     position: absolute;
     bottom: calc(10% + 3.3rem);
     left: -45vh;
@@ -277,35 +313,7 @@
     max-height: 38vh;
 }
 
-/* Corner line next to BRANDING */
-.profile-section .corner-line {
-    position: absolute;
-    pointer-events: none;
-    z-index: 40;
-}
-
-.profile-section .corner-line--top {
-    top: 3.3rem;
-    left: calc((3 / 11.5) * 100%);
-    width: 58vw;
-    height: auto;
-    opacity: 0.5;
-}
-
-/* ============================================
-   META PANEL - Per Section
-   ============================================ */
-.profile-section .meta-panel {
-    position: absolute;
-    bottom: 10%;
-    left: calc((2 / 9) * 100%);
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    z-index: 50;
-}
-
-.profile-section .meta-text {
+.profile-page .meta-text {
     font-family: var(--font-nav);
     font-size: 0.3rem;
     letter-spacing: 0.1em;
@@ -313,23 +321,23 @@
     margin: 0;
 }
 
-.profile-section .meta-text:last-child {
+.profile-page .meta-text:last-child {
     color: rgba(255, 255, 255, 0.3);
     margin-top: 1rem;
 }
 
 /* ============================================
-   CTA PANEL - Per Section
+   FIXED CTA PANEL (position: fixed)
    ============================================ */
-.profile-section .cta-panel {
-    position: absolute;
+.fixed-cta-panel {
+    position: fixed;
     bottom: 2.5rem;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 50;
+    z-index: 1000;
 }
 
-.profile-section .cta-link {
+.profile-page .cta-link {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -341,25 +349,43 @@
     cursor: pointer;
 }
 
-.profile-section .cta-link:hover {
+.profile-page .cta-link:hover {
     color: #fff;
 }
 
-.profile-section .cta-text {
+.profile-page .cta-text {
     font-family: var(--font-nav);
     font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
 }
 
-.profile-section .cta-line {
+.profile-page .cta-line {
     width: 1px;
     height: 30px;
     background: rgba(255, 255, 255, 0.5);
 }
 
+/* Arrow CTA */
+.cta-link--arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cta-arrow {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-link--arrow:hover .cta-arrow {
+    color: #fff;
+    transform: translateY(-4px);
+}
+
 /* ============================================
-   SECTION CONTENT (Algorithm Screen)
+   SECTION CONTENT (Scrollable)
    ============================================ */
 .section-content {
     position: relative;
@@ -415,13 +441,6 @@
 /* ============================================
    PROTOCOL SECTION (Screen 3)
    ============================================ */
-.profile-section--protocol {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #000;
-}
-
 /* Protocol Grid - Two columns layout */
 .protocol-grid {
     display: flex;
@@ -465,13 +484,6 @@
 /* ============================================
    SERVICES SECTION (Screen 4)
    ============================================ */
-.profile-section--services {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #000;
-}
-
 /* Services Grid - Three columns */
 .services-grid {
     display: grid;
@@ -516,13 +528,6 @@
 /* ============================================
    CONTACT SECTION (Screen 5)
    ============================================ */
-.profile-section--contact {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #000;
-}
-
 .section-content--contact {
     text-align: center;
     display: flex;
@@ -538,7 +543,6 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.5);
-    /* font-style: italic; */
 }
 
 .contact-email {
@@ -558,27 +562,20 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Arrow CTA */
-.cta-link--arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cta-arrow {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.5);
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.cta-link--arrow:hover .cta-arrow {
-    color: #fff;
-    transform: translateY(-4px);
-}
-
 /* ============================================
    RESPONSIVE ADJUSTMENTS
+   Breakpoints for >=0.2% market share
    ============================================ */
+
+/* Large Desktops (1440px+) - no changes needed */
+
+/* Laptops & Small Desktops (1200px - 1439px) */
+@media (max-width: 1439px) {
+    .fixed-crosshair {
+        width: 70px;
+        height: 70px;
+    }
+}
 
 /* Tablets & Small Laptops (769px - 1200px) */
 @media (max-width: 1200px) {
@@ -590,38 +587,40 @@
         font-size: clamp(2rem, 4vw, 3.5rem);
     }
 
-    .profile-section .meta-panel {
+    .fixed-meta-panel {
         display: none;
+    }
+
+    .fixed-crosshair {
+        width: 60px;
+        height: 60px;
     }
 }
 
 /* Tablets (576px - 768px) */
 @media (max-width: 768px) {
-    .profile-section .crosshair {
+    .fixed-crosshair {
         display: none;
     }
 
-    .profile-section .corner-nav--top-left,
-    .profile-section .corner-nav--bottom-left {
+    .fixed-nav--top-left,
+    .fixed-nav--bottom-left {
         left: 1.5rem;
     }
 
-    .profile-section .corner-nav--top-right,
-    .profile-section .corner-nav--bottom-right {
+    .fixed-nav--top-right,
+    .fixed-nav--bottom-right {
         left: auto;
         right: 1.5rem;
         transform: none;
     }
 
-    .profile-section .side-text {
+    .fixed-side-text--left,
+    .fixed-side-text--right {
         display: none;
     }
 
-    .profile-section .corner-line {
-        display: none;
-    }
-
-    .profile-section .line-horizontal {
+    .fixed-corner-line {
         display: none;
     }
 
@@ -665,27 +664,27 @@
         height: 95%;
     }
 
-    .profile-section .corner-nav--top-left,
-    .profile-section .corner-nav--top-right {
+    .fixed-nav--top-left,
+    .fixed-nav--top-right {
         top: 1rem;
     }
 
-    .profile-section .corner-nav--bottom-left,
-    .profile-section .corner-nav--bottom-right {
+    .fixed-nav--bottom-left,
+    .fixed-nav--bottom-right {
         bottom: 1rem;
     }
 
-    .profile-section .corner-nav--top-left,
-    .profile-section .corner-nav--bottom-left {
+    .fixed-nav--top-left,
+    .fixed-nav--bottom-left {
         left: 1rem;
     }
 
-    .profile-section .corner-nav--top-right,
-    .profile-section .corner-nav--bottom-right {
+    .fixed-nav--top-right,
+    .fixed-nav--bottom-right {
         right: 1rem;
     }
 
-    .profile-section .cta-panel {
+    .fixed-cta-panel {
         bottom: 3rem;
     }
 
@@ -712,5 +711,23 @@
 
     .contact-label {
         font-size: 0.6rem;
+    }
+}
+
+/* Small Phones (320px and below) */
+@media (max-width: 320px) {
+
+    .fixed-nav--top-left,
+    .fixed-nav--bottom-left {
+        left: 0.75rem;
+    }
+
+    .fixed-nav--top-right,
+    .fixed-nav--bottom-right {
+        right: 0.75rem;
+    }
+
+    .section-content {
+        padding: 0 1rem;
     }
 }

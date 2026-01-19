@@ -1,8 +1,8 @@
 /**
  * ProfilePage - Profile/About Page
  * Five-screen layout with snap scroll
- * Each section has its own UI elements (crosshairs, nav, texts)
- * Snap scroll: auto-scroll to next section on 5% scroll threshold
+ * STATIC ELEMENTS: crosshairs, nav, side-text, corner-line, meta-panel, cta-panel
+ * These elements are position:fixed and don't scroll with content
  */
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './ProfilePage.css'
@@ -11,12 +11,24 @@ import ContactModal from '../components/ContactModal'
 // Section IDs in order
 const SECTIONS = ['hero', 'section-2', 'section-3', 'section-4', 'section-5']
 
+// Side text configuration per section
+const SIDE_TEXT_CONFIG = {
+    0: { left: 'BRANDING', right: 'ARCHITECT' },
+    1: { left: 'BRANDING', right: 'INTERIOR' },
+    2: { left: 'BRANDING', right: 'INTERIOR' },
+    3: { left: 'BRANDING', right: 'INTERIOR' },
+    4: { left: 'BRANDING', right: 'INTERIOR' },
+}
+
 export default function ProfilePage() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currentSection, setCurrentSection] = useState(0)
     const containerRef = useRef(null)
     const isScrolling = useRef(false)
     const scrollStartY = useRef(0)
+
+    // Get current side text based on section
+    const sideText = SIDE_TEXT_CONFIG[currentSection] || SIDE_TEXT_CONFIG[0]
 
     // Premium easing function - easeInOutQuart for smooth acceleration/deceleration
     const easeInOutQuart = (t) => {
@@ -141,8 +153,77 @@ export default function ProfilePage() {
         scrollToSection(currentSection + 1)
     }
 
+    // Check if on last section (for arrow up visibility)
+    const isLastSection = currentSection === SECTIONS.length - 1
+
     return (
         <main className="profile-page" ref={containerRef}>
+            {/* ============================================
+                STATIC ELEMENTS (position: fixed)
+                These don't scroll with the page
+                ============================================ */}
+
+            {/* Corner Crosshairs */}
+            <img src="/kross.svg" className="fixed-crosshair fixed-crosshair--top-left" aria-hidden="true" alt="" />
+            <img src="/kross.svg" className="fixed-crosshair fixed-crosshair--top-right" aria-hidden="true" alt="" />
+            <img src="/kross.svg" className="fixed-crosshair fixed-crosshair--bottom-left" aria-hidden="true" alt="" />
+            <img src="/kross.svg" className="fixed-crosshair fixed-crosshair--bottom-right" aria-hidden="true" alt="" />
+
+            {/* Corner Navigation */}
+            <nav className="fixed-nav fixed-nav--top-left">
+                <a href="/projects" className="nav-link font-nav">PROJECTS</a>
+            </nav>
+            <nav className="fixed-nav fixed-nav--top-right">
+                <a href="/online" className="nav-link font-nav">ONLINE</a>
+            </nav>
+            <nav className="fixed-nav fixed-nav--bottom-left">
+                <a href={currentSection === 0 ? "/" : "/profile"} className="nav-link font-nav">
+                    {currentSection === 0 ? "HOME" : "PROFILE"}
+                </a>
+            </nav>
+            <nav className="fixed-nav fixed-nav--bottom-right">
+                <a href="/contact" className="nav-link font-nav">CONTACT</a>
+            </nav>
+
+            {/* Side Vertical Text */}
+            <div className="fixed-side-text fixed-side-text--left">
+                <span className="vertical-text font-nav">{sideText.left}</span>
+            </div>
+            <div className="fixed-side-text fixed-side-text--right">
+                <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
+                <span className="vertical-text font-nav">{sideText.right}</span>
+            </div>
+
+            {/* Corner Line */}
+            <img src="/corn1.svg" className="fixed-corner-line" aria-hidden="true" alt="" />
+
+            {/* Meta Panel */}
+            <div className="fixed-meta-panel">
+                <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
+                <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
+                <p className="meta-text font-nav">new desition</p>
+                <p className="meta-text font-nav">VERSION: 1.0</p>
+            </div>
+
+            {/* CTA Panel */}
+            <div className="fixed-cta-panel">
+                {isLastSection ? (
+                    <button onClick={() => scrollToSection(0)} className="cta-link cta-link--arrow font-nav">
+                        <span className="cta-arrow" aria-hidden="true">↑</span>
+                    </button>
+                ) : (
+                    <button onClick={handleExplore} className="cta-link font-nav">
+                        <span className="cta-text">EXPLORE</span>
+                        <span className="cta-line" aria-hidden="true" />
+                    </button>
+                )}
+            </div>
+
+            {/* ============================================
+                SCROLLABLE SECTIONS
+                Only unique content per section
+                ============================================ */}
+
             {/* === SCREEN 1: HERO === */}
             <section className="profile-section profile-section--hero" id="hero">
                 {/* Background Image */}
@@ -150,107 +231,10 @@ export default function ProfilePage() {
                     <img src="/about-2.jpg" alt="" />
                 </div>
                 <div className="profile-bg-overlay" aria-hidden="true" />
-
-                {/* Corner Crosshairs */}
-                <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
-
-                {/* Corner Navigation */}
-                <nav className="corner-nav corner-nav--top-left">
-                    <a href="/projects" className="nav-link font-nav">PROJECTS</a>
-                </nav>
-                <nav className="corner-nav corner-nav--top-right">
-                    <a href="/online" className="nav-link font-nav">ONLINE</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-left">
-                    <a href="/" className="nav-link font-nav">HOME</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-right">
-                    <a href="/contact" className="nav-link font-nav">CONTACT</a>
-                </nav>
-
-                {/* Side Vertical Text */}
-                <div className="side-text side-text--left">
-                    <span className="vertical-text font-nav">BRANDING</span>
-                </div>
-                <div className="side-text side-text--right">
-                    <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
-                    <span className="vertical-text font-nav">ARCHITECT</span>
-                </div>
-
-                {/* Corner Line */}
-                <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
-
-                {/* Meta Panel */}
-                <div className="meta-panel">
-                    <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
-                    <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
-                    <p className="meta-text font-nav">new desition</p>
-                    <p className="meta-text font-nav">VERSION: 1.0</p>
-                </div>
-
-                {/* CTA */}
-                <div className="cta-panel">
-                    <button onClick={handleExplore} className="cta-link font-nav">
-                        <span className="cta-text">EXPLORE</span>
-                        <span className="cta-line" aria-hidden="true" />
-                    </button>
-                </div>
             </section>
 
             {/* === SCREEN 2: K.S.A.R. ALGORITHM === */}
             <section className="profile-section profile-section--algorithm" id="section-2">
-                {/* Corner Crosshairs */}
-                <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
-
-                {/* Corner Navigation */}
-                <nav className="corner-nav corner-nav--top-left">
-                    <a href="/projects" className="nav-link font-nav">PROJECTS</a>
-                </nav>
-                <nav className="corner-nav corner-nav--top-right">
-                    <a href="/online" className="nav-link font-nav">ONLINE</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-left">
-                    <a href="/" className="nav-link font-nav">HOME</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-right">
-                    <a href="/contact" className="nav-link font-nav">CONTACT</a>
-                </nav>
-
-                {/* Side Vertical Text */}
-                <div className="side-text side-text--left">
-                    <span className="vertical-text font-nav">BRANDING</span>
-                </div>
-                <div className="side-text side-text--right">
-                    <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
-                    <span className="vertical-text font-nav">INTERIOR</span>
-                </div>
-
-                {/* Corner Line */}
-                <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
-
-                {/* Meta Panel */}
-                <div className="meta-panel">
-                    <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
-                    <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
-                    <p className="meta-text font-nav">new desition</p>
-                    <p className="meta-text font-nav">VERSION: 1.0</p>
-                </div>
-
-                {/* CTA */}
-                <div className="cta-panel">
-                    <button onClick={handleExplore} className="cta-link font-nav">
-                        <span className="cta-text">EXPLORE</span>
-                        <span className="cta-line" aria-hidden="true" />
-                    </button>
-                </div>
-
-                {/* Section Content */}
                 <div className="section-content">
                     <header className="section-header">
                         <span className="section-label font-nav">THE K.S.A.R. ALGORITHM / PHASE 01</span>
@@ -279,55 +263,6 @@ export default function ProfilePage() {
 
             {/* === SCREEN 3: K.S.A.R. CORE PROTOCOL === */}
             <section className="profile-section profile-section--protocol" id="section-3">
-                {/* Corner Crosshairs */}
-                <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
-
-                {/* Corner Navigation */}
-                <nav className="corner-nav corner-nav--top-left">
-                    <a href="/projects" className="nav-link font-nav">PROJECTS</a>
-                </nav>
-                <nav className="corner-nav corner-nav--top-right">
-                    <a href="/online" className="nav-link font-nav">ONLINE</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-left">
-                    <a href="/profile" className="nav-link font-nav">PROFILE</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-right">
-                    <a href="/contact" className="nav-link font-nav">CONTACT</a>
-                </nav>
-
-                {/* Side Vertical Text */}
-                <div className="side-text side-text--left">
-                    <span className="vertical-text font-nav">BRANDING</span>
-                </div>
-                <div className="side-text side-text--right">
-                    <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
-                    <span className="vertical-text font-nav">INTERIOR</span>
-                </div>
-
-                {/* Corner Line */}
-                <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
-
-                {/* Meta Panel */}
-                <div className="meta-panel">
-                    <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
-                    <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
-                    <p className="meta-text font-nav">new desition</p>
-                    <p className="meta-text font-nav">VERSION: 1.0</p>
-                </div>
-
-                {/* CTA */}
-                <div className="cta-panel">
-                    <button onClick={handleExplore} className="cta-link font-nav">
-                        <span className="cta-text">EXPLORE</span>
-                        <span className="cta-line" aria-hidden="true" />
-                    </button>
-                </div>
-
-                {/* Section Content - K.S.A.R. Protocol */}
                 <div className="section-content section-content--protocol">
                     <header className="section-header">
                         <span className="section-label font-nav">// K.S.A.R. CORE PROTOCOL:</span>
@@ -375,55 +310,6 @@ export default function ProfilePage() {
 
             {/* === SCREEN 4: SERVICES === */}
             <section className="profile-section profile-section--services" id="section-4">
-                {/* Corner Crosshairs */}
-                <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
-
-                {/* Corner Navigation */}
-                <nav className="corner-nav corner-nav--top-left">
-                    <a href="/projects" className="nav-link font-nav">PROJECTS</a>
-                </nav>
-                <nav className="corner-nav corner-nav--top-right">
-                    <a href="/online" className="nav-link font-nav">ONLINE</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-left">
-                    <a href="/profile" className="nav-link font-nav">PROFILE</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-right">
-                    <a href="/contact" className="nav-link font-nav">CONTACT</a>
-                </nav>
-
-                {/* Side Vertical Text */}
-                <div className="side-text side-text--left">
-                    <span className="vertical-text font-nav">BRANDING</span>
-                </div>
-                <div className="side-text side-text--right">
-                    <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
-                    <span className="vertical-text font-nav">INTERIOR</span>
-                </div>
-
-                {/* Corner Line */}
-                <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
-
-                {/* Meta Panel */}
-                <div className="meta-panel">
-                    <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
-                    <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
-                    <p className="meta-text font-nav">new desition</p>
-                    <p className="meta-text font-nav">VERSION: 1.0</p>
-                </div>
-
-                {/* CTA */}
-                <div className="cta-panel">
-                    <button onClick={handleExplore} className="cta-link font-nav">
-                        <span className="cta-text">EXPLORE</span>
-                        <span className="cta-line" aria-hidden="true" />
-                    </button>
-                </div>
-
-                {/* Section Content - Services Grid */}
                 <div className="section-content section-content--services">
                     <div className="services-grid">
                         {/* Service 1: Brand Identity System */}
@@ -470,54 +356,6 @@ export default function ProfilePage() {
 
             {/* === SCREEN 5: CONTACT CTA === */}
             <section className="profile-section profile-section--contact" id="section-5">
-                {/* Corner Crosshairs */}
-                <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
-                <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
-
-                {/* Corner Navigation */}
-                <nav className="corner-nav corner-nav--top-left">
-                    <a href="/projects" className="nav-link font-nav">PROJECTS</a>
-                </nav>
-                <nav className="corner-nav corner-nav--top-right">
-                    <a href="/online" className="nav-link font-nav">ONLINE</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-left">
-                    <a href="/profile" className="nav-link font-nav">PROFILE</a>
-                </nav>
-                <nav className="corner-nav corner-nav--bottom-right">
-                    <a href="/contact" className="nav-link font-nav">CONTACT</a>
-                </nav>
-
-                {/* Side Vertical Text */}
-                <div className="side-text side-text--left">
-                    <span className="vertical-text font-nav">BRANDING</span>
-                </div>
-                <div className="side-text side-text--right">
-                    <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
-                    <span className="vertical-text font-nav">INTERIOR</span>
-                </div>
-
-                {/* Corner Line */}
-                <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
-
-                {/* Meta Panel */}
-                <div className="meta-panel">
-                    <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
-                    <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
-                    <p className="meta-text font-nav">new desition</p>
-                    <p className="meta-text font-nav">VERSION: 1.0</p>
-                </div>
-
-                {/* CTA - Arrow Up (back to top) */}
-                <div className="cta-panel">
-                    <button onClick={() => scrollToSection(0)} className="cta-link cta-link--arrow font-nav">
-                        <span className="cta-arrow" aria-hidden="true">↑</span>
-                    </button>
-                </div>
-
-                {/* Section Content - Contact CTA */}
                 <div className="section-content section-content--contact">
                     <header className="contact-header">
                         <span className="contact-label font-nav">// READY TO INITIALIZE?</span>

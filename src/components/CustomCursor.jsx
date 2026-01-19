@@ -42,7 +42,7 @@ function CustomCursor() {
 
         // Smooth follow animation
         const animate = () => {
-            const ease = 0.03
+            const ease = 0.06  // 2x faster (was 0.03)
             cursorX += (mouseX - cursorX) * ease
             cursorY += (mouseY - cursorY) * ease
 
