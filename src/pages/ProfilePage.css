@@ -451,6 +451,66 @@
 }
 
 /* ============================================
+   CONTACT SECTION (Screen 5)
+   ============================================ */
+.profile-section--contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+}
+
+.section-content--contact {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.contact-label {
+    font-family: 'Manrope Bold', 'Manrope', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    /* font-style: italic; */
+}
+
+.contact-email {
+    font-family: 'Manrope Bold', 'Manrope', sans-serif;
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-decoration: none;
+    transition: color var(--transition-fast), opacity 0.3s ease;
+}
+
+.contact-email:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Arrow CTA */
+.cta-link--arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cta-arrow {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-link--arrow:hover .cta-arrow {
+    color: #fff;
+    transform: translateY(-4px);
+}
+
+/* ============================================
    RESPONSIVE ADJUSTMENTS
    ============================================ */
 
@@ -577,5 +637,14 @@
 
     .section-paragraph {
         font-size: 0.875rem;
+    }
+
+    /* Contact email - smaller on phones */
+    .contact-email {
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
+    }
+
+    .contact-label {
+        font-size: 0.6rem;
     }
 }

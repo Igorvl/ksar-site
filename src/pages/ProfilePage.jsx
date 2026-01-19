@@ -332,6 +332,67 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </section>
+
+            {/* === SCREEN 5: CONTACT CTA === */}
+            <section className="profile-section profile-section--contact" id="section-5">
+                {/* Corner Crosshairs */}
+                <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
+                <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
+                <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
+                <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
+
+                {/* Corner Navigation */}
+                <nav className="corner-nav corner-nav--top-left">
+                    <a href="/projects" className="nav-link font-nav">PROJECTS</a>
+                </nav>
+                <nav className="corner-nav corner-nav--top-right">
+                    <a href="/online" className="nav-link font-nav">ONLINE</a>
+                </nav>
+                <nav className="corner-nav corner-nav--bottom-left">
+                    <a href="/profile" className="nav-link font-nav">PROFILE</a>
+                </nav>
+                <nav className="corner-nav corner-nav--bottom-right">
+                    <a href="/contact" className="nav-link font-nav">CONTACT</a>
+                </nav>
+
+                {/* Side Vertical Text */}
+                <div className="side-text side-text--left">
+                    <span className="vertical-text font-nav">BRANDING</span>
+                </div>
+                <div className="side-text side-text--right">
+                    <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
+                    <span className="vertical-text font-nav">INTERIOR</span>
+                </div>
+
+                {/* Corner Line */}
+                <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
+
+                {/* Meta Panel */}
+                <div className="meta-panel">
+                    <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
+                    <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
+                    <p className="meta-text font-nav">new desition</p>
+                    <p className="meta-text font-nav">VERSION: 1.0</p>
+                </div>
+
+                {/* CTA - Arrow Up (back to top) */}
+                <div className="cta-panel">
+                    <a href="#hero" className="cta-link cta-link--arrow font-nav">
+                        <span className="cta-arrow" aria-hidden="true">↑</span>
+                    </a>
+                </div>
+
+                {/* Section Content - Contact CTA */}
+                <div className="section-content section-content--contact">
+                    <header className="contact-header">
+                        <span className="contact-label font-nav">// READY TO INITIALIZE?</span>
+                    </header>
+
+                    <a href="mailto:init@ksar.me" className="contact-email font-hero">
+                        INIT@KSAR.ME
+                    </a>
+                </div>
+            </section>
         </main>
     )
 }

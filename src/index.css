@@ -28,6 +28,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Manrope Bold';
+  src: url('/fonts/Manrope-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* === CSS VARIABLES === */
 :root {
   /* Colors */
