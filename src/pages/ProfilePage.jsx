@@ -1,17 +1,148 @@
 /**
  * ProfilePage - Profile/About Page
- * Two-screen layout with scroll
+ * Five-screen layout with snap scroll
  * Each section has its own UI elements (crosshairs, nav, texts)
+ * Snap scroll: auto-scroll to next section on 5% scroll threshold
  */
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import './ProfilePage.css'
 import ContactModal from '../components/ContactModal'
 
+// Section IDs in order
+const SECTIONS = ['hero', 'section-2', 'section-3', 'section-4', 'section-5']
+
 export default function ProfilePage() {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [currentSection, setCurrentSection] = useState(0)
+    const containerRef = useRef(null)
+    const isScrolling = useRef(false)
+    const scrollStartY = useRef(0)
+
+    // Premium easing function - easeInOutQuart for smooth acceleration/deceleration
+    const easeInOutQuart = (t) => {
+        return t < 0.5
+            ? 8 * t * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 4) / 2
+    }
+
+    // Custom smooth scroll with premium easing
+    const smoothScrollTo = useCallback((targetY, duration = 1200) => {
+        const startY = window.scrollY
+        const distance = targetY - startY
+        let startTime = null
+
+        const animation = (currentTime) => {
+            if (!startTime) startTime = currentTime
+            const elapsed = currentTime - startTime
+            const progress = Math.min(elapsed / duration, 1)
+            const easedProgress = easeInOutQuart(progress)
+
+            window.scrollTo(0, startY + distance * easedProgress)
+
+            if (progress < 1) {
+                requestAnimationFrame(animation)
+            } else {
+                isScrolling.current = false
+            }
+        }
+
+        requestAnimationFrame(animation)
+    }, [])
+
+    // Scroll to specific section
+    const scrollToSection = useCallback((index) => {
+        if (index < 0 || index >= SECTIONS.length) return
+        if (isScrolling.current) return
+
+        const sectionId = SECTIONS[index]
+        const section = document.getElementById(sectionId)
+        if (!section) return
+
+        isScrolling.current = true
+        setCurrentSection(index)
+
+        // Calculate target scroll position
+        const targetY = section.offsetTop
+
+        // Use premium smooth scroll (1.8 seconds duration)
+        smoothScrollTo(targetY, 1800)
+    }, [smoothScrollTo])
+
+    // Handle wheel scroll with 5% threshold
+    useEffect(() => {
+        const container = containerRef.current
+        if (!container) return
+
+        const handleWheel = (e) => {
+            if (isScrolling.current) {
+                e.preventDefault()
+                return
+            }
+
+            const viewportHeight = window.innerHeight
+            const threshold = viewportHeight * 0.05 // 5% threshold
+
+            // Scroll down
+            if (e.deltaY > 0 && currentSection < SECTIONS.length - 1) {
+                if (Math.abs(e.deltaY) > threshold || e.deltaY > 50) {
+                    e.preventDefault()
+                    scrollToSection(currentSection + 1)
+                }
+            }
+            // Scroll up
+            else if (e.deltaY < 0 && currentSection > 0) {
+                if (Math.abs(e.deltaY) > threshold || Math.abs(e.deltaY) > 50) {
+                    e.preventDefault()
+                    scrollToSection(currentSection - 1)
+                }
+            }
+        }
+
+        // Touch handling for mobile
+        const handleTouchStart = (e) => {
+            scrollStartY.current = e.touches[0].clientY
+        }
+
+        const handleTouchMove = (e) => {
+            if (isScrolling.current) {
+                e.preventDefault()
+                return
+            }
+
+            const touchY = e.touches[0].clientY
+            const diff = scrollStartY.current - touchY
+            const viewportHeight = window.innerHeight
+            const threshold = viewportHeight * 0.05
+
+            if (Math.abs(diff) > threshold) {
+                e.preventDefault()
+                if (diff > 0 && currentSection < SECTIONS.length - 1) {
+                    scrollToSection(currentSection + 1)
+                } else if (diff < 0 && currentSection > 0) {
+                    scrollToSection(currentSection - 1)
+                }
+                scrollStartY.current = touchY
+            }
+        }
+
+        container.addEventListener('wheel', handleWheel, { passive: false })
+        container.addEventListener('touchstart', handleTouchStart, { passive: true })
+        container.addEventListener('touchmove', handleTouchMove, { passive: false })
+
+        return () => {
+            container.removeEventListener('wheel', handleWheel)
+            container.removeEventListener('touchstart', handleTouchStart)
+            container.removeEventListener('touchmove', handleTouchMove)
+        }
+    }, [currentSection, scrollToSection])
+
+    // Handle Explore button click
+    const handleExplore = () => {
+        scrollToSection(currentSection + 1)
+    }
 
     return (
-        <main className="profile-page">
+        <main className="profile-page" ref={containerRef}>
             {/* === SCREEN 1: HERO === */}
             <section className="profile-section profile-section--hero" id="hero">
                 {/* Background Image */}
@@ -62,10 +193,10 @@ export default function ProfilePage() {
 
                 {/* CTA */}
                 <div className="cta-panel">
-                    <a href="#section-2" className="cta-link font-nav">
+                    <button onClick={handleExplore} className="cta-link font-nav">
                         <span className="cta-text">EXPLORE</span>
                         <span className="cta-line" aria-hidden="true" />
-                    </a>
+                    </button>
                 </div>
             </section>
 
@@ -113,10 +244,10 @@ export default function ProfilePage() {
 
                 {/* CTA */}
                 <div className="cta-panel">
-                    <a href="#section-3" className="cta-link font-nav">
+                    <button onClick={handleExplore} className="cta-link font-nav">
                         <span className="cta-text">EXPLORE</span>
                         <span className="cta-line" aria-hidden="true" />
-                    </a>
+                    </button>
                 </div>
 
                 {/* Section Content */}
@@ -190,10 +321,10 @@ export default function ProfilePage() {
 
                 {/* CTA */}
                 <div className="cta-panel">
-                    <a href="#section-4" className="cta-link font-nav">
+                    <button onClick={handleExplore} className="cta-link font-nav">
                         <span className="cta-text">EXPLORE</span>
                         <span className="cta-line" aria-hidden="true" />
-                    </a>
+                    </button>
                 </div>
 
                 {/* Section Content - K.S.A.R. Protocol */}
@@ -286,10 +417,10 @@ export default function ProfilePage() {
 
                 {/* CTA */}
                 <div className="cta-panel">
-                    <a href="#section-5" className="cta-link font-nav">
+                    <button onClick={handleExplore} className="cta-link font-nav">
                         <span className="cta-text">EXPLORE</span>
                         <span className="cta-line" aria-hidden="true" />
-                    </a>
+                    </button>
                 </div>
 
                 {/* Section Content - Services Grid */}
@@ -381,9 +512,9 @@ export default function ProfilePage() {
 
                 {/* CTA - Arrow Up (back to top) */}
                 <div className="cta-panel">
-                    <a href="#hero" className="cta-link cta-link--arrow font-nav">
+                    <button onClick={() => scrollToSection(0)} className="cta-link cta-link--arrow font-nav">
                         <span className="cta-arrow" aria-hidden="true">↑</span>
-                    </a>
+                    </button>
                 </div>
 
                 {/* Section Content - Contact CTA */}

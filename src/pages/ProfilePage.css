@@ -77,6 +77,62 @@
 /* ============================================
    CORNER CROSSHAIRS (SVG) - Per Section
    ============================================ */
+@keyframes crosshairPulseTopLeft {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 0.7;
+    }
+}
+
+@keyframes crosshairPulseTopRight {
+
+    0%,
+    100% {
+        transform: translate(50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(50%, -50%) scale(1.15);
+        opacity: 0.7;
+    }
+}
+
+@keyframes crosshairPulseBottomLeft {
+
+    0%,
+    100% {
+        transform: translate(-50%, 50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, 50%) scale(1.15);
+        opacity: 0.7;
+    }
+}
+
+@keyframes crosshairPulseBottomRight {
+
+    0%,
+    100% {
+        transform: translate(50%, 50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(50%, 50%) scale(1.15);
+        opacity: 0.7;
+    }
+}
+
 .profile-section .crosshair {
     position: absolute;
     width: 90px;
@@ -90,24 +146,28 @@
     top: 4.17vw;
     left: 4.17vw;
     transform: translate(-50%, -50%);
+    animation: crosshairPulseTopLeft 5s ease-in-out infinite;
 }
 
 .profile-section .crosshair--top-right {
     top: 4.17vw;
     right: 4.17vw;
     transform: translate(50%, -50%);
+    animation: crosshairPulseTopRight 5s ease-in-out infinite;
 }
 
 .profile-section .crosshair--bottom-left {
     bottom: 4.17vw;
     left: 4.17vw;
     transform: translate(-50%, 50%);
+    animation: crosshairPulseBottomLeft 5s ease-in-out infinite;
 }
 
 .profile-section .crosshair--bottom-right {
     bottom: 4.17vw;
     right: 4.17vw;
     transform: translate(50%, 50%);
+    animation: crosshairPulseBottomRight 5s ease-in-out infinite;
 }
 
 /* ============================================
@@ -276,6 +336,9 @@
     gap: 0.5rem;
     color: rgba(255, 255, 255, 0.7);
     transition: color var(--transition-fast);
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .profile-section .cta-link:hover {
