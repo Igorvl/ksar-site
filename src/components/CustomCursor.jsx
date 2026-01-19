@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useCursor } from '../context/CursorContext'
 import './CustomCursor.css'
 
 function CustomCursor() {
     const cursorRef = useRef(null)
     const cursorDotRef = useRef(null)
     const [isHovering, setIsHovering] = useState(false)
+    const { cursorText, cursorVariant } = useCursor()
 
     useEffect(() => {
         const cursor = cursorRef.current
@@ -70,8 +72,12 @@ function CustomCursor() {
         <>
             <div
                 ref={cursorRef}
-                className={`custom-cursor ${isHovering ? 'hovering' : ''}`}
-            />
+                className={`custom-cursor ${isHovering ? 'hovering' : ''} ${cursorText ? 'has-text' : ''}`}
+            >
+                {cursorText && (
+                    <span className="cursor-text">{cursorText}</span>
+                )}
+            </div>
             <div
                 ref={cursorDotRef}
                 className="custom-cursor-dot"

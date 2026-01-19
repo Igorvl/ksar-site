@@ -7,6 +7,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './ProfilePage.css'
 import ContactModal from '../components/ContactModal'
+import { useCursor } from '../context/CursorContext'
 
 // Section IDs in order
 const SECTIONS = ['hero', 'section-2', 'section-3', 'section-4', 'section-5']
@@ -26,9 +27,27 @@ export default function ProfilePage() {
     const containerRef = useRef(null)
     const isScrolling = useRef(false)
     const scrollStartY = useRef(0)
+    const { setCursorText } = useCursor()
 
     // Get current side text based on section
     const sideText = SIDE_TEXT_CONFIG[currentSection] || SIDE_TEXT_CONFIG[0]
+
+    // Update cursor text based on current section
+    // Screens 1-4: show "SCROLL", Screen 5: hide text
+    useEffect(() => {
+        if (currentSection < 4) {
+            setCursorText('SCROLL')
+        } else {
+            setCursorText('')
+        }
+    }, [currentSection, setCursorText])
+
+    // Clear cursor text when leaving the page
+    useEffect(() => {
+        return () => {
+            setCursorText('')
+        }
+    }, [setCursorText])
 
     // Premium easing function - easeInOutQuart for smooth acceleration/deceleration
     const easeInOutQuart = (t) => {
@@ -209,7 +228,12 @@ export default function ProfilePage() {
             <div className="fixed-cta-panel">
                 {isLastSection ? (
                     <button onClick={() => scrollToSection(0)} className="cta-link cta-link--arrow font-nav">
-                        <span className="cta-arrow" aria-hidden="true">↑</span>
+                        <svg className="cta-arrow-svg" viewBox="0 0 24 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            {/* Arrow head (chevron) */}
+                            <path d="M12 2L4 12M12 2L20 12" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+                            {/* Vertical line */}
+                            <line x1="12" y1="12" x2="12" y2="78" stroke="currentColor" strokeWidth="1" />
+                        </svg>
                     </button>
                 ) : (
                     <button onClick={handleExplore} className="cta-link font-nav">

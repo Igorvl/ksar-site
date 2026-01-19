@@ -366,22 +366,42 @@
     background: rgba(255, 255, 255, 0.5);
 }
 
-/* Arrow CTA */
+/* Arrow CTA - SVG style */
 .cta-link--arrow {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.cta-arrow {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.5);
-    transition: color 0.3s ease, transform 0.3s ease;
+/* Pulsing animation for arrow (like crosshairs) */
+@keyframes arrowPulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
 }
 
-.cta-link--arrow:hover .cta-arrow {
+/* SVG Arrow with chevron and long vertical line */
+.cta-arrow-svg {
+    width: 24px;
+    height: 80px;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.3s ease;
+    animation: arrowPulse 2.5s ease-in-out infinite;
+}
+
+.cta-link--arrow:hover .cta-arrow-svg {
     color: #fff;
-    transform: translateY(-4px);
+    animation: none;
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 /* ============================================

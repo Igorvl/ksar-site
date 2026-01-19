@@ -7,6 +7,7 @@
  */
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { CursorProvider } from './context/CursorContext'
 import HomePage from './pages/HomePage'
 import ProfilePage from './pages/ProfilePage'
 import CrystalDemo from './pages/CrystalDemo'
@@ -15,14 +16,16 @@ import './App.css'
 
 function App() {
   return (
-    <BrowserRouter>
-      <CustomCursor />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/crystal" element={<CrystalDemo />} />
-      </Routes>
-    </BrowserRouter>
+    <CursorProvider>
+      <BrowserRouter>
+        <CustomCursor />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/crystal" element={<CrystalDemo />} />
+        </Routes>
+      </BrowserRouter>
+    </CursorProvider>
   )
 }
 
