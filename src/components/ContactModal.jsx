@@ -6,6 +6,15 @@
 import { useState } from 'react'
 import './ContactModal.css'
 
+const projectTypes = [
+    { value: '', label: '—' },
+    { value: 'branding', label: 'BRANDING' },
+    { value: 'interior', label: 'INTERIOR DESIGN' },
+    { value: 'web', label: 'WEB DESIGN' },
+    { value: '3d', label: '3D VISUALIZATION' },
+    { value: 'other', label: 'OTHER' }
+]
+
 export default function ContactModal({ isOpen, onClose }) {
     const [formData, setFormData] = useState({
         name: '',
@@ -14,19 +23,52 @@ export default function ContactModal({ isOpen, onClose }) {
         budget: '',
         message: ''
     })
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    const [errors, setErrors] = useState({})
 
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData(prev => ({ ...prev, [name]: value }))
+        // Clear error when user types
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: '' }))
+        }
+    }
+
+    const handleSelectOption = (value) => {
+        setFormData(prev => ({ ...prev, projectType: value }))
+        setIsDropdownOpen(false)
+        if (errors.projectType) {
+            setErrors(prev => ({ ...prev, projectType: '' }))
+        }
+    }
+
+    const validateForm = () => {
+        const newErrors = {}
+        if (!formData.name.trim()) {
+            newErrors.name = '// FIELD REQUIRED'
+        }
+        if (!formData.projectType) {
+            newErrors.projectType = '// SELECT PROJECT TYPE'
+        }
+        if (!formData.message.trim()) {
+            newErrors.message = '// MESSAGE REQUIRED'
+        }
+        setErrors(newErrors)
+        return Object.keys(newErrors).length === 0
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // Handle form submission here
-        console.log('Form submitted:', formData)
-        // Could send to API or email service
-        onClose()
+        if (validateForm()) {
+            // Handle form submission here
+            console.log('Form submitted:', formData)
+            // Could send to API or email service
+            onClose()
+        }
     }
+
+    const selectedLabel = projectTypes.find(t => t.value === formData.projectType)?.label || '—'
 
     if (!isOpen) return null
 
@@ -65,8 +107,8 @@ export default function ContactModal({ isOpen, onClose }) {
                     <div className="modal-form-container">
                         <h3 className="modal-form-title font-hero">// START NEW PROTOCOL</h3>
 
-                        <form className="modal-form" onSubmit={handleSubmit}>
-                            <div className="form-field">
+                        <form className="modal-form" onSubmit={handleSubmit} noValidate>
+                            <div className={`form-field ${errors.name ? 'form-field--error' : ''}`}>
                                 <label className="form-label font-nav">CODENAME (NAME)</label>
                                 <input
                                     type="text"
@@ -74,29 +116,37 @@ export default function ContactModal({ isOpen, onClose }) {
                                     value={formData.name}
                                     onChange={handleChange}
                                     className="form-input font-nav"
-                                    required
                                 />
+                                {errors.name && <span className="form-error font-nav">{errors.name}</span>}
                             </div>
 
-                            <div className="form-field">
+                            {/* Custom Dropdown */}
+                            <div className={`form-field ${errors.projectType ? 'form-field--error' : ''}`}>
                                 <label className="form-label font-nav">TARGET (PROJECT TYPE)</label>
-                                <div className="form-select-wrapper">
-                                    <select
-                                        name="projectType"
-                                        value={formData.projectType}
-                                        onChange={handleChange}
-                                        className="form-select font-nav"
-                                        required
+                                <div className="custom-dropdown">
+                                    <button
+                                        type="button"
+                                        className="custom-dropdown-trigger font-nav"
+                                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                     >
-                                        <option value="">—</option>
-                                        <option value="branding">BRANDING</option>
-                                        <option value="interior">INTERIOR DESIGN</option>
-                                        <option value="web">WEB DESIGN</option>
-                                        <option value="3d">3D VISUALIZATION</option>
-                                        <option value="other">OTHER</option>
-                                    </select>
-                                    <span className="form-select-indicator font-nav">[ SELECT ]</span>
+                                        <span>{selectedLabel}</span>
+                                        <span className="custom-dropdown-indicator">[ SELECT ]</span>
+                                    </button>
+                                    {isDropdownOpen && (
+                                        <ul className="custom-dropdown-menu">
+                                            {projectTypes.map(type => (
+                                                <li
+                                                    key={type.value}
+                                                    className={`custom-dropdown-item font-nav ${formData.projectType === type.value ? 'active' : ''}`}
+                                                    onClick={() => handleSelectOption(type.value)}
+                                                >
+                                                    {type.label}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </div>
+                                {errors.projectType && <span className="form-error font-nav">{errors.projectType}</span>}
                             </div>
 
                             <div className="form-field">
@@ -123,7 +173,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                 />
                             </div>
 
-                            <div className="form-field form-field--textarea">
+                            <div className={`form-field form-field--textarea ${errors.message ? 'form-field--error' : ''}`}>
                                 <label className="form-label font-nav">TRANSMISSION (MESSAGE)</label>
                                 <textarea
                                     name="message"
@@ -131,8 +181,8 @@ export default function ContactModal({ isOpen, onClose }) {
                                     onChange={handleChange}
                                     className="form-textarea font-nav"
                                     rows={3}
-                                    required
                                 />
+                                {errors.message && <span className="form-error font-nav">{errors.message}</span>}
                             </div>
 
                             <button type="submit" className="form-submit font-nav">
