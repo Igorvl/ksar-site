@@ -237,6 +237,101 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </section>
+
+            {/* === SCREEN 4: SERVICES === */}
+            <section className="profile-section profile-section--services" id="section-4">
+                {/* Corner Crosshairs */}
+                <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
+                <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
+                <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
+                <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
+
+                {/* Corner Navigation */}
+                <nav className="corner-nav corner-nav--top-left">
+                    <a href="/projects" className="nav-link font-nav">PROJECTS</a>
+                </nav>
+                <nav className="corner-nav corner-nav--top-right">
+                    <a href="/online" className="nav-link font-nav">ONLINE</a>
+                </nav>
+                <nav className="corner-nav corner-nav--bottom-left">
+                    <a href="/profile" className="nav-link font-nav">PROFILE</a>
+                </nav>
+                <nav className="corner-nav corner-nav--bottom-right">
+                    <a href="/contact" className="nav-link font-nav">CONTACT</a>
+                </nav>
+
+                {/* Side Vertical Text */}
+                <div className="side-text side-text--left">
+                    <span className="vertical-text font-nav">BRANDING</span>
+                </div>
+                <div className="side-text side-text--right">
+                    <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
+                    <span className="vertical-text font-nav">INTERIOR</span>
+                </div>
+
+                {/* Corner Line */}
+                <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
+
+                {/* Meta Panel */}
+                <div className="meta-panel">
+                    <img src="/lineV.svg" className="line-horizontal" aria-hidden="true" alt="" />
+                    <p className="meta-text font-nav">LOC: 34.05° N, 118.24° W</p>
+                    <p className="meta-text font-nav">new desition</p>
+                    <p className="meta-text font-nav">VERSION: 1.0</p>
+                </div>
+
+                {/* CTA */}
+                <div className="cta-panel">
+                    <a href="#section-5" className="cta-link font-nav">
+                        <span className="cta-text">EXPLORE</span>
+                        <span className="cta-line" aria-hidden="true" />
+                    </a>
+                </div>
+
+                {/* Section Content - Services Grid */}
+                <div className="section-content section-content--services">
+                    <div className="services-grid">
+                        {/* Service 1: Brand Identity System */}
+                        <article className="service-card">
+                            <header className="service-header">
+                                <span className="service-label font-nav">BRAND DNA SYNTHESIS / PHASE 01</span>
+                            </header>
+                            <h3 className="service-title font-hero">
+                                Brand Identity<br />System
+                            </h3>
+                            <p className="service-description font-body">
+                                High-end logo design, typography, and visual systems. Creating adaptive identities designed to dominate any medium.
+                            </p>
+                        </article>
+
+                        {/* Service 2: Spatial Concepts */}
+                        <article className="service-card">
+                            <header className="service-header">
+                                <span className="service-label font-nav">CONCEPTS / PHASE 02</span>
+                            </header>
+                            <h3 className="service-title font-hero">
+                                Spatial<br />Concepts
+                            </h3>
+                            <p className="service-description font-body">
+                                Beyond standard mockups. Atmospheric 3D-visualization of your future space. We show how the brand lives in the real world before construction begins.
+                            </p>
+                        </article>
+
+                        {/* Service 3: Digital Experience */}
+                        <article className="service-card">
+                            <header className="service-header">
+                                <span className="service-label font-nav">DIGITAL / PHASE 03</span>
+                            </header>
+                            <h3 className="service-title font-hero">
+                                Digital<br />Experience
+                            </h3>
+                            <p className="service-description font-body">
+                                Web-design and UI/UX that continues the storytelling. Translating physical atmosphere into the browser.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
         </main>
     )
 }

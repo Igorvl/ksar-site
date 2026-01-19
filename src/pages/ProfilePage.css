@@ -400,6 +400,57 @@
 }
 
 /* ============================================
+   SERVICES SECTION (Screen 4)
+   ============================================ */
+.profile-section--services {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+}
+
+/* Services Grid - Three columns */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.service-label {
+    font-family: var(--font-nav);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.5rem;
+}
+
+.service-title {
+    font-family: var(--font-hero);
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0;
+}
+
+.service-description {
+    font-family: var(--font-body, 'Manrope', sans-serif);
+    font-size: clamp(0.75rem, 1vw, 0.875rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+}
+
+/* ============================================
    RESPONSIVE ADJUSTMENTS
    ============================================ */
 
@@ -468,6 +519,16 @@
 
     .protocol-description {
         max-width: 100%;
+    }
+
+    /* Services grid - stack on tablets */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .service-title {
+        font-size: clamp(1.25rem, 5vw, 1.75rem);
     }
 }
 
