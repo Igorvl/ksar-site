@@ -1,18 +1,39 @@
 /**
  * ProfilePage Styles
- * Same as HomePage but with background image
+ * Two-screen layout with scroll
+ * Each section has its own UI elements
+ * 12-column grid, responsive (>=0.5% market share)
  */
 
-/* === PAGE CONTAINER === */
+/* === PAGE CONTAINER (Scrollable) === */
 .profile-page {
     position: relative;
-    min-height: 100vh;
     width: 100vw;
     background-color: #000;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* ============================================
+   SECTION BASE STYLES
+   ============================================ */
+.profile-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
     overflow: hidden;
 }
 
-/* === BACKGROUND IMAGE === */
+/* ============================================
+   SCREEN 1: HERO SECTION
+   ============================================ */
+.profile-section--hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Background Image - 90% x 90% centered */
 .profile-bg {
     position: absolute;
     top: 50%;
@@ -32,22 +53,32 @@
     opacity: 0.85;
 }
 
-/* Dark gradient overlay for text readability */
-.profile-bg::after {
-    content: '';
+/* Dark gradient overlay */
+.profile-bg-overlay {
     position: absolute;
     inset: 0;
     background:
         linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, transparent 30%, transparent 70%, rgba(0, 0, 0, 0.4) 100%),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, transparent 30%, transparent 70%, rgba(0, 0, 0, 0.3) 100%);
     pointer-events: none;
+    z-index: 1;
 }
 
 /* ============================================
-   CORNER CROSSHAIRS (SVG)
+   SCREEN 2: ALGORITHM SECTION
    ============================================ */
-.profile-page .crosshair {
-    position: fixed;
+.profile-section--algorithm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+}
+
+/* ============================================
+   CORNER CROSSHAIRS (SVG) - Per Section
+   ============================================ */
+.profile-section .crosshair {
+    position: absolute;
     width: 90px;
     height: 90px;
     pointer-events: none;
@@ -55,67 +86,61 @@
     opacity: 0.5;
 }
 
-.profile-page .crosshair--top-left {
+.profile-section .crosshair--top-left {
     top: 4.17vw;
     left: 4.17vw;
     transform: translate(-50%, -50%);
 }
 
-.profile-page .crosshair--top-right {
+.profile-section .crosshair--top-right {
     top: 4.17vw;
     right: 4.17vw;
     transform: translate(50%, -50%);
 }
 
-.profile-page .crosshair--bottom-left {
+.profile-section .crosshair--bottom-left {
     bottom: 4.17vw;
     left: 4.17vw;
     transform: translate(-50%, 50%);
 }
 
-.profile-page .crosshair--bottom-right {
+.profile-section .crosshair--bottom-right {
     bottom: 4.17vw;
     right: 4.17vw;
     transform: translate(50%, 50%);
 }
 
-@media (max-width: 768px) {
-    .profile-page .crosshair {
-        display: none;
-    }
-}
-
 /* ============================================
-   CORNER NAVIGATION (Fixed Positioning)
+   CORNER NAVIGATION - Per Section
    ============================================ */
-.profile-page .corner-nav {
-    position: fixed;
+.profile-section .corner-nav {
+    position: absolute;
     z-index: 100;
 }
 
-.profile-page .corner-nav--top-left {
+.profile-section .corner-nav--top-left {
     top: 2.5rem;
     left: calc((1.5 / 12) * 100%);
 }
 
-.profile-page .corner-nav--top-right {
+.profile-section .corner-nav--top-right {
     top: 2.5rem;
     left: calc((10.5 / 12) * 100%);
     transform: translateX(-50%);
 }
 
-.profile-page .corner-nav--bottom-left {
+.profile-section .corner-nav--bottom-left {
     bottom: 2.5rem;
     left: calc((1.5 / 12) * 100%);
 }
 
-.profile-page .corner-nav--bottom-right {
+.profile-section .corner-nav--bottom-right {
     bottom: 2.5rem;
     left: calc((10.5 / 12) * 100%);
     transform: translateX(-50%);
 }
 
-.profile-page .nav-link {
+.profile-section .nav-link {
     font-family: var(--font-nav);
     font-size: 0.7rem;
     letter-spacing: 0.15em;
@@ -124,30 +149,29 @@
     transition: color var(--transition-fast);
 }
 
-.profile-page .nav-link:hover,
-.profile-page .nav-link--active {
+.profile-section .nav-link:hover {
     color: #fff;
 }
 
 /* ============================================
-   SIDE VERTICAL TEXT (Fixed Positioning)
+   SIDE VERTICAL TEXT - Per Section
    ============================================ */
-.profile-page .side-text--left {
-    position: fixed;
+.profile-section .side-text--left {
+    position: absolute;
     top: 3.4rem;
     left: calc((3 / 12) * 100%);
     transform: translateX(-100%);
     z-index: 50;
 }
 
-.profile-page .side-text--right {
-    position: fixed;
+.profile-section .side-text--right {
+    position: absolute;
     bottom: 2.5rem;
     left: calc((9 / 12) * 100%);
     z-index: 50;
 }
 
-.profile-page .vertical-text {
+.profile-section .vertical-text {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     font-family: var(--font-label);
@@ -158,16 +182,16 @@
     color: rgba(255, 255, 255, 0.5);
 }
 
-.profile-page .side-text--left .vertical-text {
+.profile-section .side-text--left .vertical-text {
     transform: rotate(180deg);
 }
 
-.profile-page .side-text--right .vertical-text {
+.profile-section .side-text--right .vertical-text {
     transform: rotate(180deg);
 }
 
-/* Vertical line above ARCHITECT */
-.profile-page .line-vertical {
+/* Vertical line */
+.profile-section .line-vertical {
     position: absolute;
     top: auto;
     left: -50%;
@@ -179,10 +203,10 @@
 }
 
 /* Horizontal line from left edge */
-.profile-page .line-horizontal {
-    position: fixed;
+.profile-section .line-horizontal {
+    position: absolute;
     bottom: calc(10% + 3.3rem);
-    left: -1vh;
+    left: -45vh;
     transform: rotate(90deg);
     transform-origin: bottom left;
     width: 3vh;
@@ -194,13 +218,13 @@
 }
 
 /* Corner line next to BRANDING */
-.profile-page .corner-line {
-    position: fixed;
+.profile-section .corner-line {
+    position: absolute;
     pointer-events: none;
     z-index: 40;
 }
 
-.profile-page .corner-line--top {
+.profile-section .corner-line--top {
     top: 3.3rem;
     left: calc((3 / 11.5) * 100%);
     width: 58vw;
@@ -209,72 +233,10 @@
 }
 
 /* ============================================
-   HERO TITLE
+   META PANEL - Per Section
    ============================================ */
-.profile-page .hero-title {
-    position: fixed;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    pointer-events: none;
-    z-index: 5;
-}
-
-.profile-page .hero-name {
-    font-family: var(--font-hero);
-    font-size: clamp(8rem, 19vw, 22rem);
-    font-weight: 700;
-    line-height: 0.75;
-    letter-spacing: 0;
-    color: #fff;
-    text-transform: uppercase;
-    white-space: nowrap;
-    margin: 0;
-    margin-left: -7vw;
-}
-
-.profile-page .hero-name__first,
-.profile-page .hero-name__last {
-    display: block;
-}
-
-.profile-page .hero-name__first {
-    letter-spacing: -0.015em;
-}
-
-/* ============================================
-   INFO PANEL (Right Side - Fixed)
-   ============================================ */
-.profile-page .info-panel {
-    position: fixed;
-    top: 50%;
-    right: 3rem;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: right;
-    z-index: 50;
-    max-width: 300px;
-}
-
-.profile-page .info-label {
-    font-family: var(--font-nav);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.8;
-    margin: 0;
-}
-
-/* ============================================
-   META PANEL (Bottom Left - Fixed)
-   ============================================ */
-.profile-page .meta-panel {
-    position: fixed;
+.profile-section .meta-panel {
+    position: absolute;
     bottom: 10%;
     left: calc((2 / 9) * 100%);
     display: flex;
@@ -283,7 +245,7 @@
     z-index: 50;
 }
 
-.profile-page .meta-text {
+.profile-section .meta-text {
     font-family: var(--font-nav);
     font-size: 0.3rem;
     letter-spacing: 0.1em;
@@ -291,23 +253,23 @@
     margin: 0;
 }
 
-.profile-page .meta-text:last-child {
+.profile-section .meta-text:last-child {
     color: rgba(255, 255, 255, 0.3);
     margin-top: 1rem;
 }
 
 /* ============================================
-   CTA PANEL (Bottom Center - Fixed)
+   CTA PANEL - Per Section
    ============================================ */
-.profile-page .cta-panel {
-    position: fixed;
+.profile-section .cta-panel {
+    position: absolute;
     bottom: 2.5rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 50;
 }
 
-.profile-page .cta-link {
+.profile-section .cta-link {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -316,81 +278,243 @@
     transition: color var(--transition-fast);
 }
 
-.profile-page .cta-link:hover {
+.profile-section .cta-link:hover {
     color: #fff;
 }
 
-.profile-page .cta-text {
+.profile-section .cta-text {
     font-family: var(--font-nav);
     font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
 }
 
-.profile-page .cta-line {
+.profile-section .cta-line {
     width: 1px;
     height: 30px;
     background: rgba(255, 255, 255, 0.5);
 }
 
 /* ============================================
+   SECTION CONTENT (Algorithm Screen)
+   ============================================ */
+.section-content {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 calc((2 / 12) * 100%);
+    z-index: 20;
+}
+
+/* Section Label - small uppercase text */
+.section-label {
+    display: block;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2rem;
+}
+
+/* Section Title - Large headline */
+.section-title {
+    font-family: var(--font-hero);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0 0 2.5rem 0;
+}
+
+/* Section Text Container */
+.section-text {
+    max-width: 600px;
+}
+
+/* Section Paragraph */
+.section-paragraph {
+    font-family: var(--font-body, 'Manrope', sans-serif);
+    font-size: clamp(0.875rem, 1.2vw, 1rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 1.5rem 0;
+}
+
+.section-paragraph:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
+   PROTOCOL SECTION (Screen 3)
+   ============================================ */
+.profile-section--protocol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+}
+
+/* Protocol Grid - Two columns layout */
+.protocol-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.protocol-item {
+    display: grid;
+    grid-template-columns: minmax(200px, 350px) 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.protocol-title {
+    font-family: var(--font-hero);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.protocol-letter {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.protocol-description {
+    font-family: var(--font-body, 'Manrope', sans-serif);
+    font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    max-width: 450px;
+}
+
+/* ============================================
    RESPONSIVE ADJUSTMENTS
    ============================================ */
+
+/* Tablets & Small Laptops (769px - 1200px) */
 @media (max-width: 1200px) {
-    .profile-page .hero-name {
-        font-size: clamp(5rem, 15vw, 12rem);
+    .section-content {
+        padding: 0 calc((1.5 / 12) * 100%);
     }
 
-    .profile-page .info-panel,
-    .profile-page .meta-panel {
+    .section-title {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .profile-section .meta-panel {
         display: none;
     }
 }
 
+/* Tablets (576px - 768px) */
 @media (max-width: 768px) {
+    .profile-section .crosshair {
+        display: none;
+    }
 
-    .profile-page .corner-nav--top-left,
-    .profile-page .corner-nav--bottom-left {
+    .profile-section .corner-nav--top-left,
+    .profile-section .corner-nav--bottom-left {
         left: 1.5rem;
     }
 
-    .profile-page .corner-nav--top-right,
-    .profile-page .corner-nav--bottom-right {
+    .profile-section .corner-nav--top-right,
+    .profile-section .corner-nav--bottom-right {
+        left: auto;
         right: 1.5rem;
+        transform: none;
     }
 
-    .profile-page .hero-name {
-        font-size: clamp(3rem, 12vw, 6rem);
-    }
-
-    .profile-page .side-text {
+    .profile-section .side-text {
         display: none;
+    }
+
+    .profile-section .corner-line {
+        display: none;
+    }
+
+    .profile-section .line-horizontal {
+        display: none;
+    }
+
+    .section-content {
+        padding: 0 2rem;
+    }
+
+    .section-title {
+        font-size: clamp(1.75rem, 6vw, 2.5rem);
+    }
+
+    /* Protocol grid - stack on tablets */
+    .protocol-item {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .protocol-title {
+        font-size: clamp(1.25rem, 5vw, 1.75rem);
+    }
+
+    .protocol-description {
+        max-width: 100%;
     }
 }
 
+/* Phones (320px - 575px) */
 @media (max-width: 575px) {
+    .profile-bg {
+        width: 95%;
+        height: 95%;
+    }
 
-    .profile-page .corner-nav--top-left,
-    .profile-page .corner-nav--top-right {
+    .profile-section .corner-nav--top-left,
+    .profile-section .corner-nav--top-right {
         top: 1rem;
     }
 
-    .profile-page .corner-nav--bottom-left,
-    .profile-page .corner-nav--bottom-right {
+    .profile-section .corner-nav--bottom-left,
+    .profile-section .corner-nav--bottom-right {
         bottom: 1rem;
     }
 
-    .profile-page .corner-nav--top-left,
-    .profile-page .corner-nav--bottom-left {
+    .profile-section .corner-nav--top-left,
+    .profile-section .corner-nav--bottom-left {
         left: 1rem;
     }
 
-    .profile-page .corner-nav--top-right,
-    .profile-page .corner-nav--bottom-right {
+    .profile-section .corner-nav--top-right,
+    .profile-section .corner-nav--bottom-right {
         right: 1rem;
     }
 
-    .profile-page .cta-panel {
+    .profile-section .cta-panel {
         bottom: 3rem;
+    }
+
+    .section-content {
+        padding: 0 1.5rem;
+    }
+
+    .section-label {
+        font-size: 0.55rem;
+    }
+
+    .section-title {
+        font-size: clamp(1.5rem, 8vw, 2rem);
+    }
+
+    .section-paragraph {
+        font-size: 0.875rem;
     }
 }
