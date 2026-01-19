@@ -2,9 +2,13 @@
  * ContactModal - Contact Form Modal
  * Opens when clicking INIT@KSAR.ME on screen 5
  * Features: backdrop blur, two-column layout, styled form
+ * Sends emails directly via ksar.me PHP API
  */
 import { useState } from 'react'
 import './ContactModal.css'
+
+// API endpoint for contact form (your Hestia server)
+const CONTACT_API_URL = 'https://www.ksar.me/api/contact.php'
 
 const projectTypes = [
     { value: '', label: '—' },
@@ -25,6 +29,8 @@ export default function ContactModal({ isOpen, onClose }) {
     })
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [errors, setErrors] = useState({})
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState(null) // 'success' | 'error' | null
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -58,13 +64,56 @@ export default function ContactModal({ isOpen, onClose }) {
         return Object.keys(newErrors).length === 0
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if (validateForm()) {
-            // Handle form submission here
-            console.log('Form submitted:', formData)
-            // Could send to API or email service
-            onClose()
+        if (!validateForm()) return
+
+        setIsSubmitting(true)
+        setSubmitStatus(null)
+
+        // Prepare data for API
+        const payload = {
+            name: formData.name,
+            projectType: projectTypes.find(t => t.value === formData.projectType)?.label || formData.projectType,
+            timeline: formData.timeline || '',
+            budget: formData.budget || '',
+            message: formData.message
+        }
+
+        try {
+            const response = await fetch(CONTACT_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+
+            const data = await response.json()
+
+            if (response.ok && data.success) {
+                setSubmitStatus('success')
+                // Reset form
+                setFormData({
+                    name: '',
+                    projectType: '',
+                    timeline: '',
+                    budget: '',
+                    message: ''
+                })
+                // Close modal after 2 seconds on success
+                setTimeout(() => {
+                    onClose()
+                    setSubmitStatus(null)
+                }, 2000)
+            } else {
+                throw new Error(data.error || 'Failed to send')
+            }
+        } catch (error) {
+            console.error('Contact API Error:', error)
+            setSubmitStatus('error')
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -185,8 +234,15 @@ export default function ContactModal({ isOpen, onClose }) {
                                 {errors.message && <span className="form-error font-nav">{errors.message}</span>}
                             </div>
 
-                            <button type="submit" className="form-submit font-nav">
-                                [ INITIALIZE PROJECT ]
+                            <button
+                                type="submit"
+                                className={`form-submit font-nav ${isSubmitting ? 'form-submit--loading' : ''} ${submitStatus ? `form-submit--${submitStatus}` : ''}`}
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting && '[ TRANSMITTING... ]'}
+                                {submitStatus === 'success' && '[ TRANSMISSION COMPLETE ]'}
+                                {submitStatus === 'error' && '[ TRANSMISSION FAILED ]'}
+                                {!isSubmitting && !submitStatus && '[ INITIALIZE PROJECT ]'}
                             </button>
                         </form>
                     </div>

@@ -352,8 +352,24 @@
     margin-top: 1rem;
 }
 
-.form-submit:hover {
+.form-submit:hover:not(:disabled) {
     color: #fff;
+}
+
+.form-submit:disabled {
+    cursor: not-allowed;
+}
+
+.form-submit--loading {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-submit--success {
+    color: rgba(100, 255, 150, 0.8);
+}
+
+.form-submit--error {
+    color: rgba(255, 100, 100, 0.8);
 }
 
 /* === RESPONSIVE === */
