@@ -4,8 +4,12 @@
  * Layout: Fixed positioning for corners + centered content
  */
 import './HomePage.css'
+import { useModal } from '../context/ModalContext'
+import OnlineIndicator from '../components/OnlineIndicator'
 
 export default function HomePage() {
+    const { openContactModal } = useModal()
+
     return (
         <main className="home-page">
             {/* Background Glow Effect */}
@@ -22,13 +26,16 @@ export default function HomePage() {
                 <a href="/projects" className="nav-link font-nav">PROJECTS</a>
             </nav>
             <nav className="corner-nav corner-nav--top-right">
-                <a href="/online" className="nav-link font-nav">ONLINE</a>
+                <span className="nav-status nav-status--online font-nav">
+                    ONLINE
+                    <OnlineIndicator />
+                </span>
             </nav>
             <nav className="corner-nav corner-nav--bottom-left">
                 <a href="/profile" className="nav-link font-nav">PROFILE</a>
             </nav>
             <nav className="corner-nav corner-nav--bottom-right">
-                <a href="/contact" className="nav-link font-nav">CONTACT</a>
+                <button onClick={openContactModal} className="nav-link font-nav nav-button">CONTACT</button>
             </nav>
 
             {/* === SIDE VERTICAL TEXT === */}

@@ -4,10 +4,11 @@
  * STATIC ELEMENTS: crosshairs, nav, side-text, corner-line, meta-panel, cta-panel
  * These elements are position:fixed and don't scroll with content
  */
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import './ProfilePage.css'
-import ContactModal from '../components/ContactModal'
 import { useCursor } from '../context/CursorContext'
+import { useModal } from '../context/ModalContext'
+import OnlineIndicator from '../components/OnlineIndicator'
 
 // Section IDs in order
 const SECTIONS = ['hero', 'section-2', 'section-3', 'section-4', 'section-5']
@@ -22,12 +23,12 @@ const SIDE_TEXT_CONFIG = {
 }
 
 export default function ProfilePage() {
-    const [isModalOpen, setIsModalOpen] = useState(false)
     const [currentSection, setCurrentSection] = useState(0)
     const containerRef = useRef(null)
     const isScrolling = useRef(false)
     const scrollStartY = useRef(0)
     const { setCursorText } = useCursor()
+    const { openContactModal } = useModal()
 
     // Get current side text based on section
     const sideText = SIDE_TEXT_CONFIG[currentSection] || SIDE_TEXT_CONFIG[0]
@@ -193,7 +194,10 @@ export default function ProfilePage() {
                 <a href="/projects" className="nav-link font-nav">PROJECTS</a>
             </nav>
             <nav className="fixed-nav fixed-nav--top-right">
-                <a href="/online" className="nav-link font-nav">ONLINE</a>
+                <span className="nav-status nav-status--online font-nav">
+                    ONLINE
+                    <OnlineIndicator />
+                </span>
             </nav>
             <nav className="fixed-nav fixed-nav--bottom-left">
                 <a href={currentSection === 0 ? "/" : "/profile"} className="nav-link font-nav">
@@ -201,7 +205,7 @@ export default function ProfilePage() {
                 </a>
             </nav>
             <nav className="fixed-nav fixed-nav--bottom-right">
-                <a href="/contact" className="nav-link font-nav">CONTACT</a>
+                <button onClick={openContactModal} className="nav-link font-nav nav-button">CONTACT</button>
             </nav>
 
             {/* Side Vertical Text */}
@@ -387,18 +391,12 @@ export default function ProfilePage() {
 
                     <button
                         className="contact-email font-hero"
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={openContactModal}
                     >
                         INIT@KSAR.ME
                     </button>
                 </div>
             </section>
-
-            {/* Contact Modal */}
-            <ContactModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            />
         </main>
     )
 }

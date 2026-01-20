@@ -1,0 +1,12 @@
+/* Online Indicator - JS controlled trembling effect */
+.online-indicator-js {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    transition: opacity 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease;
+    box-shadow:
+        0 0 3px 1px rgba(255, 255, 255, 0.6),
+        0 0 6px 2px rgba(255, 255, 255, 0.3);
+}
