@@ -12,7 +12,7 @@ export default function GlassCubeDemo() {
                 <GlassCube
                     size={800}
                     cubeScale={2.5}
-                    rotationSpeed={0.002}
+                    rotationSpeed={0.008}
                     text="SYNTHETIC"
                 />
             </div>

@@ -63,30 +63,29 @@ function Cube({ scale = 2, rotationSpeed = 0.003 }) {
                 <MeshTransmissionMaterial
                     // Core transmission settings
                     transmission={1}
-                    thickness={1.5}
+                    thickness={1}
                     roughness={0}
 
-                    // Refraction
+                    // Refraction - RGB chromatic aberration
                     ior={1.5}
-                    chromaticAberration={0.02}
-                    anisotropy={0.1}
+                    chromaticAberration={0.15}
+                    anisotropy={0.2}
 
-                    // Rendering
-                    samples={16}
-                    resolution={1024}
-                    backside={true}
-                    backsideThickness={1}
+                    // Rendering - OPTIMIZED for performance
+                    samples={8}
+                    resolution={512}
+                    backside={false}
 
                     // Environment
                     envMap={envMap}
-                    envMapIntensity={0.2}
+                    envMapIntensity={0.3}
 
                     // Colors
                     color="#ffffff"
-                    attenuationDistance={2}
+                    attenuationDistance={3}
                     attenuationColor="#ffffff"
 
-                    // Distortion off for clean glass
+                    // Distortion off
                     distortion={0}
                     distortionScale={0}
                     temporalDistortion={0}
