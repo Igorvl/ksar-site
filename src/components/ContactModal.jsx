@@ -146,9 +146,29 @@ export default function ContactModal({ isOpen, onClose }) {
                         </div>
 
                         <div className="modal-social">
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="modal-social-link font-nav">INSTAGRAM</a>
-                            <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="modal-social-link font-nav">BEHANCE</a>
-                            <a href="https://t.me" target="_blank" rel="noopener noreferrer" className="modal-social-link font-nav">TELEGRAM</a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="modal-social-link font-nav">
+                                <svg className="social-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.5" />
+                                    <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.5" />
+                                    <circle cx="18" cy="6" r="1" fill="currentColor" />
+                                </svg>
+                                INSTAGRAM
+                            </a>
+                            <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="modal-social-link font-nav">
+                                <svg className="social-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 6h5c2 0 3 1 3 2.5S10 11 8 11c2.5 0 3.5 1.5 3.5 3s-1 3-3.5 3H3V6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                                    <path d="M3 11h5" stroke="currentColor" strokeWidth="1.5" />
+                                    <path d="M15 8h6M18 14c2.5 0 3.5-1.5 3.5-3.5S20 7 18 7s-3.5 1.5-3.5 3.5c0 2.5 1.5 4 4 4 1.5 0 2.5-.5 3-1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                BEHANCE
+                            </a>
+                            <a href="https://t.me" target="_blank" rel="noopener noreferrer" className="modal-social-link font-nav">
+                                <svg className="social-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 3L10 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                    <path d="M21 3L14 21L10 14L3 10L21 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                                </svg>
+                                TELEGRAM
+                            </a>
                         </div>
                     </div>
 

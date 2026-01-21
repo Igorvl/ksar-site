@@ -1,9 +1,10 @@
 /**
  * App - Main Application with Routing
  * Routes:
- *   /         - New HomePage (reference design)
- *   /profile  - ProfilePage (about page with background image)
- *   /crystal  - CrystalDemo (3D crystal page)
+ *   /           - New HomePage (reference design)
+ *   /profile    - ProfilePage (about page with background image)
+ *   /crystal    - CrystalDemo (3D crystal page)
+ *   /glass-cube - GlassCubeDemo (glass cube demo)
  * 
  * Global Components:
  *   - CustomCursor (follows mouse)
@@ -16,6 +17,7 @@ import { ModalProvider, useModal } from './context/ModalContext'
 import HomePage from './pages/HomePage'
 import ProfilePage from './pages/ProfilePage'
 import CrystalDemo from './pages/CrystalDemo'
+import GlassCubeDemo from './pages/GlassCubeDemo'
 import CustomCursor from './components/CustomCursor'
 import ContactModal from './components/ContactModal'
 import './App.css'
@@ -31,6 +33,7 @@ function AppContent() {
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/crystal" element={<CrystalDemo />} />
+        <Route path="/glass-cube" element={<GlassCubeDemo />} />
       </Routes>
       {/* Global Contact Modal */}
       <ContactModal

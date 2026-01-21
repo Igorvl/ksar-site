@@ -138,6 +138,9 @@
 }
 
 .modal-social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     font-family: var(--font-nav);
     font-size: 0.7rem;
     letter-spacing: 0.15em;
@@ -148,6 +151,19 @@
 
 .modal-social-link:hover {
     color: #fff;
+}
+
+/* Social Icons - minimalist line style */
+.social-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.modal-social-link:hover .social-icon {
+    opacity: 1;
 }
 
 /* === RIGHT COLUMN - FORM === */
