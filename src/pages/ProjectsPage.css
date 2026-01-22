@@ -296,22 +296,33 @@
    ============================================ */
 .info-panel {
     position: fixed;
-    top: 50%;
+    top: 0;
+    bottom: 0;
     right: -4rem;
-    transform: translateY(-50%);
+    height: 100vh;
+    transform: none;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem 0;
     gap: 1rem;
     text-align: right;
-    z-index: 50;
-    max-width: 600px;
+    max-width: 720px;
     flex-wrap: nowrap;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.03) 8%, black 40%, black 60%, rgba(0, 0, 0, 0.03) 92%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.03) 8%, black 40%, black 60%, rgba(0, 0, 0, 0.03) 92%, transparent 100%);
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
 }
 
 .info-label {
     font-family: var(--font-nav);
-    font-size: 0.3rem;
-    letter-spacing: 0.1em;
+    font-size: 0.25rem;
+    letter-spacing: 0.11em;
     color: rgba(255, 255, 255, 0.4);
     line-height: 1.8;
     margin: 0;

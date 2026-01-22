@@ -49,9 +49,13 @@ export default function ProjectsPage() {
 
             {/* === INFO BLOCK (Right Side) === */}
             <aside className="info-panel">
-                <p className="info-label font-nav">SYSTEM_OVERRIDE: INITIATED // PROTOCOL: ABYSSAL_09 // RENDERING_ENVIRONMENT: DARK_MODE</p>
-                <p className="info-label font-nav">// LATENCY: 0.00MS // SUBJECT: KSENIYA_ARTMAN // STATUS: ONLINE // DATA_STREAM:</p>
-                <p className="info-label font-nav">UNSTABLE // UPLOAD_COMPLETE // ACCESSING_ARCHIVE_FILES...</p>
+                {Array.from({ length: 20 }).map((_, i) => (
+                    <div key={i} className="info-block">
+                        <p className="info-label font-nav">// LATENCY: 0.00MS // SUBJECT: KSENIYA_ARTMAN // STATUS: ONLINE // DATA_STREAM: UNSTABLE // UNIFORM VEC2 WINRESOLUTION; //</p>
+                        <p className="info-label font-nav">UPLOAD_COMPLETE // ACCESSING_ARCHIVE_FILES...SYSTEM_OVERRIDE: INITIATED // UNIFORM SAMPLER2D UTEXTURE; // VARYING VEC3 EYEVECTOR; //</p>
+                        <p className="info-label font-nav">PROTOCOL: ABYSSAL_09 // RENDERING_ENVIRONMENT: DARK_MODE // VARYING VEC3 WORLDNORMAL</p>
+                    </div>
+                ))}
             </aside>
 
         </main>
