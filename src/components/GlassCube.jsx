@@ -13,6 +13,7 @@ import {
     useEnvironment
 } from '@react-three/drei'
 import * as THREE from 'three'
+import FastSpectralGlass from './FastSpectralGlass'
 import './GlassCube.css'
 
 /**
@@ -38,59 +39,21 @@ function BackgroundText({ children = "GLASS CUBE", color = "#ffffff" }) {
  * Glass Cube with transmission material
  * Standing on one corner with slow rotation
  */
+// function Cube({ scale = 2, rotationSpeed = 0.003 }) { (Original signature)
 function Cube({ scale = 2, rotationSpeed = 0.003 }) {
-    const meshRef = useRef()
-    const { viewport } = useThree()
-
-    // Load environment for reflections
-    const envMap = useEnvironment({ preset: 'city' })
-
-    // Slow rotation animation
-    useFrame((state, delta) => {
-        if (meshRef.current) {
-            meshRef.current.rotation.y += rotationSpeed
-        }
-    })
+    // Rotation is now handled inside FastSpectralGlass
 
     return (
         <group rotation={[Math.PI / 4, 0, Math.atan(1 / Math.SQRT2)]}>
-            <RoundedBox
-                ref={meshRef}
-                args={[scale, scale, scale]}
-                radius={0.05}
-                smoothness={4}
-            >
-                <MeshTransmissionMaterial
-                    // Core transmission settings
-                    transmission={1}
-                    thickness={1}
-                    roughness={0}
-
-                    // Refraction - RGB chromatic aberration
-                    ior={1.5}
-                    chromaticAberration={0.15}
-                    anisotropy={0.2}
-
-                    // Rendering - OPTIMIZED for performance
-                    samples={8}
-                    resolution={512}
-                    backside={false}
-
-                    // Environment
-                    envMap={envMap}
-                    envMapIntensity={0.3}
-
-                    // Colors
-                    color="#ffffff"
-                    attenuationDistance={3}
-                    attenuationColor="#ffffff"
-
-                    // Distortion off
-                    distortion={0}
-                    distortionScale={0}
-                    temporalDistortion={0}
-                />
-            </RoundedBox>
+            {/* 
+                Replaced standard MeshTransmissionMaterial which only supports 3-channel (RGB) aberration
+                with FastSpectralGlass that supports full 32-channel rainbow dispersion.
+            */}
+            <FastSpectralGlass
+                scale={scale}
+                chromaticAberration={0.8}
+                rotationSpeed={rotationSpeed}
+            />
         </group>
     )
 }

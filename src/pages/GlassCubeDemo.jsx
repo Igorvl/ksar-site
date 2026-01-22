@@ -19,7 +19,7 @@ export default function GlassCubeDemo() {
 
             {/* Subtitle outside */}
             <p className="glass-demo-subtitle font-nav">
-                MeshTransmissionMaterial • Glass Refraction Effect
+                32-Channel Spectral Dispersion • Turbo Rainbow Shader
             </p>
         </main>
     )
