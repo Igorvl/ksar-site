@@ -19,6 +19,7 @@ export default function ProjectsPage() {
             <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
             <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
             <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
+            <img src="/kross.svg" className="crosshair crosshair--bottom-center" aria-hidden="true" alt="" />
 
             {/* === CORNER NAVIGATION === */}
             <nav className="corner-nav corner-nav--top-left">
@@ -39,12 +40,9 @@ export default function ProjectsPage() {
 
             {/* === SIDE VERTICAL TEXT === */}
             <div className="side-text side-text--left">
-                <span className="vertical-text font-nav">SYNTHETIC</span>
+                <span className="vertical-text font-nav">BRANDING</span>
             </div>
-            <div className="side-text side-text--right">
-                <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
-                <span className="vertical-text font-nav">ARCHITECT</span>
-            </div>
+
 
             {/* === CORNER LINE (from SYNTHETIC to right) === */}
             <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />

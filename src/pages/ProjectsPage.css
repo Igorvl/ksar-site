@@ -125,6 +125,14 @@
     animation: crosshairPulseBottomRight 5s ease-in-out infinite;
 }
 
+.crosshair--bottom-center {
+    bottom: 4.17vw;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    animation: crosshairPulseBottomLeft 5s ease-in-out infinite;
+    /* Reuse animation as transform is identical */
+}
+
 @media (max-width: 768px) {
     .crosshair {
         display: none;
