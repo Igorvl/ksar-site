@@ -4,48 +4,109 @@
  */
 
 /* === OVERLAY === */
+/* === OVERLAY === */
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(1px) grayscale(100%);
+    -webkit-backdrop-filter: blur(1px) grayscale(100%);
+    /* Use flex + margin:auto on child to allow scrolling when content > viewport */
     display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow-y: auto;
+    padding: 1rem;
+    /* Ensure padding wraps content on small screens */
     z-index: 1000;
-    padding: 2rem;
-    animation: fadeIn 0.3s ease;
+    /* Overall fadeIn is separate to allow content animation to pop */
+    animation: overlayFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes fadeIn {
+@keyframes overlayFadeIn {
     from {
-        opacity: 0;
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px) grayscale(0%);
     }
 
     to {
-        opacity: 1;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(1px) grayscale(100%);
     }
 }
 
 /* === MODAL CONTENT === */
 .modal-content {
     position: relative;
+    /* Center in flex container safely (handles overflow) */
+    margin: auto;
     width: 100%;
     max-width: 1000px;
-    background: rgba(0, 0, 0, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
     padding: 3rem 4rem;
-    animation: slideUp 0.4s ease;
+
+    /* "Holographic Initialization" Animation Logic */
+    /* Start as a thin line in the center */
+    clip-path: inset(50% 0 50% 0);
+    opacity: 0;
+
+    animation: holoUnfold 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes slideUp {
-    from {
+/* 
+ * The Holographic Unfold:
+ * 0% - Invisible
+ * 10% - Full Width, 2px Height (The "Flash Line")
+ * 100% - Full Height, Full Width (Revealed)
+ */
+@keyframes holoUnfold {
+    0% {
         opacity: 0;
-        transform: translateY(20px);
+        clip-path: inset(50% 50% 50% 50%);
+        /* Dot in center */
+        transform: scale(0.95);
+        border-color: rgba(255, 255, 255, 0.8);
+        /* Bright flash color */
     }
 
-    to {
+    10% {
+        opacity: 1;
+        clip-path: inset(50% 0 50% 0);
+        /* Horizontal Line */
+        transform: scale(1);
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+        /* Fully open */
+        transform: scale(1);
+        border-color: rgba(255, 255, 255, 0.15);
+        /* Normal border */
+    }
+}
+
+/* Inner elements glitch-in slightly later */
+.modal-grid {
+    opacity: 0;
+    animation: contentGlitchIn 0.3s ease forwards;
+    animation-delay: 0.2s;
+    /* Wait for unfolding to start */
+}
+
+@keyframes contentGlitchIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: translateY(-5px);
+    }
+
+    100% {
         opacity: 1;
         transform: translateY(0);
     }

@@ -19,6 +19,7 @@ import ProjectsPage from './pages/ProjectsPage'
 import ProfilePage from './pages/ProfilePage'
 import CrystalDemo from './pages/CrystalDemo'
 import GlassCubeDemo from './pages/GlassCubeDemo'
+import NegativeTextDemo from './pages/NegativeTextDemo'
 import CustomCursor from './components/CustomCursor'
 import ContactModal from './components/ContactModal'
 // import GlassRefractionPage from './pages/GlassRefractionPage';
@@ -37,6 +38,7 @@ function AppContent() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/crystal" element={<CrystalDemo />} />
         <Route path="/glass-cube" element={<GlassCubeDemo />} />
+        <Route path="/negative" element={<NegativeTextDemo />} />
         {/* <Route path="/glass-refraction" element={<GlassRefractionPage />} /> */}
       </Routes>
       {/* Global Contact Modal */}

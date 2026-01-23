@@ -22,6 +22,7 @@ const projectTypes = [
 export default function ContactModal({ isOpen, onClose }) {
     const [formData, setFormData] = useState({
         name: '',
+        email: '',
         projectType: '',
         timeline: '',
         budget: '',
@@ -54,6 +55,11 @@ export default function ContactModal({ isOpen, onClose }) {
         if (!formData.name.trim()) {
             newErrors.name = '// FIELD REQUIRED'
         }
+        if (!formData.email.trim()) {
+            newErrors.email = '// FIELD REQUIRED'
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = '// INVALID EMAIL'
+        }
         if (!formData.projectType) {
             newErrors.projectType = '// SELECT PROJECT TYPE'
         }
@@ -74,6 +80,7 @@ export default function ContactModal({ isOpen, onClose }) {
         // Prepare data for API
         const payload = {
             name: formData.name,
+            email: formData.email,
             projectType: projectTypes.find(t => t.value === formData.projectType)?.label || formData.projectType,
             timeline: formData.timeline || '',
             budget: formData.budget || '',
@@ -96,6 +103,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 // Reset form
                 setFormData({
                     name: '',
+                    email: '',
                     projectType: '',
                     timeline: '',
                     budget: '',
@@ -187,6 +195,18 @@ export default function ContactModal({ isOpen, onClose }) {
                                     className="form-input font-nav"
                                 />
                                 {errors.name && <span className="form-error font-nav">{errors.name}</span>}
+                            </div>
+
+                            <div className={`form-field ${errors.email ? 'form-field--error' : ''}`}>
+                                <label className="form-label font-nav">CONTACT (EMAIL)</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="form-input font-nav"
+                                />
+                                {errors.email && <span className="form-error font-nav">{errors.email}</span>}
                             </div>
 
                             {/* Custom Dropdown */}
