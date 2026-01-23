@@ -11,6 +11,11 @@ export default function ProjectsPage() {
 
     return (
         <main className="projects-page">
+            {/* Full Screen Placeholder Image */}
+            <div className="project-hero-image">
+                <img src="/projects_cat_Soma.jpg" alt="Soma Project" />
+            </div>
+
             {/* Background Glow Effect */}
             <div className="home-glow" aria-hidden="true" />
 

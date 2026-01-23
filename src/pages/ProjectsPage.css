@@ -13,6 +13,25 @@
     /* Or auto if we have scrolling content */
 }
 
+/* === HERO IMAGE === */
+.project-hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    /* Behind UI, but in front of background color */
+}
+
+.project-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    /* Slight transparency to blend with black background if needed, or remove if full opacity wanted */
+}
+
 /* === BACKGROUND GLOW === */
 .home-glow {
     position: absolute;
