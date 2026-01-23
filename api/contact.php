@@ -30,13 +30,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $input = json_decode(file_get_contents('php://input'), true);
 
 // Validate required fields
-$required = ['name', 'projectType', 'message'];
+$required = ['name', 'email', 'projectType', 'message'];
 $errors = [];
 
 foreach ($required as $field) {
     if (empty($input[$field])) {
         $errors[$field] = 'Field required';
     }
+}
+
+// Basic email validation
+if (!empty($input['email']) && !filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = 'Invalid email format';
 }
 
 if (!empty($errors)) {
@@ -47,6 +52,7 @@ if (!empty($errors)) {
 
 // Sanitize input
 $name = htmlspecialchars(strip_tags(trim($input['name'])));
+$email = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
 $projectType = htmlspecialchars(strip_tags(trim($input['projectType'])));
 $timeline = htmlspecialchars(strip_tags(trim($input['timeline'] ?? 'Not specified')));
 $budget = htmlspecialchars(strip_tags(trim($input['budget'] ?? 'Not specified')));
@@ -63,6 +69,7 @@ NEW PROJECT REQUEST
 ===========================================
 
 CODENAME (NAME): {$name}
+CONTACT (EMAIL): {$email}
 PROJECT TYPE: {$projectType}
 TIMELINE: {$timeline}
 BUDGET: {$budget}
@@ -79,7 +86,7 @@ Sent from ksar.me contact form
 // Email headers
 $headers = [
     'From' => "noreply@ksar.me",
-    'Reply-To' => $name,
+    'Reply-To' => $email,
     'X-Mailer' => 'PHP/' . phpversion(),
     'Content-Type' => 'text/plain; charset=UTF-8'
 ];
