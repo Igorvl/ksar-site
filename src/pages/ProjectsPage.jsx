@@ -12,8 +12,11 @@ export default function ProjectsPage() {
     return (
         <main className="projects-page">
             {/* Full Screen Placeholder Image */}
+            {/* Full Screen Placeholder Image */}
             <div className="project-hero-image">
-                <img src="/projects_cat_Soma.jpg" alt="Soma Project" />
+                <a href="/soma" style={{ display: 'block', width: '100%', height: '100%' }}>
+                    <img src="/projects_cat_Soma.jpg" alt="Soma Project" />
+                </a>
             </div>
 
             {/* Background Glow Effect */}
