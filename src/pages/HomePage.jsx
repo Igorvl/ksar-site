@@ -76,7 +76,7 @@ export default function HomePage() {
             {/* === CTA (Bottom Center) === */}
             <div className="cta-panel">
                 <a href="#void" className="cta-link font-nav">
-                    <span className="cta-text">ENTER THE VOID</span>
+                    <span className="cta-text">EXPLORE</span>
                     <span className="cta-line" aria-hidden="true" />
                 </a>
             </div>

@@ -66,6 +66,43 @@ export default function SomaProjectPage() {
 
             {/* Background Glow Effect */}
             <div className="home-glow" aria-hidden="true" />
+
+            {/* ============================================
+                SECTION 2: GENESIS (Orb)
+                ============================================ */}
+            <section className="soma-section soma-section-2">
+                {/* Grid Lines */}
+                <div className="soma-grid-line soma-grid-vert" />
+                <div className="soma-grid-line soma-grid-horiz" />
+
+                {/* Corner Markers (Top) */}
+                <div className="soma-corner-marker soma-corner-tl" />
+                <div className="soma-corner-marker soma-corner-tr" />
+
+                {/* Top Labels */}
+                <div className="soma-label soma-label-tl font-nav">FIG 01. GENESIS ORIGIN</div>
+                <div className="soma-label soma-label-tr font-nav">STATUS: ACTIVE</div>
+                <div className="soma-label soma-label-tc font-nav">PROJECT: GENESIS // V 2.0</div>
+
+                {/* Center Content */}
+                <div className="soma-orb-container">
+                    <img src="/Projects/Soma/Soma2.webp" alt="Genesis Orb" className="soma-orb-image" />
+                </div>
+
+                {/* Bottom Content */}
+                <div className="soma-bottom-wrapper">
+                    <h3 className="soma-section-title font-hero">CELLULAR REGENERATION PROTOCOLS</h3>
+                    <p className="soma-section-subtitle font-nav">We don't treat aging. We cancel it.</p>
+                </div>
+
+                {/* Bottom Markers */}
+                <div className="soma-label soma-label-bl font-nav">DATE: 2026.01.20</div>
+                <div className="soma-label soma-label-br font-nav">REF: A-001</div>
+
+                {/* Corner Markers (Bottom) */}
+                <div className="soma-corner-marker soma-corner-bl" />
+                <div className="soma-corner-marker soma-corner-br" />
+            </section>
         </main>
     )
 }

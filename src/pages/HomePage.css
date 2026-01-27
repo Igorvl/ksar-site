@@ -332,11 +332,31 @@
 }
 
 .corner-line--top {
-    top: 3.3rem;
+    top: 2.9rem;
     left: calc((3 / 11.5) * 100%);
-    width: 58vw;
+    width: 54vw;
     height: auto;
     opacity: 0.5;
+}
+
+/* Landscape Mobile Fixes (e.g. iPhone XR Landscape) */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero-name {
+        font-size: clamp(3rem, 10vh, 5rem);
+        margin-left: -2vw;
+    }
+
+    .side-text {
+        display: none;
+    }
+
+    .cta-panel {
+        bottom: 1.5rem;
+    }
+
+    .cta-line {
+        height: 20px;
+    }
 }
 
 /* ============================================

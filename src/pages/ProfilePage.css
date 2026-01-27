@@ -34,14 +34,14 @@
     justify-content: center;
 }
 
-/* Background Image - 90% x 90% centered */
+/* Background Image - Full screen */
 .profile-bg {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    height: 90%;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: 100%;
     z-index: 0;
     pointer-events: none;
 }
@@ -334,9 +334,9 @@
    ============================================ */
 .fixed-corner-line {
     position: fixed;
-    top: 3.3rem;
+    top: 2.9rem;
     left: calc((3 / 11.5) * 100%);
-    width: 58vw;
+    width: 54vw;
     height: auto;
     opacity: 0.5;
     pointer-events: none;
@@ -738,8 +738,8 @@
 /* Phones (320px - 575px) */
 @media (max-width: 575px) {
     .profile-bg {
-        width: 95%;
-        height: 95%;
+        width: 100%;
+        height: 100%;
     }
 
     .fixed-nav--top-left,
@@ -807,5 +807,75 @@
 
     .section-content {
         padding: 0 1rem;
+    }
+}
+
+/* Landscape Mobile Fixes (e.g. iPhone XR Landscape) */
+@media (max-height: 600px) and (orientation: landscape) {
+    .section-content {
+        padding-top: 2rem;
+        /* Push content down from top nav */
+    }
+
+    /* Section 2: Text Scaling */
+    .section-title {
+        font-size: clamp(1.5rem, 8vh, 2rem);
+        margin-bottom: 1rem;
+    }
+
+    .section-paragraph {
+        font-size: 0.75rem;
+        line-height: 1.4;
+        margin-bottom: 0.8rem;
+    }
+
+    /* Section 3: Protocol Grid Scaling */
+    .protocol-grid {
+        gap: 0.5rem;
+    }
+
+    .protocol-item {
+        gap: 1rem;
+        align-items: center;
+        /* Better alignment for small text */
+    }
+
+    .protocol-title {
+        font-size: 1.1rem;
+    }
+
+    .protocol-description {
+        font-size: 0.7rem;
+        line-height: 1.3;
+    }
+
+    .section-label {
+        margin-bottom: 0.5rem;
+        /* Tighter header */
+    }
+
+    /* Hide side texts as requested/done before */
+    .fixed-side-text--left,
+    .fixed-side-text--right {
+        display: none;
+    }
+
+    .fixed-cta-panel {
+        bottom: 1rem;
+    }
+
+    .cta-line {
+        height: 15px;
+    }
+
+    .fixed-corner-line {
+        display: block !important;
+        /* Ensure line is visible */
+        top: 2.9rem;
+    }
+
+    .profile-bg {
+        width: 100%;
+        height: 100%;
     }
 }

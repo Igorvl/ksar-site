@@ -305,7 +305,7 @@
 .corner-line--top {
     top: 3.3rem;
     left: calc((3 / 11.5) * 100%);
-    width: 58vw;
+    width: 54vw;
     height: auto;
     opacity: 0.5;
 }
