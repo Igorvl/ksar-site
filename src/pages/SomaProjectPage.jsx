@@ -12,21 +12,9 @@ export default function SomaProjectPage() {
 
     return (
         <main className="soma-project-page">
-            {/* === NAVIGATION (Copy of ProjectsPage Nav for consistency) === */}
+            {/* === NAVIGATION (Strictly limited as per request) === */}
             <nav className="corner-nav corner-nav--top-left">
                 <a href="/projects" className="nav-link font-nav">BACK TO PROJECTS</a>
-            </nav>
-            <nav className="corner-nav corner-nav--top-right">
-                <span className="nav-status nav-status--online font-nav">
-                    ONLINE
-                    <OnlineIndicator />
-                </span>
-            </nav>
-            <nav className="corner-nav corner-nav--bottom-left">
-                <a href="/" className="nav-link font-nav">HOME</a>
-            </nav>
-            <nav className="corner-nav corner-nav--bottom-right">
-                <button onClick={openContactModal} className="nav-link font-nav nav-button">CONTACT</button>
             </nav>
 
             {/* === SCROLLABLE BACKGROUND IMAGE === */}
@@ -46,23 +34,7 @@ export default function SomaProjectPage() {
             </div>
 
 
-            {/* === CORNER CROSSHAIRS (SVG) === */}
-            <img src="/kross.svg" className="crosshair crosshair--top-left" aria-hidden="true" alt="" />
-            <img src="/kross.svg" className="crosshair crosshair--top-right" aria-hidden="true" alt="" />
-            <img src="/kross.svg" className="crosshair crosshair--bottom-left" aria-hidden="true" alt="" />
-            <img src="/kross.svg" className="crosshair crosshair--bottom-right" aria-hidden="true" alt="" />
 
-            {/* === SIDE VERTICAL TEXT === */}
-            <div className="side-text side-text--left">
-                <span className="vertical-text font-nav">SYNTHETIC</span>
-            </div>
-            <div className="side-text side-text--right">
-                <img src="/lineV.svg" className="line-vertical" aria-hidden="true" alt="" />
-                <span className="vertical-text font-nav">ARCHITECT</span>
-            </div>
-
-            {/* === CORNER LINE (from SYNTHETIC to right) === */}
-            <img src="/corn1.svg" className="corner-line corner-line--top" aria-hidden="true" alt="" />
 
             {/* Background Glow Effect */}
             <div className="home-glow" aria-hidden="true" />
@@ -87,6 +59,7 @@ export default function SomaProjectPage() {
                 {/* Center Content */}
                 <div className="soma-orb-container">
                     <img src="/Projects/Soma/Soma2.webp" alt="Genesis Orb" className="soma-orb-image" />
+
                 </div>
 
                 {/* Bottom Content */}
