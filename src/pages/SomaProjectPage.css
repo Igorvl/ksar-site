@@ -16,8 +16,12 @@
 }
 
 /* Specific nav override for readability */
+/* Specific nav override for readability */
 .soma-project-page .corner-nav--top-left {
     left: 2rem;
+    top: 1.5rem;
+    z-index: 1001;
+    /* Essential: must be above nav gradient (900) */
 }
 
 .soma-bg-container {
@@ -534,4 +538,317 @@
     .soma-section-subtitle {
         font-size: 0.7rem;
     }
+}
+
+/* ============================================
+   SECTION 3: IDENTITY GRID (Light Mode)
+   ============================================ */
+.soma-section-3 {
+    background-color: #EAE6DD;
+    /* Light beige/paper */
+    color: #1A1A1A;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.soma-section-3 .soma-grid-line {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.soma-section-3 .soma-corner-marker {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.text-dark {
+    color: #1A1A1A !important;
+}
+
+/* Dashed Circle Guide */
+.soma-dashed-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40vw;
+    height: 40vw;
+    border: 1px dashed rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Center Wrapper */
+.soma-identity-wrapper {
+    position: absolute;
+    top: 43%;
+    /* Lifted up from center */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 50vh;
+    /* Fixed height to ensure centering stability */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+/* Logo Area */
+.soma-logo-construction-area {
+    position: relative;
+    width: 40vw;
+    max-width: 500px;
+    aspect-ratio: 2.5/1;
+    /* Wide logo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.soma-identity-logo {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    z-index: 10;
+}
+
+/* Inner Markers (Crop marks around logo) */
+.inner-marker {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-style: solid;
+}
+
+.marker-tl {
+    top: -1rem;
+    left: -1rem;
+    border-width: 1px 0 0 1px;
+}
+
+.marker-tr {
+    top: -1rem;
+    right: -1rem;
+    border-width: 1px 1px 0 0;
+}
+
+.marker-bl {
+    bottom: -1rem;
+    left: -1rem;
+    border-width: 0 0 1px 1px;
+}
+
+.marker-br {
+    bottom: -1rem;
+    right: -1rem;
+    border-width: 0 1px 1px 0;
+}
+
+/* Captions with Lines */
+.soma-caption {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    top: 57%;
+    transform: translateY(-50%);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+}
+
+.caption-line {
+    width: 3rem;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.soma-caption-left {
+    right: calc(50% + 25vw);
+    /* Offset from center */
+}
+
+.soma-caption-right {
+    left: calc(50% + 25vw);
+}
+
+/* Text Content */
+.soma-identity-text-content {
+    position: absolute;
+    bottom: 25vh;
+    /* Lifted up from 15vh */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 2rem;
+    z-index: 10;
+}
+
+.soma-identity-text-content .soma-section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0;
+    font-family: 'Manrope Bold', sans-serif;
+}
+
+.soma-identity-text-content .soma-section-desc {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .soma-dashed-circle {
+        width: 80vw;
+        height: 80vw;
+    }
+
+    .soma-logo-construction-area {
+        width: 70vw;
+    }
+
+    .soma-caption {
+        display: none;
+        /* Hide construct lines on mobile if too cluttered */
+    }
+
+    .soma-identity-text-content {
+        bottom: 18vh;
+        width: 90%;
+    }
+
+    .soma-identity-text-content .soma-section-title {
+        font-size: 1.2rem;
+        font-family: 'Manrope Bold', sans-serif;
+    }
+}
+
+/* Header Separator Line in Section 3 */
+.soma-identity-header-line {
+    position: absolute;
+    top: 15vh;
+    left: 5vw;
+    right: 5vw;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+/* Vertical Center Line for Header in Section 3 */
+.soma-identity-vert-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 15vh;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+/* Specific Label positioning for Section 3 */
+/* Specific Label positioning for Section 3 */
+.soma-section-3 .soma-label-tl {
+    top: calc(15vh + 0.8rem);
+    /* Below line */
+    left: 5vw;
+    /* Proportional margin */
+}
+
+.soma-section-3 .soma-label-tr {
+    top: calc(15vh - 1.2rem);
+    /* Above line */
+    right: 5vw;
+    /* Proportional margin */
+}
+
+/* Align Bottom labels as well */
+.soma-section-3 .soma-label-bl {
+    left: 5vw;
+}
+
+.soma-section-3 .soma-label-br {
+    right: 5vw;
+}
+
+/* Captions Alignment to Edges */
+.soma-caption-left {
+    right: auto;
+    left: 5vw;
+    /* Align with labels */
+}
+
+.soma-caption-right {
+    left: auto;
+    right: 5vw;
+    /* Align with labels */
+    flex-direction: row-reverse;
+    /* Ensure text is on the outside or inside? Ref shows text inside? 
+    Ref: Horizontal center line goes through logo.
+    Left side: "GRID: GOLDEN RATIO" --- Logo
+    Right side: Logo --- "HEX: ..." 
+    Current HTML: Left Caption has Span then Line. Right Caption has Line then Span.
+    If moved to edges:
+    Left: [Edge] "GRID..." --- [Center]
+    Right: [Center] --- "HEX..." [Edge]
+    So Right Caption needs Line then Span (Default).
+    But position is Right: 5vw.
+    Standard flow: Line is Left of Text?
+    HTML: <div class="soma-caption-right"><div class="caption-line"></div><span>HEX...</span></div>
+    Display: Flex.
+    Visual: Line - Text.
+    If anchored to Right:
+    [Line] [Text] |
+    This looks correct if line points TO the text from logo?
+    No, line should connect Logo to Text.
+    So Right Side: Logo --- Line --- Text.
+    So Line should be on Left of Text.
+    HTML: Line, Text.
+    Correct.
+    Wait, left side: Text --- Line --- Logo.
+    HTML: Text, Line.
+    Correct. 
+    */
+}
+
+
+
+/* Dark Nav State for Light Sections (Beige BG) */
+/* User Request: Beige Screen -> Black Gradient -> White Text */
+.corner-nav.nav-dark .nav-link {
+    color: #fff !important;
+}
+
+.corner-nav.nav-dark .nav-link::before {
+    background-color: #fff;
+}
+
+/* Default Nav State for Dark Sections (Black BG) */
+/* User Request: Black Screen -> White Gradient -> Black Text */
+.soma-project-page .corner-nav--top-left .nav-link {
+    color: #1A1A1A;
+    /* Black text on White Gradient */
+}
+
+/* Nav Readability Gradient */
+.soma-nav-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5rem;
+    /* Default: White Gradient for Dark Pages (Black BG) */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+    z-index: 900;
+    transition: background 0.3s ease;
+}
+
+.soma-nav-gradient.nav-dark {
+    /* Adaptive: Black Gradient for Light Pages (Beige BG) */
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
 }
