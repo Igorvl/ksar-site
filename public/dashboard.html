@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Monitor: Global Link</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <style>
+        /* --- 1. CORE VARIABLES --- */
+        :root {
+            --bg-color: #050505;
+            --panel-bg: #0f0f0f;
+            --border-color: #333;
+            --text-main: #a0a0a0;
+            --text-dim: #555;
+            --accent-green: #5c9c6d;
+            --font-stack: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            user-select: none;
+        }
+
+        /* --- 2. EFFECTS LAYERS --- */
+        .crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 999;
+            pointer-events: none;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            animation: flicker 0.15s infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 0.95;
+            }
+
+            50% {
+                opacity: 0.92;
+            }
+
+            100% {
+                opacity: 0.96;
+            }
+        }
+
+        .screen-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 998;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(92, 156, 109, 0.05) 0%, rgba(0, 0, 0, 0.9) 90%);
+        }
+
+        /* --- 3. LAYOUT --- */
+        .dashboard-container {
+            width: 95vw;
+            height: 90vh;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+            background-color: var(--border-color);
+            border: 1px solid #444;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+            position: relative;
+            z-index: 1;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            padding: 15px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-logs {
+            grid-row: 1 / 3;
+            grid-column: 1 / 2;
+        }
+
+        .panel-globe {
+            grid-row: 1 / 2;
+            grid-column: 2 / 3;
+        }
+
+        /* Renamed for clarity */
+        .panel-metrics {
+            grid-row: 2 / 3;
+            grid-column: 2 / 3;
+        }
+
+        h3 {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        /* --- 4. COMPONENTS --- */
+        /* Logs */
+        #log-container {
+            flex-grow: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-size: 11px;
+            line-height: 1.5;
+            text-shadow: 0 0 2px rgba(92, 156, 109, 0.3);
+        }
+
+        .log-line {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ts {
+            color: var(--text-dim);
+            min-width: 65px;
+        }
+
+        .proc {
+            color: var(--accent-green);
+            min-width: 75px;
+        }
+
+        .msg {
+            color: #ccc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: var(--accent-green);
+            animation: blink 1s step-end infinite;
+            margin-top: 5px;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* THREE.JS GLOBE CONTAINER */
+        #globe-container {
+            flex-grow: 1;
+            width: 100%;
+            position: relative;
+            /* Subtle border to match aesthetic */
+            border-left: 1px solid #222;
+            border-bottom: 1px solid #222;
+            /* Ensure canvas doesn't overflow and create scrollbars */
+            overflow: hidden;
+        }
+
+        #globe-container canvas {
+            display: block;
+            /* Removes bottom margin of inline elements */
+            outline: none;
+        }
+
+        /* Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 8px;
+            height: 100%;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.015);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(92, 156, 109, 0.3);
+            background: rgba(92, 156, 109, 0.05);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-dim);
+        }
+
+        .metric-value {
+            font-size: 20px;
+            color: #eee;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .status-badge {
+            background: #1e2e21;
+            color: var(--accent-green);
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-size: 9px;
+        }
+
+        /* --- 5. INIT OVERLAY --- */
+        #init-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: pointer;
+        }
+
+        .init-text {
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+            padding: 20px 40px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        .audio-indicator {
+            font-size: 9px;
+            margin-right: 5px;
+            color: #444;
+        }
+
+        .audio-on {
+            color: var(--accent-green);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="crt-overlay"></div>
+    <div class="screen-glow"></div>
+
+    <div id="init-overlay">
+        <div class="init-text">CLICK TO INITIALIZE SYSTEM</div>
+    </div>
+
+    <div class="dashboard-container">
+
+        <div class="panel panel-logs">
+            <h3>
+                <span>System Log // tty1</span>
+                <span id="audio-status" class="audio-indicator">MUTE</span>
+            </h3>
+            <div id="log-container"></div>
+            <div class="cursor"></div>
+        </div>
+
+        <div class="panel panel-globe">
+            <h3>GLOBAL THREAT MAP</h3>
+            <div id="globe-container"></div>
+        </div>
+
+        <div class="panel panel-metrics">
+            <h3>Hardware Status</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-header"><span>CPU 0</span><span class="status-badge">OK</span></div>
+                    <div class="metric-value" id="cpu-val">12%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header"><span>RAM</span><span class="status-badge">OK</span></div>
+                    <div class="metric-value" id="mem-val">8.4G</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header"><span>IO/S</span><span class="status-badge">ACT</span></div>
+                    <div class="metric-value" id="disk-val">4MB</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header"><span>NODES</span><span class="status-badge">OK</span></div>
+                    <div class="metric-value" id="pid-val">54</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* --- AUDIO ENGINE --- */
+        let audioCtx;
+        let isMuted = false;
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+        function playDataTick() {
+            if (!audioCtx || isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.type = 'square'; osc.frequency.setValueAtTime(800 + Math.random() * 200, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+        }
+
+        /* --- THREE.JS GLOBE SETUP --- */
+        let scene, camera, renderer, globeMesh, outerGlobeMesh;
+        const globeContainer = document.getElementById('globe-container');
+
+        function initGlobe() {
+            // Get dimensions of the container panel
+            let width = globeContainer.clientWidth;
+            let height = globeContainer.clientHeight;
+
+            // 1. Scene & Camera
+            scene = new THREE.Scene();
+            // PerspectiveCamera(fov, aspect, near, far)
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.z = 2.8; // Zoom out slightly
+
+            // 2. Renderer
+            // alpha: true allows transparent background to show HTML panel bg
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1); // Ensure sharpness on HiDPI
+            globeContainer.appendChild(renderer.domElement);
+
+            // 3. Objects
+            // Accent color defined in CSS (0x5c9c6d)
+            const accentColorHex = 0x5c9c6d;
+
+            // Inner Sphere (The main grid)
+            const geometry1 = new THREE.SphereGeometry(1, 32, 24);
+            const material1 = new THREE.MeshBasicMaterial({
+                color: accentColorHex,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.5
+            });
+            globeMesh = new THREE.Mesh(geometry1, material1);
+            scene.add(globeMesh);
+
+            // Outer Icosahedron (For "hologram" complexity effect)
+            const geometry2 = new THREE.IcosahedronGeometry(1.1, 1);
+            const material2 = new THREE.MeshBasicMaterial({
+                color: accentColorHex,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.15 // More subtle
+            });
+            outerGlobeMesh = new THREE.Mesh(geometry2, material2);
+            scene.add(outerGlobeMesh);
+
+            // Handle window resizing
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onWindowResize() {
+            // Recalculate dimensions based on container size
+            let width = globeContainer.clientWidth;
+            let height = globeContainer.clientHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function animateGlobe() {
+            requestAnimationFrame(animateGlobe);
+            // Rotate the globes
+            globeMesh.rotation.y += 0.002;
+            globeMesh.rotation.x += 0.0005;
+
+            // Rotate outer shell in opposite direction
+            outerGlobeMesh.rotation.y -= 0.003;
+            outerGlobeMesh.rotation.z += 0.001;
+
+            renderer.render(scene, camera);
+        }
+
+        /* --- UI LOGIC (Logs & Metrics) --- */
+        const processes = ['kernel', 'systemd', 'sshd', 'dockerd', 'nginx', 'kworker', 'aws-agent', 'postgres', 'redis'];
+        const messages = [
+            "Validating block checksums...", "Packet validated eth0", "Garbage collection [GC]",
+            "Flushing buffer to disk (sda1)", "Connection accepted 10.0.0.5", "Health check passed (200 OK)",
+            "Snapshot created volume-442", "Replication sync: 0ms lag", "Telemetry sent to master node",
+            "Allocating virtual memory", "Threat signature update received"
+        ];
+        const logContainer = document.getElementById('log-container');
+
+        function addLogLine() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-GB', { hour12: false });
+            const proc = processes[Math.floor(Math.random() * processes.length)];
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            const div = document.createElement('div');
+            div.className = 'log-line';
+            div.style.animation = `fadeIn 0.1s ease`;
+            div.innerHTML = `<span class="ts">[${timeStr}]</span> <span class="proc">${proc}:</span> <span class="msg">${msg}</span>`;
+            logContainer.appendChild(div);
+            if (logContainer.children.length > 22) logContainer.removeChild(logContainer.firstChild);
+            playDataTick();
+        }
+
+        function updateMetrics() {
+            document.getElementById('cpu-val').innerText = (Math.floor(Math.random() * 30) + 5) + "%";
+            document.getElementById('mem-val').innerText = (8 + Math.random()).toFixed(1) + "G";
+            document.getElementById('disk-val').innerText = Math.floor(Math.random() * 50) + "MB";
+            document.getElementById('pid-val').innerText = 50 + Math.floor(Math.random() * 10);
+        }
+
+        /* --- INITIALIZATION --- */
+        const overlay = document.getElementById('init-overlay');
+        const audioStatus = document.getElementById('audio-status');
+
+        overlay.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            initAudio();
+            audioStatus.innerText = "AUDIO ON";
+            audioStatus.classList.add('audio-on');
+
+            // Initialize Three.js scene
+            initGlobe();
+            // Start Three.js animation loop
+            animateGlobe();
+
+            // Start data loops
+            setInterval(addLogLine, 400);
+            setInterval(updateMetrics, 2000);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'm') {
+                isMuted = !isMuted;
+                audioStatus.innerText = isMuted ? "MUTE" : "AUDIO ON";
+                audioStatus.classList.toggle('audio-on');
+            }
+        });
+    </script>
+</body>
+
+</html>

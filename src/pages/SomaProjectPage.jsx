@@ -2,6 +2,7 @@
  * SomaProjectPage - Detailed view for SOMA Project
  */
 import React, { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import './SomaProjectPage.css'
 import { useModal } from '../context/ModalContext'
 import OnlineIndicator from '../components/OnlineIndicator'
@@ -12,6 +13,64 @@ export default function SomaProjectPage() {
     const [isNavDark, setIsNavDark] = useState(false)
     const section3Ref = useRef(null)
 
+    // Animation Variants for "Blueprint" Assembly
+    const gridContainerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.15, // Delay between each element appearing
+                delayChildren: 0.2
+            }
+        }
+    }
+
+    const drawLineHoriz = {
+        hidden: { scaleX: 0, opacity: 0 },
+        visible: {
+            scaleX: 1,
+            opacity: 1,
+            transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] } // Custom bezier for premium feel
+        }
+    }
+
+    const drawLineVert = {
+        hidden: { scaleY: 0, opacity: 0 },
+        visible: {
+            scaleY: 1,
+            opacity: 1,
+            transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+        }
+    }
+
+    const fadeUp = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: { duration: 0.8, ease: "easeOut" }
+        }
+    }
+
+    const markerScale = {
+        hidden: { scale: 0, opacity: 0 },
+        visible: {
+            scale: 1,
+            opacity: 1,
+            transition: { type: "spring", stiffness: 200, damping: 20 }
+        }
+    }
+
+    const circleRotate = {
+        hidden: { rotate: -90, opacity: 0, scale: 0.8 },
+        visible: {
+            rotate: 0,
+            opacity: 1,
+            scale: 1,
+            transition: { duration: 1.5, ease: "easeOut" }
+        }
+    }
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -19,8 +78,8 @@ export default function SomaProjectPage() {
             },
             {
                 threshold: 0,
-                // Trigger immediately when the element hits the top of the viewport
-                rootMargin: "0px 0px -90% 0px"
+                // Trigger when the section top reaches 10% of the viewport height (near the nav)
+                rootMargin: "-5% 0px -90% 0px"
             }
         )
 
@@ -33,14 +92,22 @@ export default function SomaProjectPage() {
 
     return (
         <main className="soma-project-page">
-            {/* Nav Readability Gradient */}
-            <div className={`soma-nav-gradient ${isNavDark ? 'nav-dark' : ''}`} aria-hidden="true" />
+
 
 
             {/* === NAVIGATION (Strictly limited as per request) === */}
             <nav className={`corner-nav corner-nav--top-left ${isNavDark ? 'nav-dark' : ''}`}>
-                <a href="/projects" className="nav-link font-nav">BACK TO PROJECTS</a>
+                <a href="/projects" className="nav-link">
+                    <span className="nav-blur-bg" aria-hidden="true"></span>
+                    <span className="nav-text font-nav">BACK TO PROJECTS</span>
+                </a>
             </nav>
+
+            {/* === GLOBAL CROSSHAIRS === */}
+            <div className="crosshair crosshair--top-left"></div>
+            <div className="crosshair crosshair--top-right"></div>
+            <div className="crosshair crosshair--bottom-left"></div>
+            <div className="crosshair crosshair--bottom-right"></div>
 
             {/* === SCROLLABLE BACKGROUND IMAGE === */}
             <div className="soma-bg-container">
@@ -105,71 +172,117 @@ export default function SomaProjectPage() {
             {/* ============================================
                 SECTION 3: IDENTITY GRID (Light Mode)
                 ============================================ */}
-            <section className="soma-section soma-section-3 light-mode" ref={section3Ref}>
+            <motion.section
+                className="soma-section soma-section-3 light-mode"
+                ref={section3Ref}
+                variants={gridContainerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+            >
                 {/* Grid Lines (Darker for light bg) */}
-                <div className="soma-grid-line soma-grid-vert" />
+                {/* Vertical Line growing from top */}
+                <motion.div
+                    className="soma-grid-line soma-grid-vert"
+                    variants={drawLineVert}
+                    style={{ originY: 0 }}
+                />
 
-                {/* Header Separator Line */}
-                <div className="soma-identity-header-line" />
+                {/* Header Separator Line growing from center */}
+                <motion.div
+                    className="soma-identity-header-line"
+                    variants={drawLineHoriz}
+                    style={{ originX: 0.5 }}
+                />
 
                 {/* Header Vertical Line */}
-                <div className="soma-identity-vert-line" />
+                <motion.div
+                    className="soma-identity-vert-line"
+                    variants={drawLineVert}
+                    style={{ originY: 0 }}
+                />
 
-                {/* Dashed Center Guide */}
-                <div className="soma-dashed-circle" />
+                {/* Dashed Center Guide - Rotates nicely */}
+                <motion.div
+                    className="soma-dashed-circle"
+                    variants={circleRotate}
+                    style={{
+                        rotate: 0
+                    }}
+                    animate={{
+                        rotate: 360
+                    }}
+                    transition={{
+                        // Initial appearance handled by variants
+                        // Continuous rotation:
+                        rotate: {
+                            duration: 60,
+                            repeat: Infinity,
+                            ease: "linear"
+                        }
+                    }}
+                />
 
-                {/* Corner Markers */}
-                <div className="soma-corner-marker soma-corner-tl" />
-                <div className="soma-corner-marker soma-corner-tr" />
-                <div className="soma-corner-marker soma-corner-bl" />
-                <div className="soma-corner-marker soma-corner-br" />
+                {/* Corner Markers - Pop in */}
+                <motion.div className="soma-corner-marker soma-corner-tl" variants={markerScale} />
+                <motion.div className="soma-corner-marker soma-corner-tr" variants={markerScale} />
+                <motion.div className="soma-corner-marker soma-corner-bl" variants={markerScale} />
+                <motion.div className="soma-corner-marker soma-corner-br" variants={markerScale} />
 
-                {/* Top Labels */}
-                <div className="soma-label soma-label-tl font-nav text-dark">FIG 02. IDENTITY GRID</div>
-                <div className="soma-label soma-label-tr font-nav text-dark">SYSTEM: VISUAL DNA</div>
+                {/* Top Labels - Fade up */}
+                <motion.div className="soma-label soma-label-tl font-nav text-dark" variants={fadeUp}>FIG 02. IDENTITY GRID</motion.div>
+                <motion.div className="soma-label soma-label-tr font-nav text-dark" variants={fadeUp}>SYSTEM: VISUAL DNA</motion.div>
 
                 {/* Center Wrapper */}
                 <div className="soma-identity-wrapper">
 
                     {/* Left Caption */}
-                    <div className="soma-caption soma-caption-left font-nav text-dark">
+                    <motion.div className="soma-caption soma-caption-left font-nav text-dark" variants={fadeUp}>
                         <span>GRID: GOLDEN RATIO</span>
-                        <div className="caption-line"></div>
-                    </div>
+                        <motion.div className="caption-line" variants={drawLineHoriz} style={{ originX: 1 }}></motion.div>
+                    </motion.div>
 
                     {/* Logo Area */}
                     <div className="soma-logo-construction-area">
-                        {/* Inner markers */}
-                        <div className="inner-marker marker-tl"></div>
-                        <div className="inner-marker marker-tr"></div>
-                        <div className="inner-marker marker-bl"></div>
-                        <div className="inner-marker marker-br"></div>
+                        {/* Inner markers - Sequential pop in */}
+                        <motion.div className="inner-marker marker-tl" variants={markerScale}></motion.div>
+                        <motion.div className="inner-marker marker-tr" variants={markerScale}></motion.div>
+                        <motion.div className="inner-marker marker-bl" variants={markerScale}></motion.div>
+                        <motion.div className="inner-marker marker-br" variants={markerScale}></motion.div>
 
-                        <img src="/Projects/Soma/Soma_Logo2.svg" alt="Soma Identity Logo" className="soma-identity-logo" />
+                        {/* Logo fades in last */}
+                        <motion.img
+                            src="/Projects/Soma/Soma_Logo2.svg"
+                            alt="Soma Identity Logo"
+                            className="soma-identity-logo"
+                            variants={fadeUp}
+                        />
                     </div>
 
                     {/* Right Caption */}
-                    <div className="soma-caption soma-caption-right font-nav text-dark">
-                        <div className="caption-line"></div>
+                    <motion.div className="soma-caption soma-caption-right font-nav text-dark" variants={fadeUp}>
+                        <motion.div className="caption-line" variants={drawLineHoriz} style={{ originX: 0 }}></motion.div>
                         <span>HEX: #1A1A1A / ONYX</span>
-                    </div>
+                    </motion.div>
                 </div>
 
-                {/* Bottom Text Content */}
-                <div className="soma-identity-text-content">
-                    <h3 className="soma-section-title text-dark font-label">THE MITOSIS PULSE</h3>
-                    <p className="soma-section-desc text-dark font-label">
-                        The visual identity is derived from the precise moment of cellular<br />
-                        division. Two organic entities connected by a vital thread,<br />
-                        symbolizing the transfer of energy and life.
-                    </p>
+                {/* Bottom Text Content - Wrapped to fix centering conflict */}
+                <div className="soma-identity-text-wrapper-static">
+                    <motion.div className="soma-identity-text-content" variants={fadeUp}>
+                        <h3 className="soma-section-title text-dark font-label">THE MITOSIS PULSE</h3>
+                        <p className="soma-section-desc text-dark font-label">
+                            The visual identity is derived from the precise moment of cellular<br />
+                            division. Two organic entities connected by a vital thread,<br />
+                            symbolizing the transfer of energy and life.
+                        </p>
+                    </motion.div>
                 </div>
 
                 {/* Bottom Labels */}
-                <div className="soma-label soma-label-bl font-nav text-dark">DATE: 2026 / Q3</div>
-                <div className="soma-label soma-label-br font-nav text-dark">LOGO CONSTRUCTION</div>
+                <motion.div className="soma-label soma-label-bl font-nav text-dark" variants={fadeUp}>DATE: 2026 / Q3</motion.div>
+                <motion.div className="soma-label soma-label-br font-nav text-dark" variants={fadeUp}>LOGO CONSTRUCTION</motion.div>
 
-            </section>
+            </motion.section>
         </main>
     )
 }

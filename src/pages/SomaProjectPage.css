@@ -18,10 +18,84 @@
 /* Specific nav override for readability */
 /* Specific nav override for readability */
 .soma-project-page .corner-nav--top-left {
+    position: fixed;
+    /* Ensure it stays fixed */
     left: 2rem;
     top: 1.5rem;
     z-index: 1001;
     /* Essential: must be above nav gradient (900) */
+}
+
+/* Glassmorphic Gradient Blur Design for Nav Link */
+.soma-project-page .corner-nav--top-left .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    /* Larger touch area for the effect */
+    text-decoration: none;
+    /* No border, no background on container */
+    overflow: visible;
+}
+
+/* The Blurred "Cloud" Background */
+.nav-blur-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160%;
+    /* Significantly wider */
+    height: 250%;
+    /* Much taller for better vertical fade */
+
+    /* The Magic: Strong Blur + Gradient Mask */
+    background: rgba(0, 0, 0, 0.4);
+    /* Base darkness */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    /* Fade out edges completely */
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+
+    border-radius: 50%;
+    /* Soft organic shape */
+    z-index: -1;
+    opacity: 0;
+    /* Hidden by default, appears when needed or always subtle? Let's make it always subtle */
+    transition: all 0.4s ease;
+}
+
+/* Make it visible but subtle by default to aid reading */
+.nav-blur-bg {
+    opacity: 1;
+}
+
+/* Text Styles */
+.nav-text {
+    position: relative;
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Hover State */
+.soma-project-page .corner-nav--top-left .nav-link:hover .nav-blur-bg {
+    width: 180%;
+    height: 280%;
+    background: rgba(0, 0, 0, 0.6);
+    /* Darker on hover */
+    backdrop-filter: blur(25px);
+}
+
+.soma-project-page .corner-nav--top-left .nav-link:hover .nav-text {
+    color: #fff;
+    transform: translateY(1px);
 }
 
 .soma-bg-container {
@@ -226,7 +300,7 @@
 
 .corner-line--top {
     top: 3.3rem;
-    left: calc((3 / 11.5) * 100%);
+    left: calc((3 / 12) * 100%);
     width: 54vw;
     height: auto;
     opacity: 0.5;
@@ -673,18 +747,28 @@
     left: calc(50% + 25vw);
 }
 
-/* Text Content */
-.soma-identity-text-content {
+/* Text Content Wrapper (Static Position) */
+.soma-identity-text-wrapper-static {
     position: absolute;
     bottom: 25vh;
-    /* Lifted up from 15vh */
     left: 50%;
     transform: translateX(-50%);
-    text-align: center;
+    /* Static centering works perfectly here */
     width: 100%;
     max-width: 600px;
-    padding: 0 2rem;
     z-index: 10;
+    pointer-events: none;
+    display: flex;
+    /* Ensures child centers if needed */
+    justify-content: center;
+}
+
+/* Inner Text Content (Animated) */
+.soma-identity-text-content {
+    /* No absolute positioning here to avoid Framer Motion conflict */
+    text-align: center;
+    width: 100%;
+    padding: 0 2rem;
 }
 
 .soma-identity-text-content .soma-section-title {
@@ -793,8 +877,8 @@
     Right side: Logo --- "HEX: ..." 
     Current HTML: Left Caption has Span then Line. Right Caption has Line then Span.
     If moved to edges:
-    Left: [Edge] "GRID..." --- [Center]
-    Right: [Center] --- "HEX..." [Edge]
+    [Edge] "GRID..." --- [Center]
+    [Center] --- "HEX..." [Edge]
     So Right Caption needs Line then Span (Default).
     But position is Right: 5vw.
     Standard flow: Line is Left of Text?
@@ -817,38 +901,31 @@
 
 
 
-/* Dark Nav State for Light Sections (Beige BG) */
-/* User Request: Beige Screen -> Black Gradient -> White Text */
+/* --- ADAPTIVE COLOR LOGIC --- */
+
+/* LIGHT SECTION MODE */
+.corner-nav.nav-dark .nav-blur-bg {
+    background: rgba(255, 255, 255, 0.5) !important;
+    /* White cloud */
+    /* Adjust mask for light mode if needed, but standard should work */
+}
+
+.corner-nav.nav-dark .nav-text {
+    color: #1A1A1A !important;
+}
+
+.corner-nav.nav-dark .nav-link:hover .nav-blur-bg {
+    background: rgba(255, 255, 255, 0.8) !important;
+}
+
+.corner-nav.nav-dark .nav-link:hover .nav-text {
+    color: #000 !important;
+}
+
+/* Remove old overrides */
 .corner-nav.nav-dark .nav-link {
-    color: #fff !important;
-}
-
-.corner-nav.nav-dark .nav-link::before {
-    background-color: #fff;
-}
-
-/* Default Nav State for Dark Sections (Black BG) */
-/* User Request: Black Screen -> White Gradient -> Black Text */
-.soma-project-page .corner-nav--top-left .nav-link {
-    color: #1A1A1A;
-    /* Black text on White Gradient */
-}
-
-/* Nav Readability Gradient */
-.soma-nav-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5rem;
-    /* Default: White Gradient for Dark Pages (Black BG) */
-    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-    pointer-events: none;
-    z-index: 900;
-    transition: background 0.3s ease;
-}
-
-.soma-nav-gradient.nav-dark {
-    /* Adaptive: Black Gradient for Light Pages (Beige BG) */
-    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: inherit !important;
 }
