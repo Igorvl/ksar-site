@@ -929,3 +929,232 @@
     box-shadow: none !important;
     color: inherit !important;
 }
+
+/* ============================================
+   SECTION 4: CHROMATIC DNA (Materials)
+   ============================================ */
+.soma-section-4 {
+    height: 115vh;
+    /* Request: Significantly reduced height to remove bottom gap */
+    min-height: 800px;
+    background-color: #000;
+    justify-content: flex-start;
+    /* Align content to top (with padding) */
+    padding-top: 15vh;
+}
+
+/* Header Area with Lines */
+.soma-materials-header {
+    position: absolute;
+    top: 10vh;
+    left: 0;
+    width: 100%;
+    height: 10vh;
+}
+
+.soma-grid-horiz-top {
+    position: absolute;
+    top: 0;
+    left: 5vw;
+    right: 5vw;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.soma-section-4 .soma-grid-vert {
+    /* Central vertical line running through */
+    top: 0;
+    bottom: 0;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+/* Specific Label positioning for Section 4 */
+.soma-section-4 .soma-label-tl {
+    top: 1rem;
+    /* Below the line */
+    left: 5vw;
+}
+
+.soma-section-4 .soma-label-tr {
+    top: -1rem;
+    /* Above the line */
+    right: 5vw;
+}
+
+/* Vertical line going UP from the horizontal header line */
+.soma-vert-line-up {
+    position: absolute;
+    bottom: 100%;
+    /* Go up from the top of the header container (which aligns with the line) */
+    left: 50%;
+    width: 1px;
+    height: 10vh;
+    /* Fills the space from top:10vh to top:0 */
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(-50%);
+}
+
+/* GRID LAYOUT */
+.soma-materials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4vw;
+    width: 80%;
+    /* Occupy 80% of width */
+    max-width: 1400px;
+    margin-top: 15vh;
+    /* Space from header */
+    z-index: 5;
+}
+
+/* Material Card */
+.soma-material-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    cursor: none;
+    /* pointer? no, using custom cursor logic elsewhere */
+}
+
+/* Hover Interaction: L-Shape "Activation" */
+.soma-material-card:hover .material-corner-l-shape {
+    border-color: #fff;
+    box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Hover Interaction: Text Brightness */
+.soma-material-card:hover .material-meta {
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.3s ease;
+}
+
+/* Image */
+.material-image-container {
+    width: 100%;
+    aspect-ratio: 1/1;
+    /* Square */
+    overflow: hidden;
+    /* Optional: Border or not? Ref shows clean image */
+}
+
+.material-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* Color Bar */
+.material-color-bar {
+    width: 100%;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+    /* Space between bar and text */
+}
+
+
+
+.soma-material-card:hover .material-image {
+    transform: scale(1.05);
+    /* Subtle zoom */
+}
+
+/* Color Bar */
+.material-color-bar {
+    width: 100%;
+    height: 2rem;
+    /* Distinct bar */
+    /* styling handled inline for color */
+}
+
+/* Info Text */
+.material-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* Reduced gap to bring Title and Meta closer */
+    text-align: left;
+}
+
+.material-title {
+    font-family: var(--font-nav);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin: 0;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.material-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    font-family: var(--font-nav);
+}
+
+/* Material Content Row */
+.material-content-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* L-Shape Marker Inline */
+.material-corner-l-shape {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
+    margin-bottom: 0.2rem;
+    /* Align with text baseline visually */
+}
+
+
+
+/* Vertical line continuing down */
+.soma-grid-vert-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    height: 15vh;
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .soma-materials-grid {
+        gap: 2vw;
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    .soma-section-4 {
+        height: auto;
+        /* Allow auto height on mobile */
+        padding-bottom: 5rem;
+    }
+
+    .soma-materials-grid {
+        grid-template-columns: 1fr;
+        /* Stack on mobile */
+        margin-top: 10vh;
+        gap: 4rem;
+    }
+
+    .material-color-bar {
+        height: 1.5rem;
+    }
+}

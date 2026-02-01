@@ -283,6 +283,121 @@ export default function SomaProjectPage() {
                 <motion.div className="soma-label soma-label-br font-nav text-dark" variants={fadeUp}>LOGO CONSTRUCTION</motion.div>
 
             </motion.section>
+
+            {/* ============================================
+                SECTION 4: CHROMATIC DNA (Materials)
+                ============================================ */}
+            <motion.section
+                className="soma-section soma-section-4"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+            >
+                {/* Global Vertical Line through the section */}
+                <motion.div
+                    className="soma-grid-line soma-grid-vert"
+                    variants={drawLineVert}
+                    style={{ originY: 0 }}
+                />
+
+                {/* Header Area */}
+                <div className="soma-materials-header">
+                    <motion.div
+                        className="soma-vert-line-up"
+                        variants={drawLineVert}
+                        style={{ originY: 1 }} // Grows upwards from bottom
+                    />
+                    <motion.div
+                        className="soma-grid-line soma-grid-horiz-top"
+                        variants={drawLineHoriz}
+                        style={{ originX: 0.5 }} // Grows from center
+                    />
+                    <motion.div className="soma-label soma-label-tl font-nav" variants={fadeUp}>FIG 03: CHROMATIC DNA</motion.div>
+                    <motion.div className="soma-label soma-label-tr font-nav" variants={fadeUp}>PROTOTYPE / V 2.0</motion.div>
+                </div>
+
+                {/* Materials Grid */}
+                <div className="soma-materials-grid">
+                    {/* Card 1: Tectonic Grey */}
+                    <motion.div
+                        className="soma-material-card"
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.1 }}
+                    >
+                        <div className="material-image-container">
+                            <img src="/Projects/Soma/Soma4_1.webp" alt="Tectonic Grey Material" className="material-image" />
+                        </div>
+                        <div className="material-color-bar" style={{ backgroundColor: '#1E1D1B' }}></div>
+                        <div className="material-content-row">
+                            <div className="material-info">
+                                <h4 className="material-title">TECTONIC GREY</h4>
+                                <div className="material-meta font-nav">
+                                    <div>ROLE: BASE / STRUCTURE</div>
+                                    <div>HEX: #1E1D1B</div>
+                                </div>
+                            </div>
+                            <div className="material-corner-l-shape"></div>
+                        </div>
+                    </motion.div>
+
+                    {/* Card 2: Amber Resin */}
+                    <motion.div
+                        className="soma-material-card"
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                    >
+                        <div className="material-image-container">
+                            <img src="/Projects/Soma/Soma4_2.webp" alt="Amber Resin Material" className="material-image" />
+                        </div>
+                        <div className="material-color-bar" style={{ backgroundColor: '#BF8232' }}></div>
+                        <div className="material-content-row">
+                            <div className="material-info">
+                                <h4 className="material-title">AMBER RESIN</h4>
+                                <div className="material-meta font-nav">
+                                    <div>ROLE: ENERGY / FLUX</div>
+                                    <div>HEX: #BF8232</div>
+                                </div>
+                            </div>
+                            <div className="material-corner-l-shape"></div>
+                        </div>
+                    </motion.div>
+
+                    {/* Card 3: Raw Travertine */}
+                    <motion.div
+                        className="soma-material-card"
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.5 }}
+                    >
+                        <div className="material-image-container">
+                            <img src="/Projects/Soma/Soma4_3.webp" alt="Raw Travertine Material" className="material-image" />
+                        </div>
+                        <div className="material-color-bar" style={{ backgroundColor: '#C8C2B6' }}></div>
+                        <div className="material-content-row">
+                            <div className="material-info">
+                                <h4 className="material-title">RAW TRAVERTINE</h4>
+                                <div className="material-meta font-nav">
+                                    <div>ROLE: CALM / FOUNDATION</div>
+                                    <div>HEX: #C8C2B6</div>
+                                </div>
+                            </div>
+                            <div className="material-corner-l-shape"></div>
+                        </div>
+                    </motion.div>
+                </div>
+
+
+                <motion.div
+                    className="soma-grid-line soma-grid-vert-bottom"
+                    variants={drawLineVert}
+                    style={{ originY: 0 }}
+                />
+            </motion.section>
         </main>
     )
 }
