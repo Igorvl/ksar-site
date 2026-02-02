@@ -1165,7 +1165,9 @@
 .soma-section-5 {
     position: relative;
     width: 100%;
-    min-height: 200vh;
+    min-height: 170vh;
+    height: auto;
+    /* Ensure expansion */
     /* 2 Screens height */
     background-color: #EAE6DD;
     /* Match Section 3 Light beige */
@@ -1174,7 +1176,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden;
+    overflow: visible;
     padding-bottom: 5rem;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     /* Match Section 3 Top Border */
@@ -1258,6 +1260,8 @@
     /* Fill the container */
     height: auto;
     object-fit: contain;
+    max-height: 60vh;
+    /* Prevent image from taking entire screen */
     /* If the user wants the block height reduced by 50%, maybe the image is displaying too big? */
     /* Let's limit max-height if needed, but width usually dictates height for images. */
 }
@@ -1358,15 +1362,76 @@
 /* Responsive adjustments for Section 5 */
 @media (max-width: 1024px) {
     .soma-type-block {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        /* Force stack */
         gap: 4rem;
     }
 
+    .soma-type-image-wrapper,
+    .soma-type-info {
+        width: 100%;
+        /* Full width */
+        order: initial;
+        /* Reset order */
+        padding: 0 2rem;
+        /* Added horizontal padding for breathing room */
+        box-sizing: border-box;
+    }
+
     .soma-typography-content {
-        gap: 8rem;
+        gap: 4rem;
+        /* Reduced from 8rem */
     }
 
     .soma-type-name {
-        font-size: 3.5rem;
+        font-size: 2rem;
+        /* Adjusted for mobile */
+    }
+
+    .soma-type-desc {
+        padding-right: 0;
+    }
+}
+
+/* Modifier for Mono Header to replace inline styles */
+.soma-type-name.is-mono {
+    font-family: var(--font-nav);
+    font-weight: 400;
+}
+
+/* Landscape Mobile Adjustments for Section 3 Overlap */
+@media (max-height: 500px) and (orientation: landscape) {
+    .soma-section-3 .soma-identity-wrapper {
+        top: 35%;
+        /* Move Logo Up */
+    }
+
+    .soma-section-3 .soma-logo-construction-area {
+        width: 50vw;
+        /* Increased from 30vw */
+    }
+
+    .soma-section-3 .soma-identity-text-wrapper-static {
+        bottom: 1rem;
+        /* Move Text Down */
+    }
+
+    .soma-section-3 .soma-section-title {
+        font-size: 1.5rem;
+        /* Smaller Title */
+        margin-bottom: 0.5rem;
+    }
+
+    .soma-section-3 .soma-section-desc {
+        font-size: 0.8rem;
+        /* Smaller Desc */
+        line-height: 1.2;
+    }
+
+    .soma-caption-left,
+    .soma-caption-right {
+        display: none;
+        /* Hide side captions to prevent clutter/overlap */
     }
 }

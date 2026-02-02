@@ -14,6 +14,27 @@ export default function SomaProjectPage() {
     const section3Ref = useRef(null)
     const section5Ref = useRef(null)
 
+    // Data Cascade Variants for Protocol
+    const protocolContainerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.08,
+                delayChildren: 0.1
+            }
+        }
+    }
+
+    const protocolItemVariants = {
+        hidden: { opacity: 0, x: -10 },
+        visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.4, ease: "easeOut" }
+        }
+    }
+
     // Animation Variants for "Blueprint" Assembly
     const gridContainerVariants = {
         hidden: { opacity: 0 },
@@ -459,12 +480,18 @@ export default function SomaProjectPage() {
                             <p className="soma-type-desc">
                                 Constructed on strict geometric principles, Manrope serves as the primary voice of SOMA. It embodies clinical precision and architectural stability. Used for headlines, logotypes, and navigation.
                             </p>
-                            <div className="soma-type-protocol font-nav">
-                                <div className="protocol-title">PROTOCOL:</div>
-                                <div>Case: UPPERCASE (Headlines) / Sentence (Body)</div>
-                                <div>Tracking: -3% (Tight for Display)</div>
-                                <div>Weight: Bold / SemiBold</div>
-                            </div>
+                            <motion.div
+                                className="soma-type-protocol font-nav"
+                                variants={protocolContainerVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: "-10%" }}
+                            >
+                                <motion.div className="protocol-title" variants={protocolItemVariants}>PROTOCOL:</motion.div>
+                                <motion.div variants={protocolItemVariants}>Case: UPPERCASE (Headlines) / Sentence (Body)</motion.div>
+                                <motion.div variants={protocolItemVariants}>Tracking: -3% (Tight for Display)</motion.div>
+                                <motion.div variants={protocolItemVariants}>Weight: Bold / SemiBold</motion.div>
+                            </motion.div>
                             <div className="soma-separator-line"></div>
                         </div>
                     </div>
@@ -476,19 +503,25 @@ export default function SomaProjectPage() {
                         </div>
                         <div className="soma-type-info">
                             <div className="soma-type-role font-nav">SECONDARY TYPEFACE // MACHINE DATA</div>
-                            <h2 className="soma-type-name font-nav" style={{ fontSize: '2.5rem', fontWeight: 400, fontFamily: 'var(--font-nav)' }}>
+                            <h2 className="soma-type-name is-mono">
                                 SPACE MONO<br />
                                 <span className="soma-type-sub" style={{ fontWeight: 400 }}>(Fixed-width)</span>
                             </h2>
                             <p className="soma-type-desc">
                                 A monospace typeface representing the analytical and scientific layer of the brand. Used for specifications, pricing, coordinates, and technical footnotes. It provides contrast to the sterile geometry of the primary font.
                             </p>
-                            <div className="soma-type-protocol font-nav">
-                                <div className="protocol-title">PROTOCOL:</div>
-                                <div>Case: UPPERCASE ONLY (Recommended for labels)</div>
-                                <div>Tracking: +5% (Wide)</div>
-                                <div>Color: Muted Gray (80% Opacity)</div>
-                            </div>
+                            <motion.div
+                                className="soma-type-protocol font-nav"
+                                variants={protocolContainerVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: "-10%" }}
+                            >
+                                <motion.div className="protocol-title" variants={protocolItemVariants}>PROTOCOL:</motion.div>
+                                <motion.div variants={protocolItemVariants}>Case: UPPERCASE ONLY (Recommended for labels)</motion.div>
+                                <motion.div variants={protocolItemVariants}>Tracking: +5% (Wide)</motion.div>
+                                <motion.div variants={protocolItemVariants}>Color: Muted Gray (80% Opacity)</motion.div>
+                            </motion.div>
                             <div className="soma-separator-line"></div>
                         </div>
                     </div>
