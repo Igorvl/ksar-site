@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 693.72 431.81">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1a1a1a;
+        font-size: 11.67px;
+        letter-spacing: .05em;
+      }
+
+      .cls-1, .cls-2 {
+        font-family: SpaceMono-Regular, 'Space Mono';
+      }
+
+      .cls-2 {
+        fill: #2b2b2b;
+        font-size: 315.57px;
+        letter-spacing: -.02em;
+      }
+
+      .cls-3 {
+        stroke: #5b5b5b;
+        stroke-width: .5px;
+      }
+
+      .cls-3, .cls-4 {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-4 {
+        stroke: #2b2b2b;
+        stroke-width: .25px;
+      }
+    </style>
+  </defs>
+  <g id="PROJECT-PART1">
+    <g id="slide5-_typographic_syntax" data-name="slide5- typographic syntax">
+      <g>
+        <rect class="cls-4" x=".13" y=".12" width="693.47" height="431.56"/>
+        <g>
+          <g>
+            <polyline class="cls-3" points="525.7 112.73 551.48 112.73 551.48 332.73 525.7 332.73"/>
+            <text class="cls-1" transform="translate(565.71 232.69)"><tspan x="0" y="0">H:220 px</tspan></text>
+          </g>
+          <text class="cls-2" transform="translate(126.15 333.36)"><tspan x="0" y="0">Aa</tspan></text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

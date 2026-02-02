@@ -1158,3 +1158,215 @@
         height: 1.5rem;
     }
 }
+
+/* ============================================
+   SECTION 5: TYPOGRAPHIC SYNTAX
+   ============================================ */
+.soma-section-5 {
+    position: relative;
+    width: 100%;
+    min-height: 200vh;
+    /* 2 Screens height */
+    background-color: #EAE6DD;
+    /* Match Section 3 Light beige */
+    color: #1A1A1A;
+    /* Match Section 3 Dark text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    padding-bottom: 5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    /* Match Section 3 Top Border */
+}
+
+/* Dark theme overrides for lines in this section */
+.soma-section-5 .soma-line-dark {
+    background-color: rgba(0, 0, 0, 0.05);
+    /* Match Section 3 Grid Lines */
+}
+
+.soma-section-5 .soma-text-dark {
+    color: #1A1A1A;
+}
+
+/* Header */
+.soma-typography-header {
+    width: 100%;
+    height: 15vh;
+    position: relative;
+    margin-top: 5vh;
+}
+
+/* Specific Label positioning for Section 5 */
+.soma-section-5 .soma-label-tl {
+    top: 1rem;
+    /* Adjusted to be below the line */
+    left: 5vw;
+}
+
+.soma-section-5 .soma-label-tr {
+    top: -1.5rem;
+    /* Adjusted to be above the line */
+    right: 5vw;
+}
+
+/* Manually position the horizontal line within the relative header container */
+.soma-section-5 .soma-grid-horiz-top {
+    top: 0;
+    /* Aligned to header top */
+}
+
+/* Typography Content Layout */
+.soma-typography-content {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    /* Wider, almost edge to edge */
+    max-width: 1600px;
+    /* Allow it to get very wide on large screens */
+    gap: 5rem;
+    /* Use viewport height for vertical spacing */
+    margin-top: 5rem;
+    z-index: 2;
+}
+
+.soma-type-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Equal split */
+    gap: 3rem;
+    /* Responsive gap */
+    align-items: start;
+}
+
+/* Image Wrapper */
+.soma-type-image-wrapper {
+    width: 100%;
+    /* No border, no padding, image contains the frame */
+    border: none;
+    padding: 0;
+    display: block;
+    /* minimal container */
+    position: relative;
+    /* aspect-ratio removed, let image dictate */
+    background: transparent;
+}
+
+.soma-type-img {
+    width: 100%;
+    /* Fill the container */
+    height: auto;
+    object-fit: contain;
+    /* If the user wants the block height reduced by 50%, maybe the image is displaying too big? */
+    /* Let's limit max-height if needed, but width usually dictates height for images. */
+}
+
+/* Text Info Side */
+.soma-type-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+    padding-top: 0;
+    justify-content: center;
+    /* If we want to align with image height? Ref shows top alignment mostly */
+    height: 100%;
+    /* To matching image height if we used grid stretch? but we use align-items start. */
+}
+
+.soma-type-role {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    opacity: 0.6;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(30, 29, 27, 0.2);
+    padding-top: 1rem;
+    width: 100%;
+    /* margin-bottom: 0.2rem; */
+}
+
+.soma-type-name {
+    margin: 0;
+    font-size: 2.5rem;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    font-family: var(--font-hero);
+    letter-spacing: -0.02em;
+    font-weight: 700;
+}
+
+.soma-type-sub {
+    font-size: 1em;
+    font-weight: 700;
+    text-transform: none;
+    display: block;
+    margin-top: 0.2rem;
+    letter-spacing: 0;
+}
+
+.soma-type-desc {
+    font-size: 0.9rem;
+    line-height: 2.5;
+    opacity: 0.8;
+    max-width: 100%;
+    margin-top: 0.5rem;
+    font-family: 'Manrope', sans-serif !important;
+    /* Force Manrope Regular */
+    font-weight: 400 !important;
+    padding-right: 3rem;
+}
+
+/* Protocol Section */
+.soma-type-protocol {
+    font-size: 0.5rem;
+    line-height: 1.6;
+    /* margin-top: 1rem; */
+    opacity: 1;
+    font-family: var(--font-nav);
+    color: #1A1A1A;
+}
+
+/* Scoped to Section 5 only */
+.soma-section-5 .protocol-title {
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    font-size: 0.5rem;
+    color: #1A1A1A;
+    /* Explicitly dark for Section 5 */
+}
+
+.soma-separator-line {
+    width: 100%;
+    height: 1px;
+    /* background-color: rgba(30, 29, 27, 0.15); */
+    margin-top: 1.5rem;
+}
+
+/* Specific Font Overrides */
+.manrope-font {
+    font-family: var(--font-hero);
+}
+
+.space-mono-font {
+    font-family: var(--font-nav);
+}
+
+/* Responsive adjustments for Section 5 */
+@media (max-width: 1024px) {
+    .soma-type-block {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .soma-typography-content {
+        gap: 8rem;
+    }
+
+    .soma-type-name {
+        font-size: 3.5rem;
+    }
+}

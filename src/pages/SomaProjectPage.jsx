@@ -12,6 +12,7 @@ export default function SomaProjectPage() {
     const { openContactModal } = useModal()
     const [isNavDark, setIsNavDark] = useState(false)
     const section3Ref = useRef(null)
+    const section5Ref = useRef(null)
 
     // Animation Variants for "Blueprint" Assembly
     const gridContainerVariants = {
@@ -73,19 +74,26 @@ export default function SomaProjectPage() {
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsNavDark(entry.isIntersecting)
+            (entries) => {
+                entries.forEach(entry => {
+                    // Simple logic: If any observed light section is entering the top zone, make nav dark.
+                    // If leaving, make it light (assuming we revert to default dark bg).
+                    if (entry.isIntersecting) {
+                        setIsNavDark(true)
+                    } else {
+                        setIsNavDark(false)
+                    }
+                })
             },
             {
                 threshold: 0,
                 // Trigger when the section top reaches 10% of the viewport height (near the nav)
-                rootMargin: "-5% 0px -90% 0px"
+                rootMargin: "-2% 0px -90% 0px" // Adjusted slightly to be more responsive at the very top
             }
         )
 
-        if (section3Ref.current) {
-            observer.observe(section3Ref.current)
-        }
+        if (section3Ref.current) observer.observe(section3Ref.current)
+        if (section5Ref.current) observer.observe(section5Ref.current)
 
         return () => observer.disconnect()
     }, [])
@@ -397,6 +405,95 @@ export default function SomaProjectPage() {
                     variants={drawLineVert}
                     style={{ originY: 0 }}
                 />
+            </motion.section>
+
+            {/* ============================================
+                SECTION 5: TYPOGRAPHIC SYNTAX
+                ============================================ */}
+            <motion.section
+                ref={section5Ref}
+                className="soma-section soma-section-5"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+            >
+                {/* Global Vertical Line (Dark for light bg) */}
+                <motion.div
+                    className="soma-grid-line soma-grid-vert soma-line-dark"
+                    variants={drawLineVert}
+                    style={{ originY: 0 }}
+                />
+
+                {/* Header Area */}
+                <div className="soma-typography-header">
+                    <motion.div
+                        className="soma-grid-line soma-grid-horiz-top soma-line-dark"
+                        variants={drawLineHoriz}
+                        style={{ originX: 0.5 }}
+                    />
+                    {/* Vertical line going UP to connect with previous section */}
+                    <div className="soma-vert-line-up soma-line-dark"></div>
+
+                    <motion.div className="soma-label soma-label-tl font-nav soma-text-dark" variants={fadeUp}>
+                        FIG 04: TYPOGRAPHIC SYNTAX
+                    </motion.div>
+                    <motion.div className="soma-label soma-label-tr font-nav soma-text-dark" variants={fadeUp}>
+                        PROTOTYPE / V 2.0
+                    </motion.div>
+                </div>
+
+                {/* Typography Content Container */}
+                <div className="soma-typography-content">
+
+                    {/* Block 1: Manrope */}
+                    <div className="soma-type-block">
+                        <div className="soma-type-image-wrapper">
+                            <img src="/Projects/Soma/Soma5_1.svg" alt="Manrope Graphic" className="soma-type-img" />
+                        </div>
+                        <div className="soma-type-info">
+                            <div className="soma-type-role font-nav">PRIMARY TYPEFACE // HUMAN INTERFACE</div>
+                            <h2 className="soma-type-name font-hero">
+                                MANROPE<br />
+                                <span className="soma-type-sub">(Geometric Sans)</span>
+                            </h2>
+                            <p className="soma-type-desc">
+                                Constructed on strict geometric principles, Manrope serves as the primary voice of SOMA. It embodies clinical precision and architectural stability. Used for headlines, logotypes, and navigation.
+                            </p>
+                            <div className="soma-type-protocol font-nav">
+                                <div className="protocol-title">PROTOCOL:</div>
+                                <div>Case: UPPERCASE (Headlines) / Sentence (Body)</div>
+                                <div>Tracking: -3% (Tight for Display)</div>
+                                <div>Weight: Bold / SemiBold</div>
+                            </div>
+                            <div className="soma-separator-line"></div>
+                        </div>
+                    </div>
+
+                    {/* Block 2: Space Mono */}
+                    <div className="soma-type-block">
+                        <div className="soma-type-image-wrapper">
+                            <img src="/Projects/Soma/Soma5_2.svg" alt="Space Mono Graphic" className="soma-type-img" />
+                        </div>
+                        <div className="soma-type-info">
+                            <div className="soma-type-role font-nav">SECONDARY TYPEFACE // MACHINE DATA</div>
+                            <h2 className="soma-type-name font-nav" style={{ fontSize: '2.5rem', fontWeight: 400, fontFamily: 'var(--font-nav)' }}>
+                                SPACE MONO<br />
+                                <span className="soma-type-sub" style={{ fontWeight: 400 }}>(Fixed-width)</span>
+                            </h2>
+                            <p className="soma-type-desc">
+                                A monospace typeface representing the analytical and scientific layer of the brand. Used for specifications, pricing, coordinates, and technical footnotes. It provides contrast to the sterile geometry of the primary font.
+                            </p>
+                            <div className="soma-type-protocol font-nav">
+                                <div className="protocol-title">PROTOCOL:</div>
+                                <div>Case: UPPERCASE ONLY (Recommended for labels)</div>
+                                <div>Tracking: +5% (Wide)</div>
+                                <div>Color: Muted Gray (80% Opacity)</div>
+                            </div>
+                            <div className="soma-separator-line"></div>
+                        </div>
+                    </div>
+
+                </div>
             </motion.section>
         </main>
     )
