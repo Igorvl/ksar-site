@@ -1556,7 +1556,7 @@
     max-width: none;
     display: flex;
     justify-content: center;
-    margin-top: 45vh;
+    margin-top: 95vh;
     margin-bottom: 5vh;
     margin-left: -2rem;
     margin-right: -2rem;
@@ -1573,7 +1573,7 @@
 /* Center Text */
 .soma-proto-center-text {
     text-align: center;
-    margin-bottom: 15vh;
+    margin-bottom: 30vh;
     position: relative;
     z-index: 2;
     display: flex;
@@ -1698,16 +1698,85 @@
     font-size: 0.8rem;
 }
 
+
 /* Mobile Adjustments */
 @media (max-width: 768px) {
     .soma-proto-connector-row {
         width: 100%;
-        /* Collapse to 100% */
         margin-bottom: 2rem;
     }
 
     .soma-proto-line-v {
         display: none;
-        /* Hide complex line on mobile */
+    }
+
+    /* Section 6 Mobile */
+    .soma-proto-header-wrapper,
+    .soma-proto-header {
+        height: 5vh;
+        top: 20vh;
+    }
+
+    .soma-proto-main-img-wrapper {
+        margin-top: 65vh;
+    }
+
+    .soma-proto-title-main {
+        font-size: 0.75rem;
+    }
+
+    .soma-proto-title-sub {
+        font-size: 0.5rem;
+    }
+}
+
+/* Tablet Portrait (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .soma-proto-header-wrapper,
+    .soma-proto-header {
+        top: 25vh;
+        height: 5.5vh;
+    }
+
+    .soma-proto-main-img-wrapper {
+        margin-top: 80vh;
+    }
+}
+
+/* Desktop Small (1024px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .soma-proto-header-wrapper,
+    .soma-proto-header {
+        top: 28vh;
+    }
+
+    .soma-proto-main-img-wrapper {
+        margin-top: 90vh;
+    }
+}
+
+/* Desktop Large (1440px+) */
+@media (min-width: 1441px) {
+
+    .soma-proto-header-wrapper,
+    .soma-proto-header {
+        top: 28vh;
+    }
+
+    .soma-proto-main-img-wrapper {
+        margin-top: 95vh;
+    }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 1920px) {
+    .soma-section-6 {
+        padding-top: 30vh;
+    }
+
+    .soma-proto-main-img-wrapper {
+        margin-top: 100vh;
     }
 }

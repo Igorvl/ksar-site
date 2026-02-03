@@ -7,6 +7,7 @@ import './SomaProjectPage.css'
 import { useModal } from '../context/ModalContext'
 import OnlineIndicator from '../components/OnlineIndicator'
 import SomaLogo from '../components/SomaLogo'
+import BeforeAfterSlider from '../components/BeforeAfterSlider'
 
 export default function SomaProjectPage() {
     const { openContactModal } = useModal()
@@ -544,7 +545,11 @@ export default function SomaProjectPage() {
 
                 <div className="soma-proto-content">
                     <div className="soma-proto-main-img-wrapper">
-                        <img src="/Projects/Soma/Soma6_1.webp" alt="Soma Prototype" className="soma-proto-img-main" />
+                        <BeforeAfterSlider
+                            beforeImage="/Projects/Soma/Soma6_1.webp"
+                            afterImage="/Projects/Soma/Soma6_3.webp"
+                            altText="Soma Prototype Comparison"
+                        />
                     </div>
 
                     <div className="soma-proto-center-text font-hero">
