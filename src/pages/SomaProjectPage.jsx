@@ -528,6 +528,58 @@ export default function SomaProjectPage() {
 
                 </div>
             </motion.section>
+            {/* Section 6: Product Prototype */}
+            <motion.section className="soma-section soma-section-6">
+                {/* Crop Marks / Lines */}
+                <div className="soma-crop-mark-tl"></div>
+                <div className="soma-crop-mark-tr"></div>
+                <div className="soma-crop-mark-bl"></div>
+                <div className="soma-crop-mark-br"></div>
+
+                <div className="soma-proto-header font-mono">
+                    <span>PROTOTYPE / V 3.0</span>
+                    <div className="soma-proto-header-line"></div>
+                    <span>FIG 03: PHOTONIC EMITTER</span>
+                </div>
+
+                <div className="soma-proto-content">
+                    <div className="soma-proto-main-img-wrapper">
+                        <img src="/Projects/Soma/Soma6_1.webp" alt="Soma Prototype" className="soma-proto-img-main" />
+                    </div>
+
+                    <div className="soma-proto-center-text font-hero">
+                        <div className="soma-proto-title-main">PRODUCT PROTOTYPE</div>
+                        <div className="soma-proto-title-sub">AMBER GLASS & TITANIUM</div>
+                    </div>
+
+                    <div className="soma-proto-connector-row">
+                        <div className="soma-proto-label font-mono">AMBER GLASS & TITANIUM</div>
+                        <div className="soma-proto-line-group">
+                            <div className="soma-proto-line-h"></div>
+                            <div className="soma-proto-line-v"></div>
+                        </div>
+                    </div>
+
+                    <div className="soma-proto-detail-img-wrapper">
+                        <img src="/Projects/Soma/Soma6_2.webp" alt="Soma Detail" className="soma-proto-img-detail" />
+                    </div>
+
+                    <div className="soma-proto-bottom-row font-hero">
+                        <div className="soma-proto-bottom-col">
+                            <p className="soma-proto-desc">
+                                The SOMA-X luminaire acts as a neuro-aesthetic anchor. The translucent borosilicate shell mimics cellular membrane structures,
+                                filtering light into a circadian-friendly amber spectrum (2200K).
+                            </p>
+                            <div className="soma-proto-specs">
+                                <div className="specs-title">SPECS:</div>
+                                <div>Material: Hand-blown Amber Glass & Titanium Gr.5</div>
+                                <div>Light Source: Micro-Filament Matrix (CRI 98)</div>
+                                <div>Function: Melatonin Preservation Mode</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.section>
         </main>
     )
 }

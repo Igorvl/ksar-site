@@ -1435,3 +1435,279 @@
         /* Hide side captions to prevent clutter/overlap */
     }
 }
+
+/* =========================================
+   SECTION 6: PRODUCT PROTOTYPE
+   ========================================= */
+.soma-section-6 {
+    position: relative;
+    width: 100%;
+    min-height: 250vh;
+    /* 3 Screens approx (scrolling spacing) */
+    background-color: #050505;
+    /* Deep black */
+    color: #fff;
+    padding: 25vh 2rem 10rem 2rem;
+    /* Massive top padding to clear Navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Crop Marks */
+.soma-crop-mark-tl,
+.soma-crop-mark-tr,
+.soma-crop-mark-bl,
+.soma-crop-mark-br {
+    position: absolute;
+    width: 60px;
+    /* Larger marks */
+    height: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.soma-crop-mark-tl {
+    top: 15vh;
+    /* Push down below Navbar */
+    left: 3vw;
+    border-right: none;
+    border-bottom: none;
+}
+
+.soma-crop-mark-tr {
+    top: 15vh;
+    right: 3vw;
+    border-left: none;
+    border-bottom: none;
+}
+
+
+
+.soma-crop-mark-bl {
+    bottom: 5vh;
+    left: 3vw;
+    border-right: none;
+    border-top: none;
+}
+
+.soma-crop-mark-br {
+    bottom: 5vh;
+    right: 3vw;
+    border-left: none;
+    border-top: none;
+}
+
+.soma-proto-header {
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column-reverse;
+    position: absolute;
+    top: 28vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    z-index: 2000;
+    font-weight: 400;
+    padding: 0 2rem;
+    box-sizing: border-box;
+    height: 6vh;
+}
+
+.soma-proto-header>span:first-child {
+    position: absolute;
+    right: 3vw;
+    top: 0;
+}
+
+.soma-proto-header>span:last-child {
+    position: absolute;
+    left: 3vw;
+    bottom: 0;
+}
+
+.soma-proto-header-line {
+    position: absolute;
+    left: 3vw;
+    right: 3vw;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.soma-proto-content {
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.soma-proto-main-img-wrapper {
+    width: 100vw;
+    max-width: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 45vh;
+    margin-bottom: 5vh;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    padding: 0;
+}
+
+.soma-proto-img-main {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: none;
+}
+
+/* Center Text */
+.soma-proto-center-text {
+    text-align: center;
+    margin-bottom: 15vh;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.soma-proto-title-main {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.soma-proto-title-sub {
+    font-weight: 400;
+    font-size: 0.6rem;
+    /* 1.5x smaller than main */
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Connector Row: Leads from Left to Center */
+.soma-proto-connector-row {
+    width: 50%;
+    /* Occupy Left Half */
+    align-self: flex-start;
+    /* Align to left of container */
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    padding-right: 20px;
+    /* Gap from center line */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.soma-proto-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-right: 1rem;
+    white-space: nowrap;
+    padding-bottom: 2px;
+}
+
+.soma-proto-line-group {
+    flex: 1;
+    /* Fill space between Label and Center */
+    display: flex;
+    align-items: flex-end;
+    height: 100px;
+    /* Upward reach */
+}
+
+.soma-proto-line-h {
+    flex: 1;
+    /* Stretch Horizontal */
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin-bottom: 0px;
+}
+
+.soma-proto-line-v {
+    width: 1px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    /* Right edge of the group, which is near Center */
+}
+
+/* Detail Image */
+.soma-proto-detail-img-wrapper {
+    width: 85%;
+    /* Reduced by 15% from full width */
+    max-width: 1400px;
+    /* Still respect max container */
+    margin-bottom: 10vh;
+}
+
+.soma-proto-img-detail {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 30vh;
+}
+
+/* Bottom Text */
+.soma-proto-bottom-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.soma-proto-bottom-col {
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.soma-proto-desc {
+    font-size: 0.9rem;
+    font-weight: 300;
+    /* Manrope Light */
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+}
+
+.soma-proto-specs {
+    font-size: 0.8rem;
+    font-weight: 300;
+    /* Manrope Light */
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.8;
+}
+
+.specs-title {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .soma-proto-connector-row {
+        width: 100%;
+        /* Collapse to 100% */
+        margin-bottom: 2rem;
+    }
+
+    .soma-proto-line-v {
+        display: none;
+        /* Hide complex line on mobile */
+    }
+}
