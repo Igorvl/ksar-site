@@ -1442,7 +1442,7 @@
 .soma-section-6 {
     position: relative;
     width: 100%;
-    min-height: 250vh;
+    min-height: 400vh;
     /* 3 Screens approx (scrolling spacing) */
     background-color: #050505;
     /* Deep black */
@@ -1453,7 +1453,7 @@
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* Crop Marks */
@@ -1488,14 +1488,14 @@
 
 
 .soma-crop-mark-bl {
-    bottom: 5vh;
+    bottom: 0;
     left: 3vw;
     border-right: none;
     border-top: none;
 }
 
 .soma-crop-mark-br {
-    bottom: 5vh;
+    bottom: 0;
     right: 3vw;
     border-left: none;
     border-top: none;
@@ -1552,11 +1552,12 @@
 }
 
 .soma-proto-main-img-wrapper {
+    position: relative;
     width: 100vw;
     max-width: none;
     display: flex;
     justify-content: center;
-    margin-top: 95vh;
+    margin-top: 15vh;
     margin-bottom: 5vh;
     margin-left: -2rem;
     margin-right: -2rem;
@@ -1573,7 +1574,7 @@
 /* Center Text */
 .soma-proto-center-text {
     text-align: center;
-    margin-bottom: 30vh;
+    margin-bottom: 3vh;
     position: relative;
     z-index: 2;
     display: flex;
@@ -1582,18 +1583,20 @@
 }
 
 .soma-proto-title-main {
+    font-family: 'Manrope Bold', sans-serif;
     font-weight: 700;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: #888888;
     letter-spacing: 0.05em;
     text-transform: uppercase;
 }
 
 .soma-proto-title-sub {
+    font-family: 'Space Mono', monospace;
     font-weight: 400;
     font-size: 0.6rem;
     /* 1.5x smaller than main */
-    color: rgba(255, 255, 255, 0.5);
+    color: #888888;
     letter-spacing: 0.05em;
     text-transform: uppercase;
 }
@@ -1606,19 +1609,24 @@
     /* Align to left of container */
     display: flex;
     align-items: flex-end;
-    margin-bottom: 2rem;
-    padding-right: 20px;
+    margin-bottom: 7rem;
+    /* padding-right: 20px; */
     /* Gap from center line */
     box-sizing: border-box;
     position: relative;
+    /* margin-left: 10vh; */
+    padding-left: 7vw;
 }
 
 .soma-proto-label {
+    font-family: 'Manrope Bold', sans-serif;
+    font-weight: 700;
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #888888;
     margin-right: 1rem;
     white-space: nowrap;
-    padding-bottom: 2px;
+    /* padding-bottom: 2px; */
+    margin-bottom: -1vh;
 }
 
 .soma-proto-line-group {
@@ -1626,7 +1634,7 @@
     /* Fill space between Label and Center */
     display: flex;
     align-items: flex-end;
-    height: 100px;
+    height: 35vh;
     /* Upward reach */
 }
 
@@ -1651,7 +1659,9 @@
     /* Reduced by 15% from full width */
     max-width: 1400px;
     /* Still respect max container */
-    margin-bottom: 10vh;
+    margin-bottom: 5vh;
+    align-self: flex-start;
+    margin-left: 7.5%;
 }
 
 .soma-proto-img-detail {
@@ -1663,9 +1673,12 @@
 
 /* Bottom Text */
 .soma-proto-bottom-row {
-    width: 100%;
+    width: 85%;
     display: flex;
     justify-content: flex-start;
+    align-self: flex-start;
+    margin-left: 7.5%;
+    /* Align with left edge of 85% width image above */
 }
 
 .soma-proto-bottom-col {
@@ -1676,17 +1689,19 @@
 }
 
 .soma-proto-desc {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     font-weight: 300;
     /* Manrope Light */
+    font-family: 'Manrope', sans-serif;
     color: rgba(255, 255, 255, 0.85);
     line-height: 1.6;
 }
 
 .soma-proto-specs {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 300;
     /* Manrope Light */
+    font-family: 'Manrope', sans-serif;
     color: rgba(255, 255, 255, 0.6);
     line-height: 1.8;
 }
@@ -1711,6 +1726,13 @@
     }
 
     /* Section 6 Mobile */
+    .soma-section-6 {
+        justify-content: flex-start;
+        /* Override center alignment to prevent content from being pushed down */
+        min-height: 300vh;
+        /* Reduce height for mobile */
+    }
+
     .soma-proto-header-wrapper,
     .soma-proto-header {
         height: 5vh;
@@ -1718,7 +1740,8 @@
     }
 
     .soma-proto-main-img-wrapper {
-        margin-top: 65vh;
+        margin-top: 25vh;
+        /* Significantly reduced to ensure visibility */
     }
 
     .soma-proto-title-main {
@@ -1727,6 +1750,20 @@
 
     .soma-proto-title-sub {
         font-size: 0.5rem;
+    }
+
+    /* Reset alignment for mobile */
+    .soma-proto-detail-img-wrapper {
+        width: 100%;
+        margin-left: 0;
+        align-self: center;
+    }
+
+    .soma-proto-bottom-row {
+        width: 100%;
+        margin-left: 0;
+        align-self: center;
+        padding: 0 1rem;
     }
 }
 
@@ -1740,7 +1777,7 @@
     }
 
     .soma-proto-main-img-wrapper {
-        margin-top: 80vh;
+        margin-top: 15vh;
     }
 }
 
@@ -1753,7 +1790,7 @@
     }
 
     .soma-proto-main-img-wrapper {
-        margin-top: 90vh;
+        margin-top: 15vh;
     }
 }
 
@@ -1766,7 +1803,7 @@
     }
 
     .soma-proto-main-img-wrapper {
-        margin-top: 95vh;
+        margin-top: 15vh;
     }
 }
 
@@ -1777,6 +1814,6 @@
     }
 
     .soma-proto-main-img-wrapper {
-        margin-top: 100vh;
+        margin-top: 15vh;
     }
 }

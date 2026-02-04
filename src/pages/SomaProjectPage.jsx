@@ -534,8 +534,6 @@ export default function SomaProjectPage() {
                 {/* Crop Marks / Lines */}
                 <div className="soma-crop-mark-tl"></div>
                 <div className="soma-crop-mark-tr"></div>
-                <div className="soma-crop-mark-bl"></div>
-                <div className="soma-crop-mark-br"></div>
 
                 <div className="soma-proto-header font-mono">
                     <span>PROTOTYPE / V 3.0</span>
@@ -550,6 +548,9 @@ export default function SomaProjectPage() {
                             afterImage="/Projects/Soma/Soma6_3.webp"
                             altText="Soma Prototype Comparison"
                         />
+                        {/* Bottom Crop Marks - positioned relative to slider wrapper */}
+                        <div className="soma-crop-mark-bl"></div>
+                        <div className="soma-crop-mark-br"></div>
                     </div>
 
                     <div className="soma-proto-center-text font-hero">
