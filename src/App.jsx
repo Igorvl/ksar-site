@@ -23,6 +23,7 @@ import NegativeTextDemo from './pages/NegativeTextDemo'
 import SomaProjectPage from './pages/SomaProjectPage'
 import CustomCursor from './components/CustomCursor'
 import ContactModal from './components/ContactModal'
+import TestProgressPage from './pages/TestProgressPage'
 // import GlassRefractionPage from './pages/GlassRefractionPage';
 import './App.css'
 
@@ -42,7 +43,7 @@ function AppContent() {
         <Route path="/glass-cube" element={<GlassCubeDemo />} />
         <Route path="/negative" element={<NegativeTextDemo />} />
         <Route path="/soma" element={<SomaProjectPage />} />
-        {/* <Route path="/glass-refraction" element={<GlassRefractionPage />} /> */}
+        <Route path="/test-progress" element={<TestProgressPage />} />
       </Routes>
       {/* Global Contact Modal */}
       <ContactModal

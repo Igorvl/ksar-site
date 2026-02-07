@@ -1,0 +1,148 @@
+.test-progress-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #050505;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-wrapper {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+    /* Initial rotation if needed */
+}
+
+.progress-text-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-percent {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: #FFD54F;
+    line-height: 1;
+    text-shadow: 0 0 10px rgba(173, 156, 101, 0.2);
+    /* Tweak text position to visual center of circle manually if needed */
+    margin-left: 1rem;
+    /* % spacing compensation */
+}
+
+.percent-val {
+    font-size: 6rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+}
+
+.percent-unit {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-top: 1rem;
+    opacity: 0.8;
+}
+
+.progress-label {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    color: #AD9C65;
+    text-transform: uppercase;
+}
+
+
+/* Bottom UI */
+.progress-bottom-ui {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: #666;
+}
+
+.tech-stat-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tech-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.1em;
+    color: #888;
+}
+
+.tech-bar {
+    height: 2px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    /* Track background */
+    margin-left: 0;
+    /* Reset margin as it's full width of group */
+    margin-top: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-fill {
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+}
+
+.main-bar {
+    background: #AD9C65;
+    box-shadow: 0 0 8px rgba(173, 156, 101, 0.6);
+}
+
+.alt-bar {
+    background: #E0E0E0;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.tech-dot {
+    width: 4px;
+    height: 4px;
+    background-color: #AD9C65;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #AD9C65;
+}
+
+.tech-wave {
+    opacity: 0.8;
+}
+
+.font-hero {
+    font-family: 'Manrope', sans-serif;
+}
+
+.font-mono {
+    font-family: 'Space Mono', monospace;
+}

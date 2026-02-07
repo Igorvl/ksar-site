@@ -2,7 +2,7 @@
  * SomaProjectPage - Detailed view for SOMA Project
  */
 import React, { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import './SomaProjectPage.css'
 import { useModal } from '../context/ModalContext'
 import OnlineIndicator from '../components/OnlineIndicator'
@@ -14,6 +14,18 @@ export default function SomaProjectPage() {
     const [isNavDark, setIsNavDark] = useState(false)
     const section3Ref = useRef(null)
     const section5Ref = useRef(null)
+    const section8Ref = useRef(null)
+
+    // Parallax Logic for Section 8
+    const { scrollYProgress } = useScroll({
+        target: section8Ref,
+        offset: ["start end", "end start"]
+    })
+
+    // Parallax transforms: "smooth but substantial ~10%"
+    // Adjusted to +/- 10% to match scale 1.25 (25% buffer, 12.5% per side) to prevent edge clipping
+    const parallaxY_Main = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
+    const parallaxY_Sub = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
 
     // Data Cascade Variants for Protocol
     const protocolContainerVariants = {
@@ -116,6 +128,7 @@ export default function SomaProjectPage() {
 
         if (section3Ref.current) observer.observe(section3Ref.current)
         if (section5Ref.current) observer.observe(section5Ref.current)
+        if (section8Ref.current) observer.observe(section8Ref.current)
 
         return () => observer.disconnect()
     }, [])
@@ -586,6 +599,319 @@ export default function SomaProjectPage() {
                     </div>
                 </div>
             </motion.section>
+
+            {/* ============================================
+                SECTION 7: BIOMETRIC SYNC (Dark Mode)
+                ============================================ */}
+            <motion.section
+                className="soma-section soma-section-7"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+            >
+                {/* SPLIT HEADER: Right Text Above, Left Text Below Line */}
+                <div className="soma-split-header">
+                    <motion.div
+                        className="soma-split-header-right font-nav"
+                        variants={fadeUp}
+                    >
+                        BIOMETRIC SYNC / V 1.0
+                    </motion.div>
+
+                    <motion.div
+                        className="soma-split-line"
+                        variants={drawLineHoriz}
+                        style={{ originX: 0 }}
+                    />
+
+                    <motion.div
+                        className="soma-split-header-left font-nav"
+                        variants={fadeUp}
+                    >
+                        FIG 06: BIOMETRIC INTERFACE
+                    </motion.div>
+                </div>
+
+                <div className="soma-biometric-container">
+                    {/* Left Content */}
+                    <div className="soma-biometric-content">
+                        {/* Thin Line Animation */}
+                        <motion.div
+                            className="bio-top-line"
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.2, ease: "circOut" }}
+                            style={{ originX: 0 }}
+                        />
+
+                        <motion.span className="font-bio-label" variants={fadeUp}>
+                            BIOMETRIC SYNC / V 1.0
+                        </motion.span>
+
+                        <div className="bio-title-group">
+                            <motion.h2 variants={fadeUp}>
+                                SOMA O.S.<br />
+                                THE BIOMETRIC TWIN
+                            </motion.h2>
+                        </div>
+
+                        <motion.p className="bio-description" variants={fadeUp}>
+                            Complete digitization of your metabolic processes.
+                        </motion.p>
+
+                        <div className="bio-feature-list">
+                            <motion.div className="bio-feature-item" variants={fadeUp}>
+                                <h4>REAL-TIME BODY MONITORING</h4>
+                                <p>Real-time body monitoring: sleep, stress, recovery</p>
+                            </motion.div>
+                            <motion.div className="bio-feature-item" variants={fadeUp}>
+                                <h4>ADAPTIVE NUTRITION PROTOCOLS</h4>
+                                <p>Smart protocols: ampoule composition changes based on your test results</p>
+                            </motion.div>
+                            <motion.div className="bio-feature-item" variants={fadeUp}>
+                                <h4>DIRECT CLINICAL ACCESS</h4>
+                                <p>Direct connection with a medical curator 24/7</p>
+                            </motion.div>
+                        </div>
+                    </div>
+
+                    {/* Right Visual (With Video Overlay) */}
+                    <div className="soma-biometric-visual">
+                        <motion.div
+                            className="soma-phone-anchor"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <img
+                                src="/Projects/Soma/Soma7_1.webp"
+                                alt="Soma OS UI"
+                                className="soma-biometric-img"
+                            />
+                            {/* Video Layer */}
+                            <div className="soma-screen-video-container">
+                                <video
+                                    className="soma-screen-video"
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                    src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+                                />
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* Bottom Labels */}
+                <div className="soma-label bio-label-left font-nav">FIG 4.1: DARK MODE UI</div>
+                <div className="soma-label bio-label-right font-nav">DATA: LIVE STREAM</div>
+            </motion.section>
+
+            {/* ============================================
+                SECTION 8: PHYSICAL PROTOCOLS (Light Mode)
+                ============================================ */}
+            <motion.section
+                ref={section8Ref}
+                className="soma-section soma-section-8 light-mode"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+            >
+                {/* SPLIT HEADER: Right Text Above, Left Text Below Line (Light Mode) */}
+                <div className="soma-split-header">
+                    <motion.div
+                        className="soma-split-header-right font-nav text-dark"
+                        variants={fadeUp}
+                    >
+                        BIO-AVAILABILITY PROTECTION
+                    </motion.div>
+
+                    <motion.div
+                        className="soma-split-line soma-line-dark"
+                        variants={drawLineHoriz}
+                        style={{ originX: 0 }}
+                    />
+
+                    <motion.div
+                        className="soma-split-header-left font-nav text-dark"
+                        variants={fadeUp}
+                    >
+                        FIG 07: PHYSICAL PROTOCOL
+                    </motion.div>
+                </div>
+
+                <div className="soma-delivery-container">
+                    {/* Left Column: Vertical Image + Specs */}
+                    <div className="soma-delivery-left">
+                        <motion.div
+                            className="delivery-img-main-wrapper"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <motion.img
+                                src="/Projects/Soma/Soma8_1.webp"
+                                alt="Soma Ampoule Vertical"
+                                className="delivery-img-main"
+                                style={{ y: parallaxY_Main, scale: 1.25 }} // Increased Parallax + Scale
+                            />
+                        </motion.div>
+
+                        <motion.div className="delivery-specs-text" variants={fadeUp}>
+                            <span>MATERIAL: UV-RESISTANT AMBER GLASS</span>
+                            <span>SEAL: HERMETIC FUSION</span>
+                            <span>PRINT: CERAMIC SILKSCREEN</span>
+                        </motion.div>
+                    </div>
+
+                    {/* Right Column: Text + Horizontal Image */}
+                    <div className="soma-delivery-right">
+                        <div className="delivery-text-block">
+                            {/* Thin Line Animation (Sized to image width below logic handled by layout or width constraints) */}
+                            {/* Note: In CSS delivery-top-line max-width matches the image/text block width */}
+                            <motion.div
+                                className="delivery-top-line"
+                                initial={{ scaleX: 0 }}
+                                whileInView={{ scaleX: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1.2, ease: "circOut" }}
+                                style={{ originX: 0 }}
+                            />
+
+                            <motion.span className="font-delivery-label" variants={fadeUp}>
+                                DELIVERY SYSTEMS / V 2.0
+                            </motion.span>
+
+                            <motion.h2 className="delivery-title" variants={fadeUp}>
+                                PHYSICAL<br />PROTOCOLS
+                            </motion.h2>
+
+                            <motion.p className="delivery-desc" variants={fadeUp}>
+                                Material embodiment of digital algorithms. Single-use ampoules made of medical amber glass. Minimalist labeling, no paper labels, full protection of active substances.
+                            </motion.p>
+                        </div>
+
+                        <motion.div
+                            className="delivery-img-sub-wrapper"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                        >
+                            <motion.img
+                                src="/Projects/Soma/Soma8_2.webp"
+                                alt="Soma Ampoule Detail"
+                                className="delivery-img-sub"
+                                style={{ y: parallaxY_Sub, scale: 1.25 }} // Increased Parallax + Scale
+                            />
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* Bottom Labels */}
+                <div className="soma-label soma-label-bl font-nav text-dark">SINGLE-USE BIO-AMPOULE</div>
+                <div className="soma-label soma-label-br font-nav text-dark">SURFACE: STERILE / NON-POROUS</div>
+            </motion.section>
+
+            {/* ============================================
+                SECTION 9: WEB PORTAL (Dark Mode)
+                ============================================ */}
+            <motion.section
+                className="soma-section soma-section-9"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+            >
+                {/* Header Line */}
+                <div className="soma-web-header">
+                    <motion.div
+                        className="soma-web-header-line"
+                        variants={drawLineHoriz}
+                        style={{ originX: 0 }}
+                    />
+                    <div className="soma-web-header-labels font-mono">
+                        <motion.span variants={fadeUp}>FIG 09: WEB PORTAL ARCHITECTURE</motion.span>
+                        <motion.span variants={fadeUp}>PLATFORM: DESKTOP / 4K</motion.span>
+                    </div>
+                </div>
+
+                {/* Main Grid */}
+                <div className="soma-web-grid">
+                    {/* Left Column */}
+                    <div className="soma-web-col-left">
+                        {/* Biometrics Card (Soma9_1) */}
+                        <motion.div
+                            className="soma-web-card soma-card-biometrics"
+                            variants={fadeUp}
+                        >
+                            <img src="/Projects/Soma/Soma9_1.svg" alt="Optimal Biometrics UI" className="soma-web-img" />
+                        </motion.div>
+
+                        {/* Text Block */}
+                        <motion.div className="soma-web-text-block" variants={fadeUp}>
+                            <div className="soma-web-label font-mono">DIGITAL EXPERIENCE</div>
+                            <h2 className="soma-web-title font-hero">
+                                IMMERSIVE<br />WEB PORTAL
+                            </h2>
+                            <p className="soma-web-desc font-nav">
+                                The SOMA web interface is an extension of the clinic's physical space. An architectural approach to UI, where data is transformed into an aesthetic experience. Personal account and protocol management.
+                            </p>
+                        </motion.div>
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="soma-web-col-right">
+                        {/* Calendar Card (Soma9_2) */}
+                        <motion.div
+                            className="soma-web-card soma-card-calendar"
+                            variants={fadeUp}
+                        >
+                            <img src="/Projects/Soma/Soma9_2.svg" alt="Booking UI" className="soma-web-img" />
+                        </motion.div>
+
+                        {/* Laptop Card (Soma9_3) */}
+                        <motion.div
+                            className="soma-web-card soma-card-laptop"
+                            variants={fadeUp}
+                        >
+                            <img src="/Projects/Soma/Soma9_3.webp" alt="Soma Web on Laptop" className="soma-web-img" />
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* Bottom Labels */}
+                <div className="soma-web-footer font-mono">
+                    <motion.div variants={fadeUp}>FIG 8.1: IMMERSIVE WEB</motion.div>
+                    <motion.div variants={fadeUp}>RENDER: WEBGL / REALTIME</motion.div>
+                </div>
+            </motion.section>
+
+            {/* ============================================
+                SECTION 10: FULL RENDER (Dark Mode)
+                ============================================ */}
+            <motion.section
+                className="soma-section soma-section-10"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+            >
+                <motion.div
+                    className="soma-full-render-wrapper"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                >
+                    <img src="/Projects/Soma/Soma10_1.webp" alt="Soma Full Web Render" className="soma-full-render-img" />
+
+                    {/* Overlay Frame/UI elements if needed, or just clean */}
+                    <div className="soma-render-overlay">
+                        <div className="render-label-tl font-mono">VIEW: LANDING_MAIN</div>
+                        <div className="render-label-br font-mono">STATUS: LIVE</div>
+                    </div>
+                </motion.div>
+            </motion.section>
+
         </main>
     )
 }

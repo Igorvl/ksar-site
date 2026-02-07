@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SomaProjectPage Styles
  * Dark themed project detail page
  */
@@ -614,6 +614,559 @@
     }
 }
 
+
+/* ============================================
+   SECTION 7: BIOMETRIC SYNC (Dark Mode)
+   ============================================ */
+.soma-section-7 {
+    background-color: #050505;
+    /* Deep dark, almost black */
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    align-items: flex-start;
+    /* Align top, not center */
+    padding-top: 5vh;
+    height: auto;
+    /* Unlock height */
+    min-height: 180vh;
+    /* Increased to fit 150vh image comfortably */
+    overflow: visible;
+    /* Allow bleed if needed */
+    padding-bottom: 14vh;
+    margin-bottom: 7vh;
+}
+
+.soma-biometric-container {
+    width: 100%;
+    min-height: 150vh;
+    /* Stretch to fit visual */
+    display: flex;
+    align-items: flex-end;
+    /* Align content to bottom of visual */
+    justify-content: space-between;
+    padding: 0 5vw;
+    position: relative;
+    height: auto;
+    /* Remove strict 100vh */
+}
+
+.soma-biometric-content {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Align internal content to bottom */
+    align-items: flex-start;
+    padding-left: 5%;
+    position: relative;
+    z-index: 2;
+}
+
+.soma-biometric-visual {
+    width: 45%;
+    height: 150%;
+    /* Massive scale as requested */
+    display: flex;
+    align-items: flex-end;
+    /* Align image to bottom of container so it matches text */
+    justify-content: center;
+    position: relative;
+}
+
+/* New wrapper to act as anchor for video */
+.soma-phone-anchor {
+    position: relative;
+    height: 100%;
+    /* Fill the 150% from parent */
+    width: auto;
+    /* Let image dictate width */
+    display: flex;
+    justify-content: center;
+}
+
+.soma-biometric-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    /* Ensure image dictates the layout size */
+    display: block;
+}
+
+/* Video Overlay Container */
+.soma-screen-video-container {
+    position: absolute;
+    top: 21%;
+    left: 49%;
+    width: 43%;
+    height: 46%;
+    /* Added perspective to make the 3D rotation properly trapezoidal */
+    transform: perspective(1500px) translate(-45%, 0) rotateZ(-18deg) rotateY(18deg) rotateX(10deg);
+    /* Debug helper */
+    /* background: rgba(255, 0, 0, 0.3); */
+    overflow: hidden;
+    border-radius: 40px;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.9;
+    mix-blend-mode: screen;
+
+    /* MASKING THE FINGER */
+    /* Coords: -32% 83% (User found) */
+    /* Hole Radius: Reduced to 8% (transparent) -> 15% (visible) for creating a smaller hole */
+    -webkit-mask-image: radial-gradient(circle at -32% 83%, transparent 8%, black 15%);
+    mask-image: radial-gradient(circle at -32% 83%, transparent 8%, black 15%);
+}
+
+/* Actual video */
+.soma-screen-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.1);
+    /* Slight zoom to avoid edges */
+}
+
+/* Typography Scale for Section 7 
+   ref: 14pt(~1.15rem) -> 7pt(~0.6rem)
+        60pt(~5rem) -> 30pt(~2.5rem)
+        21pt(~1.75rem) -> 10.5pt(~0.9rem)
+        12pt(~1rem) -> 6pt(~0.5rem)
+*/
+.font-bio-label {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.45rem, 0.6vw, 0.6rem);
+    /* 7pt */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.bio-title-group h2 {
+    font-family: 'Manrope Bold', sans-serif;
+    font-weight: 700;
+    /* Bold */
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    /* 30pt */
+    line-height: 1.05;
+    margin: 0 0 1.5rem 0;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.bio-description {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    /* Regular */
+    font-size: clamp(0.55rem, 0.9vw, 0.9rem);
+    /* 10.5pt */
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+    max-width: 90%;
+}
+
+/* Feature List (Implied from reference) */
+.bio-feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.bio-feature-item h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    /* User requested 0.7rem */
+    line-height: 2.5;
+    /* User requested 2.5 */
+    letter-spacing: 0.15em;
+    /* User requested 0.15em */
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+.bio-feature-item p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.7rem;
+    /* User requested 0.7rem */
+    line-height: 2.5;
+    /* User requested 2.5 */
+    letter-spacing: 0.15em;
+    /* User requested 0.15em */
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    max-width: 300px;
+}
+
+/* Thin line above text */
+.bio-top-line {
+    width: 100%;
+    /* Width of text block */
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.5);
+    /* 50% visible opacity as 0.5% transparence implies visible guide */
+    margin-bottom: 2rem;
+    transform-origin: left;
+}
+
+/* Bottom Labels 7 
+   ref: 12pt (~1rem) -> 6pt (~0.5rem)
+*/
+.bio-bottom-label {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.4rem, 0.5vw, 0.5rem);
+    /* 6pt */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bio-label-left,
+.bio-label-right {
+    color: #888888 !important;
+}
+
+.bio-label-left {
+    position: absolute;
+    bottom: 3rem;
+    left: 4rem;
+}
+
+.bio-label-right {
+    position: absolute;
+    bottom: 3rem;
+    right: 4rem;
+}
+
+/* ============================================
+   SECTION 8: PHYSICAL PROTOCOLS (Light Mode)
+   ============================================ */
+.soma-section-8 {
+    background-color: #EAE6DD;
+    /* Matches Section 3 Light Beige */
+    color: #1A1A1A;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    height: auto;
+    min-height: 150vh;
+    /* Accommodate vertical image */
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+}
+
+.soma-delivery-container {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    padding: 0 5vw;
+    align-items: flex-end;
+    /* User requested align-items: end */
+}
+
+/* Left Column */
+.soma-delivery-left {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Align content to bottom */
+    align-items: flex-start;
+    padding-right: 4rem;
+    /* Space between cols */
+    position: relative;
+}
+
+.delivery-img-main-wrapper {
+    width: 100%;
+    max-width: 40vw;
+    /* User requested 40vw */
+    height: 85vh;
+    /* User requested 85vh */
+    margin-bottom: 1rem;
+    align-self: flex-start;
+    overflow: hidden;
+    /* For parallax clipping */
+}
+
+.delivery-img-main {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.delivery-specs-text {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.4rem, 0.5vw, 0.5rem);
+    /* 6pt */
+    color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    /* Ensure it takes full width of parent/image wrapper above */
+    max-width: 40vw;
+    /* Match the max-width of delivery-img-main-wrapper */
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.5;
+    /* Removed flex-wrap to force single line edge-to-edge if space permits, or let them stack if very small but space-between implies row usually */
+    /* white-space: nowrap; REMOVED to prevent overlap/cutoff on laptop resizing */
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    /* Add gap for when it wraps */
+}
+
+/* Right Column */
+.soma-delivery-right {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 2rem;
+    position: relative;
+    align-items: flex-start;
+    /* Align left content within right col */
+}
+
+/* Text Block */
+.delivery-text-block {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 4rem;
+}
+
+/* Line matching image width below */
+.delivery-top-line {
+    width: 100%;
+    /* Max width controlled by parent block */
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+    transform-origin: left;
+}
+
+.font-delivery-label {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.45rem, 0.6vw, 0.6rem);
+    /* 7pt */
+    text-transform: uppercase;
+    color: #1A1A1A;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.delivery-title {
+    font-family: 'Manrope Bold', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    /* 30pt */
+    line-height: 1;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    margin: 0 0 1.5rem 0;
+}
+
+.delivery-desc {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    /* User requested 0.8rem */
+    line-height: 2.5;
+    /* User requested 2.5 */
+    letter-spacing: 0.15em;
+    /* User requested 0.15em */
+    color: rgba(0, 0, 0, 0.8);
+    max-width: 100%;
+}
+
+/* Horizontal Image */
+.delivery-img-sub-wrapper {
+    width: 100%;
+    max-width: 600px;
+    height: 25vh;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    /* For parallax clipping */
+}
+
+.delivery-img-sub {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.delivery-bottom-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.4rem;
+    /* ~6pt */
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: right;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+/* Laptop */
+@media (max-width: 1440px) {
+
+    .bio-title-group h2,
+    .delivery-title {
+        font-size: 2rem;
+    }
+
+    .bio-description {
+        font-size: 0.7rem;
+    }
+}
+
+/* Tablet & Mobile */
+@media (max-width: 1024px) {
+
+    .soma-section {
+        min-height: 100vh;
+        /* Allow growing */
+        height: auto;
+        padding-top: 6rem;
+        /* More top padding for nav */
+        padding-bottom: 6rem;
+    }
+
+    .soma-biometric-container,
+    .soma-delivery-container {
+        flex-direction: column;
+        justify-content: flex-start;
+        height: auto;
+        padding: 0 2rem;
+        gap: 4rem;
+    }
+
+    /* Section 7 Order: Text then Visual? Or Visual then Text? 
+       Usually visual first on mobile, but text is strictly requested "above" visual or similar.
+       Left content is text. Right is visual.
+       Let's keep text top.
+    */
+    .soma-biometric-content {
+        width: 100%;
+        padding-left: 0;
+        margin-bottom: 2rem;
+    }
+
+    .soma-biometric-visual {
+        width: 100%;
+        height: 50vh;
+        order: -1;
+        /* Visual on top for impact match? No, let's follow standard flow. 
+           Wait, reference usually has image center. 
+           Let's put visual SECOND (below text) as markup order, or FIRST?
+           Let's stick to Text -> Image for this specific narrative flow.
+        */
+        order: 1;
+    }
+
+    .soma-biometric-img {
+        object-fit: contain;
+        object-position: center;
+    }
+
+    /* Section 8 */
+    .soma-delivery-left {
+        width: 100%;
+        padding-right: 0;
+        height: auto;
+        margin-bottom: 4rem;
+    }
+
+    .delivery-img-main-wrapper {
+        width: 100%;
+        max-width: 100%;
+        height: 60vh;
+    }
+
+    .delivery-specs-text {
+        max-width: 100%;
+        font-size: 0.7rem;
+    }
+
+    .soma-delivery-right {
+        width: 100%;
+        padding-left: 0;
+        height: auto;
+    }
+
+    .delivery-text-block {
+        max-width: 100%;
+    }
+
+    .delivery-img-sub-wrapper {
+        max-width: 100%;
+        height: 30vh;
+    }
+
+    .delivery-bottom-text {
+        max-width: 100%;
+    }
+
+    /* Fonts Mobile */
+    .bio-title-group h2,
+    .delivery-title {
+        font-size: 1.5rem;
+    }
+
+    .bio-description,
+    .delivery-desc {
+        font-size: 0.6rem;
+    }
+
+    .delivery-specs-text {
+        font-size: 0.4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .soma-section {
+        padding-top: 8rem;
+    }
+
+    .bio-title-group h2,
+    .delivery-title {
+        font-size: 1.2rem;
+    }
+
+    /* Adjust crop marks or labels if needed */
+    .bio-label-left,
+    .bio-label-right {
+        display: none;
+        /* Hide floating labels on mobile to avoid overlap */
+    }
+
+    .soma-biometric-visual {
+        height: 40vh;
+    }
+
+    .delivery-img-main-wrapper {
+        height: 50vh;
+    }
+
+    /* FIX: Reset huge min-heights for Section 7 on mobile to remove black void */
+    .soma-section-7 {
+        min-height: auto !important;
+        height: auto !important;
+        padding-bottom: 5rem;
+    }
+
+    .soma-section-7 .soma-biometric-container {
+        min-height: auto !important;
+        height: auto !important;
+    }
+}
+
 /* ============================================
    SECTION 3: IDENTITY GRID (Light Mode)
    ============================================ */
@@ -797,12 +1350,17 @@
 
     .soma-caption {
         display: none;
+
         /* Hide construct lines on mobile if too cluttered */
+        display: none;
     }
 
-    .soma-identity-text-content {
-        bottom: 18vh;
-        width: 90%;
+    .soma-identity-text-wrapper-static {
+        width: 100vw;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 15vh;
+        /* Lower for mobile */
     }
 
     .soma-identity-text-content .soma-section-title {
@@ -1442,8 +2000,9 @@
 .soma-section-6 {
     position: relative;
     width: 100%;
-    min-height: 400vh;
-    /* 3 Screens approx (scrolling spacing) */
+    min-height: 100vh;
+    height: auto;
+    /* Was 400vh, reduced to auto to fit content and remove empty gap */
     background-color: #050505;
     /* Deep black */
     color: #fff;
@@ -1725,22 +2284,66 @@
         display: none;
     }
 
+    /* FIX: Reduce the massive gap on mobile caused by the desktop vertical line height */
+    .soma-proto-line-group {
+        height: auto;
+        min-height: 1rem;
+        /* Just enough for the horizontal line */
+        align-self: center;
+        /* Or stretch */
+        margin-top: 1rem;
+    }
+
+    .soma-proto-connector-row {
+        margin-top: 2rem;
+        /* Reduced space between title and this row */
+        align-items: center;
+        /* Align label and line */
+    }
+
     /* Section 6 Mobile */
     .soma-section-6 {
         justify-content: flex-start;
         /* Override center alignment to prevent content from being pushed down */
-        min-height: 300vh;
-        /* Reduce height for mobile */
+        min-height: auto;
+        padding-top: 15vh;
+        /* Reduced from global 25vh */
+    }
+
+    /* Move crop marks up for mobile */
+    .soma-crop-mark-tl,
+    .soma-crop-mark-tr {
+        top: 8vh;
     }
 
     .soma-proto-header-wrapper,
     .soma-proto-header {
-        height: 5vh;
-        top: 20vh;
+        height: 6vh;
+        /* Ensure enough height for text separation */
+        top: 12vh;
+        /* Moved down below crop marks */
+        max-width: 90vw;
+        /* Ensure it fits on screen width */
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* Ensure text doesn't hit edge */
+    .soma-proto-header>span:first-child {
+        right: 0;
+    }
+
+    .soma-proto-header>span:last-child {
+        left: 0;
+    }
+
+    .soma-proto-header-line {
+        left: 0;
+        right: 0;
     }
 
     .soma-proto-main-img-wrapper {
-        margin-top: 25vh;
+        margin-top: 12vh;
         /* Significantly reduced to ensure visibility */
     }
 
@@ -1816,4 +2419,457 @@
     .soma-proto-main-img-wrapper {
         margin-top: 15vh;
     }
+}
+
+/* ============================================
+   SPLIT HEADER COMPONENT (Sections 7 & 8)
+   ============================================ */
+.soma-split-header {
+    width: 100%;
+    padding: 3rem 5vw 0 5vw;
+    /* Top padding to roughly match 5vh + 3rem alignment visually if using flex */
+    /* Or absolute to overlay: */
+    position: absolute;
+    top: 5vh;
+    /* Match grid start */
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.soma-split-header-right {
+    align-self: flex-end;
+    margin-bottom: 0.8rem;
+    text-align: right;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    /* Default dark mode */
+}
+
+.soma-split-line {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Default dark mode */
+}
+
+.soma-split-header-left {
+    align-self: flex-start;
+    margin-top: 0.8rem;
+    text-align: left;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    /* Default dark mode */
+}
+
+/* Light Mode Overrides for Split Header handled by inline text-dark and soma-line-dark classes mostly, 
+   but ensuring specific component overrides if needed 
+*/
+.soma-line-dark {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================================
+   SECTION 9: WEB PORTAL (Dark Mode)
+   ============================================ */
+.soma-section-9 {
+    background-color: #050505;
+    color: #fff;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: auto;
+}
+
+/* Header */
+.soma-web-header {
+    width: 100%;
+    padding: 0 5vw;
+    margin-bottom: 5rem;
+    position: relative;
+}
+
+.soma-web-header-line {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 1rem;
+}
+
+.soma-web-header-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Grid Layout */
+.soma-web-grid {
+    display: flex;
+    width: 85%;
+    max-width: 1400px;
+    /* Reduced from 1600 to keep tight content */
+    margin: 0 auto;
+    gap: 2vw;
+    /* Use vw to scale gap */
+    padding-bottom: 5rem;
+}
+
+/* Columns */
+.soma-web-col-left {
+    width: 35%;
+    /* Reduced slightly */
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.soma-web-col-right {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding-top: 0;
+}
+
+/* Cards */
+.soma-web-card {
+    width: 100%;
+    background-color: transparent;
+    /* border: 1px solid rgba(255, 255, 255, 0.1); REMOVED per request */
+    /* padding: 2rem; REMOVED per request */
+    border: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.soma-card-biometrics {
+    aspect-ratio: 1/1;
+    background: radial-gradient(circle at center, rgba(20, 20, 20, 1) 0%, rgba(5, 5, 5, 1) 100%);
+}
+
+.soma-card-calendar {
+    /* Refined for "Hero" calendar look */
+    height: 50vh;
+    /* Taller */
+    border: none;
+    perspective: 2500px;
+    /* Deeper perspective */
+    overflow: visible;
+    padding: 0;
+    /* Stronger golden glow to match reference */
+    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.soma-card-calendar .soma-web-img {
+    /* Force Massive Scale to match "floating ui" look */
+    transform: rotateX(15deg) rotateY(-15deg) rotateZ(5deg) scale(1.6);
+    filter: drop-shadow(30px 30px 60px rgba(0, 0, 0, 0.9));
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    width: 80%;
+    /* Constrain width but scale transform handles size */
+    height: auto;
+    object-fit: contain;
+}
+
+.soma-card-calendar:hover .soma-web-img {
+    transform: rotateX(0deg) rotateY(0deg) scale(1.4);
+    /* Still large on hover */
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+}
+
+.soma-card-laptop {
+    aspect-ratio: auto;
+    height: 70vh;
+    /* Even taller for the laptop */
+    padding: 0;
+    border: none;
+    /* Optional: Add a subtle floor reflection gradient */
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.02) 0%, transparent 20%);
+}
+
+.soma-web-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.soma-card-laptop .soma-web-img {
+    object-fit: contain;
+    /* Changed to contain to show full device including edges */
+    object-position: center bottom;
+    /* Anchor to bottom */
+    filter: drop-shadow(0 -20px 40px rgba(0, 0, 0, 0.5));
+    /* Lift it off the bg */
+}
+
+/* Text Block */
+.soma-web-text-block {
+    margin-top: auto;
+    padding-top: 2rem;
+}
+
+.soma-web-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.soma-web-title {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    /* Increased size for impact */
+    line-height: 0.9;
+    /* Tighter line height like ref */
+    color: #fff;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    font-family: 'Manrope Bold', sans-serif;
+    /* Explicit bold */
+    letter-spacing: -0.02em;
+}
+
+.soma-web-desc {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 100%;
+    /* Allow full width of col */
+}
+
+/* Footer Labels */
+.soma-web-footer {
+    width: 90%;
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    font-size: 0.5rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+
+/* ============================================
+   SECTION 10: FULL RENDER
+   ============================================ */
+.soma-section-10 {
+    background-color: #050505;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.soma-full-render-wrapper {
+    width: 90%;
+    max-width: 1800px;
+    height: 85vh;
+    /* Slightly taller */
+    /* Frame effect */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.soma-full-render-wrapper:hover {
+    transform: scale(1.01);
+    /* Subtle breathe effect */
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.soma-full-render-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.soma-full-render-wrapper:hover .soma-full-render-img {
+    transform: scale(1.03);
+    /* Parallax zoom inside frame */
+}
+
+.soma-render-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+}
+
+.render-label-tl {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.1em;
+}
+
+.render-label-br {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.1em;
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .soma-web-grid {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .soma-web-col-left,
+    .soma-web-col-right {
+        width: 100%;
+    }
+
+    .soma-card-biometrics {
+        max-width: 500px;
+        align-self: center;
+        /* Center on mobile */
+    }
+
+    .soma-web-title {
+        font-size: 2rem;
+    }
+
+    .soma-full-render-wrapper {
+        width: 100%;
+        height: 60vh;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+}/* ============================================
+   BIOMETRIC ANIMATION STYLES
+   ============================================ */
+.soma-bio-circle-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.soma-bio-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    max-width: 300px;
+    max-height: 300px;
+    z-index: 1;
+    overflow: visible;
+}
+
+.soma-bio-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 5%;
+    /* Slight offset to optical center */
+}
+
+.soma-bio-number {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-size: 4rem;
+    /* Large number */
+    color: #D4AF37;
+    /* Gold */
+    line-height: 0.9;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+}
+
+.soma-bio-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 0.5rem;
+    letter-spacing: 0.15em;
+}
+
+.soma-bio-details {
+    position: absolute;
+    bottom: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    z-index: 2;
+}
+
+.soma-bio-detail-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.35rem;
+    /* Very small tech text */
+    color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.soma-dot {
+    width: 3px;
+    height: 3px;
+    background-color: #D4AF37;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #D4AF37;
+}
+
+.soma-bio-wave {
+    position: absolute;
+    bottom: 15%;
+    right: 15%;
+    width: 25%;
+    height: auto;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 3;
 }
