@@ -443,16 +443,68 @@
     z-index: 2;
 }
 
-/* Orb Image */
+/* Orb Image — Living Breathing Animation */
 .soma-orb-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    /* Rotation is handled in image processing, but if adjustments needed: */
-    /* transform: rotate(-135deg); */
     opacity: 0.95;
-    filter: brightness(1.1) contrast(1.1);
-    /* Enhance gold pop */
+    /* Breathing animation: gentle scale + filter pulsation */
+    animation: orb-breathe 6s ease-in-out infinite;
+    /* Start slightly warm */
+    filter: brightness(1.05) contrast(1.08);
+    will-change: transform, filter;
+}
+
+/* Orb Container — Golden Glow Aura */
+.soma-orb-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 55%;
+    height: 55%;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(191, 130, 50, 0.15) 0%,
+            rgba(191, 130, 50, 0.08) 40%,
+            rgba(191, 130, 50, 0.02) 70%,
+            transparent 100%);
+    animation: orb-glow-pulse 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+    will-change: opacity, transform;
+}
+
+/* Breathing Keyframes: Clean sine wave — no intermediate stops */
+@keyframes orb-breathe {
+
+    0%,
+    100% {
+        transform: scale(1.0);
+        filter: brightness(1.05) contrast(1.08);
+    }
+
+    50% {
+        transform: scale(1.04);
+        filter: brightness(1.25) contrast(1.15);
+    }
+}
+
+/* Golden Glow Aura: Clean sine wave — synchronized */
+@keyframes orb-glow-pulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1.0);
+    }
+
+    50% {
+        opacity: 1.0;
+        transform: translate(-50%, -50%) scale(1.12);
+    }
 }
 
 /* SOMA Text Overlay */
@@ -2560,8 +2612,10 @@
 }
 
 .soma-card-biometrics {
-    aspect-ratio: 1/1;
+    aspect-ratio: auto;
     background: radial-gradient(circle at center, rgba(20, 20, 20, 1) 0%, rgba(5, 5, 5, 1) 100%);
+    overflow: visible;
+    padding: 2rem 0;
 }
 
 .soma-card-calendar {
@@ -2778,7 +2832,9 @@
         border-left: none;
         border-right: none;
     }
-}/* ============================================
+}
+
+/* ============================================
    BIOMETRIC ANIMATION STYLES
    ============================================ */
 .soma-bio-circle-container {

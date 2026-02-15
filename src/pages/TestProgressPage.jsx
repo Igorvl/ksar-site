@@ -3,7 +3,7 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import './TestProgressPage.css';
 
 // Helper component for animated numbers
-function Counter({ value, className = "" }) {
+function Counter({ value, className = "", suffix = "" }) {
     const [displayValue, setDisplayValue] = useState(0);
 
     useEffect(() => {
@@ -12,7 +12,7 @@ function Counter({ value, className = "" }) {
         });
     }, [value]);
 
-    return <span className={className}>{displayValue}</span>;
+    return <span className={className}>{displayValue}{suffix}</span>;
 }
 
 export default function TestProgressPage() {
@@ -208,8 +208,7 @@ export default function TestProgressPage() {
                 {/* Center Content */}
                 <div className="progress-text-content">
                     <motion.div className="progress-percent font-hero">
-                        <Counter value={percentage} className="percent-val" />
-                        <span className="percent-unit">%</span>
+                        <Counter value={percentage} className="percent-val" suffix="%" />
                     </motion.div>
                     <div className="progress-label font-mono">
                         OPTIMAL BIOMETRICS
@@ -228,7 +227,7 @@ export default function TestProgressPage() {
                         <motion.div
                             className="tech-fill main-bar"
                             initial={{ scaleX: 0 }}
-                            animate={{ scaleX: 1 }}
+                            animate={{ scaleX: 0.92 }}
                             transition={{ duration: 3.4, ease: "easeOut", delay: 0.8 }}
                         />
                     </div>
@@ -243,17 +242,17 @@ export default function TestProgressPage() {
                         <motion.div
                             className="tech-fill alt-bar"
                             initial={{ scaleX: 0 }}
-                            animate={{ scaleX: 1 }}
+                            animate={{ scaleX: 0.68 }}
                             transition={{ duration: 3.0, ease: "easeOut", delay: 1.0 }}
                         />
                     </div>
                 </div>
 
                 {/* Simple waveform SVG */}
-                <svg width="100" height="30" viewBox="0 0 100 30" className="tech-wave">
+                <svg width="100" height="50" viewBox="0 0 100 50" className="tech-wave">
                     {/* Pulse pattern: Flat -> Small bump -> Big spike -> Flat */}
                     <motion.path
-                        d="M0,15 L50,15 Q55,15 57,12 T65,15 T75,25 T85,5 T95,15 L100,15"
+                        d="M0,25 L50,25 Q55,25 57,22 T65,25 T75,35 T85,15 T95,25 L100,25"
                         fill="none"
                         stroke="#AD9C65"
                         strokeWidth="2"

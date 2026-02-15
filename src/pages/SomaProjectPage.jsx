@@ -2,12 +2,13 @@
  * SomaProjectPage - Detailed view for SOMA Project
  */
 import React, { useState, useEffect, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import './SomaProjectPage.css'
 import { useModal } from '../context/ModalContext'
 import OnlineIndicator from '../components/OnlineIndicator'
 import SomaLogo from '../components/SomaLogo'
 import BeforeAfterSlider from '../components/BeforeAfterSlider'
+import BiometricsProgress from '../components/BiometricsProgress'
 
 export default function SomaProjectPage() {
     const { openContactModal } = useModal()
@@ -15,6 +16,8 @@ export default function SomaProjectPage() {
     const section3Ref = useRef(null)
     const section5Ref = useRef(null)
     const section8Ref = useRef(null)
+    const biometricsCardRef = useRef(null)
+    const biometricsInView = useInView(biometricsCardRef, { amount: 0.4 })
 
     // Parallax Logic for Section 8
     const { scrollYProgress } = useScroll({
@@ -54,8 +57,8 @@ export default function SomaProjectPage() {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.15, // Delay between each element appearing
-                delayChildren: 0.2
+                staggerChildren: 0.06,
+                delayChildren: 0.05
             }
         }
     }
@@ -221,7 +224,7 @@ export default function SomaProjectPage() {
                 variants={gridContainerVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: false, amount: 0.3 }}
             >
                 {/* Grid Lines (Darker for light bg) */}
                 {/* Vertical Line growing from top */}
@@ -334,7 +337,7 @@ export default function SomaProjectPage() {
                 className="soma-section soma-section-4"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.2 }}
             >
                 {/* Global Vertical Line through the section */}
                 <motion.div
@@ -366,7 +369,7 @@ export default function SomaProjectPage() {
                         className="soma-material-card"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ duration: 0.8, delay: 0.1 }}
                     >
                         <div className="material-image-container">
@@ -390,7 +393,7 @@ export default function SomaProjectPage() {
                         className="soma-material-card"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ duration: 0.8, delay: 0.3 }}
                     >
                         <div className="material-image-container">
@@ -414,7 +417,7 @@ export default function SomaProjectPage() {
                         className="soma-material-card"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ duration: 0.8, delay: 0.5 }}
                     >
                         <div className="material-image-container">
@@ -450,7 +453,7 @@ export default function SomaProjectPage() {
                 className="soma-section soma-section-5"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.2 }}
             >
                 {/* Global Vertical Line (Dark for light bg) */}
                 <motion.div
@@ -499,7 +502,7 @@ export default function SomaProjectPage() {
                                 variants={protocolContainerVariants}
                                 initial="hidden"
                                 whileInView="visible"
-                                viewport={{ once: true, margin: "-10%" }}
+                                viewport={{ once: false, margin: "-10%" }}
                             >
                                 <motion.div className="protocol-title" variants={protocolItemVariants}>PROTOCOL:</motion.div>
                                 <motion.div variants={protocolItemVariants}>Case: UPPERCASE (Headlines) / Sentence (Body)</motion.div>
@@ -529,7 +532,7 @@ export default function SomaProjectPage() {
                                 variants={protocolContainerVariants}
                                 initial="hidden"
                                 whileInView="visible"
-                                viewport={{ once: true, margin: "-10%" }}
+                                viewport={{ once: false, margin: "-10%" }}
                             >
                                 <motion.div className="protocol-title" variants={protocolItemVariants}>PROTOCOL:</motion.div>
                                 <motion.div variants={protocolItemVariants}>Case: UPPERCASE ONLY (Recommended for labels)</motion.div>
@@ -607,7 +610,7 @@ export default function SomaProjectPage() {
                 className="soma-section soma-section-7"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.2 }}
             >
                 {/* SPLIT HEADER: Right Text Above, Left Text Below Line */}
                 <div className="soma-split-header">
@@ -640,7 +643,7 @@ export default function SomaProjectPage() {
                             className="bio-top-line"
                             initial={{ scaleX: 0 }}
                             whileInView={{ scaleX: 1 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: false }}
                             transition={{ duration: 1.2, ease: "circOut" }}
                             style={{ originX: 0 }}
                         />
@@ -717,7 +720,7 @@ export default function SomaProjectPage() {
                 className="soma-section soma-section-8 light-mode"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.2 }}
             >
                 {/* SPLIT HEADER: Right Text Above, Left Text Below Line (Light Mode) */}
                 <div className="soma-split-header">
@@ -775,7 +778,7 @@ export default function SomaProjectPage() {
                                 className="delivery-top-line"
                                 initial={{ scaleX: 0 }}
                                 whileInView={{ scaleX: 1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: false }}
                                 transition={{ duration: 1.2, ease: "circOut" }}
                                 style={{ originX: 0 }}
                             />
@@ -821,7 +824,7 @@ export default function SomaProjectPage() {
                 className="soma-section soma-section-9"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.2 }}
             >
                 {/* Header Line */}
                 <div className="soma-web-header">
@@ -844,8 +847,9 @@ export default function SomaProjectPage() {
                         <motion.div
                             className="soma-web-card soma-card-biometrics"
                             variants={fadeUp}
+                            ref={biometricsCardRef}
                         >
-                            <img src="/Projects/Soma/Soma9_1.svg" alt="Optimal Biometrics UI" className="soma-web-img" />
+                            <BiometricsProgress size={340} shouldAnimate={biometricsInView} />
                         </motion.div>
 
                         {/* Text Block */}
@@ -894,7 +898,7 @@ export default function SomaProjectPage() {
                 className="soma-section soma-section-10"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: false, amount: 0.2 }}
             >
                 <motion.div
                     className="soma-full-render-wrapper"

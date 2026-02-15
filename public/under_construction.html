@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSAR | Under Construction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600&family=Space+Mono:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-primary: #e0e0e0;
+            --text-secondary: #6e6e6e;
+            --accent-color: #AD9C65;
+            /* Using the project's gold accent */
+            --font-main: 'Manrope', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Subtle background noise/gradient animation */
+        .background-fx {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 70%);
+            z-index: -1;
+            opacity: 0.8;
+            animation: pulse-bg 8s infinite alternate ease-in-out;
+        }
+
+        /* Grid overlay for tech feel */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 200;
+            letter-spacing: 0.5em;
+            /* Start wide */
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            opacity: 0;
+            animation: reveal-logo 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background: linear-gradient(90deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* The little dot */
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            right: -15px;
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0;
+            animation: dot-reveal 0.5s ease-out 2s forwards;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .status-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            animation: fade-in-up 1.5s ease-out 1s forwards;
+        }
+
+        .line {
+            height: 1px;
+            width: 40px;
+            background-color: var(--text-secondary);
+            opacity: 0.3;
+        }
+
+        .status-text {
+            position: relative;
+        }
+
+        /* Animated cursor after text */
+        .status-text::after {
+            content: '_';
+            display: inline-block;
+            margin-left: 5px;
+            color: var(--accent-color);
+            animation: blink 1s step-end infinite;
+        }
+
+        /* Progress Bar Container */
+        .progress-container {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 3rem auto 0;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fade-in-up 1.5s ease-out 1.5s forwards;
+        }
+
+        /* The moving "load" line */
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 30%;
+            /* Shimmer width */
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            animation: load-shimmer 2s infinite linear;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 3rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fade-in-up 1.5s ease-out 2s forwards;
+            /* Delayed appearance */
+            border: 1px solid transparent;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .social-link:hover {
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            transform: translateY(-2px);
+        }
+
+        .social-link svg {
+            width: 1.2rem;
+            height: 1.2rem;
+            fill: currentColor;
+        }
+
+        .social-link span {
+            letter-spacing: 0.05em;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0.4;
+            letter-spacing: 0.05em;
+        }
+
+        /* Animations */
+        @keyframes reveal-logo {
+            0% {
+                opacity: 0;
+                letter-spacing: 1em;
+                transform: scale(0.95);
+                filter: blur(10px);
+            }
+
+            100% {
+                opacity: 1;
+                letter-spacing: 0.5em;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes dot-reveal {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes load-shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(400%);
+            }
+
+            /* Shoot past the container */
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse-bg {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.05);
+                opacity: 0.6;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .logo {
+                font-size: 2.5rem;
+                letter-spacing: 0.3em;
+            }
+
+            @keyframes reveal-logo {
+                0% {
+                    letter-spacing: 0.8em;
+                    opacity: 0;
+                    filter: blur(5px);
+                }
+
+                100% {
+                    letter-spacing: 0.3em;
+                    opacity: 1;
+                    filter: blur(0);
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-fx"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="container">
+        <h1 class="logo">KSAR</h1>
+
+        <div class="status-line">
+            <div class="line"></div>
+            <span class="status-text">System Upgrade in Progress</span>
+            <div class="line"></div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+
+        <a href="https://x.com/ksarme" target="_blank" class="social-link">
+            <!-- X Logo (Twitter) -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z">
+                </path>
+            </svg>
+            <span>@ksarme</span>
+        </a>
+    </div>
+
+    <div class="footer">
+        © 2026 KSAR. All rights reserved.
+    </div>
+
+</body>
+
+</html>
