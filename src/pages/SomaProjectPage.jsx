@@ -849,7 +849,7 @@ export default function SomaProjectPage() {
                             variants={fadeUp}
                             ref={biometricsCardRef}
                         >
-                            <BiometricsProgress size={340} shouldAnimate={biometricsInView} />
+                            <BiometricsProgress size={400} shouldAnimate={biometricsInView} />
                         </motion.div>
 
                         {/* Text Block */}

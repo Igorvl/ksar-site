@@ -73,11 +73,10 @@ export default function BiometricsProgress({
             className="bp-container"
             style={{
                 width: size,
-                height: size,
-                transform: `scale(${scale > 1 ? 1 : 1})`,
+                height: size + 80, /* extra space for bottom UI */
             }}
         >
-            <div className="bp-wrapper" style={{ width: 400, height: 400, transform: `scale(${scale})`, transformOrigin: 'top left' }}>
+            <div className="bp-wrapper" style={{ width: 400, height: 400, transform: `scale(${scale})`, transformOrigin: 'center center' }}>
                 {/* SVG Ring */}
                 <svg width="400" height="400" viewBox="0 0 400 400" className="bp-svg">
                     <defs>
@@ -171,7 +170,7 @@ export default function BiometricsProgress({
             </div>
 
             {/* Bottom Technical Graphics */}
-            <div className="bp-bottom-ui" style={{ width: size, maxWidth: size }}>
+            <div className="bp-bottom-ui" style={{ width: '100%', maxWidth: 340 }}>
                 <div className="bp-stat-group">
                     <div className="bp-stat">
                         <span className="bp-dot"></span>

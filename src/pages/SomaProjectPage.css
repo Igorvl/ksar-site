@@ -2592,7 +2592,7 @@
     width: 65%;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 1.5rem;
     padding-top: 0;
 }
 
@@ -2600,9 +2600,7 @@
 .soma-web-card {
     width: 100%;
     background-color: transparent;
-    /* border: 1px solid rgba(255, 255, 255, 0.1); REMOVED per request */
-    /* padding: 2rem; REMOVED per request */
-    border: none;
+    border: 0.2px solid rgba(173, 156, 101, 0.5);
     padding: 0;
     display: flex;
     justify-content: center;
@@ -2619,61 +2617,45 @@
 }
 
 .soma-card-calendar {
-    /* Refined for "Hero" calendar look */
-    height: 50vh;
-    /* Taller */
-    border: none;
-    perspective: 2500px;
-    /* Deeper perspective */
-    overflow: visible;
+    height: auto;
+    overflow: hidden;
     padding: 0;
-    /* Stronger golden glow to match reference */
-    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .soma-card-calendar .soma-web-img {
-    /* Force Massive Scale to match "floating ui" look */
-    transform: rotateX(15deg) rotateY(-15deg) rotateZ(5deg) scale(1.6);
-    filter: drop-shadow(30px 30px 60px rgba(0, 0, 0, 0.9));
-    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-    width: 80%;
-    /* Constrain width but scale transform handles size */
+    transform: none;
+    filter: none;
+    width: 100%;
     height: auto;
     object-fit: contain;
 }
 
 .soma-card-calendar:hover .soma-web-img {
-    transform: rotateX(0deg) rotateY(0deg) scale(1.4);
-    /* Still large on hover */
+    transform: none;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
 }
 
 .soma-card-laptop {
     aspect-ratio: auto;
-    height: 70vh;
-    /* Even taller for the laptop */
-    padding: 0;
-    border: none;
-    /* Optional: Add a subtle floor reflection gradient */
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.02) 0%, transparent 20%);
+    overflow: hidden;
 }
 
 .soma-web-img {
     width: 100%;
-    height: 100%;
-    object-fit: contain;
+    height: auto;
+    display: block;
+    object-fit: cover;
 }
 
 .soma-card-laptop .soma-web-img {
-    object-fit: contain;
-    /* Changed to contain to show full device including edges */
-    object-position: center bottom;
-    /* Anchor to bottom */
-    filter: drop-shadow(0 -20px 40px rgba(0, 0, 0, 0.5));
-    /* Lift it off the bg */
+    object-fit: cover;
+    object-position: center top;
+    width: 100%;
+    height: auto;
 }
 
 /* Text Block */
