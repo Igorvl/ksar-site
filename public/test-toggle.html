@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Toggle Button</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================
+           RESET & PAGE
+           ============================================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            /* Dark background matching reference — subtle radial gradient */
+            background: radial-gradient(ellipse at 50% 40%, #1a1a1e 0%, #111113 40%, #0a0a0b 100%);
+            font-family: 'Space Mono', monospace;
+            overflow: hidden;
+        }
+
+        /* Subtle noise overlay for premium feel */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ============================================
+           TOGGLE GROUP
+           ============================================ */
+        .toggle-group {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* ============================================
+           SINGLE TOGGLE WRAPPER
+           ============================================ */
+        .toggle-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* ============================================
+           THE TOGGLE TRACK (groove / channel)
+           Recessed look with inner shadows for depth
+           ============================================ */
+        .toggle-track {
+            position: relative;
+            width: 100px;
+            height: 46px;
+            border-radius: 6px;
+            /* Subtle outer border for definition */
+            border: 1.5px solid rgba(255, 255, 255, 0.07);
+            /* Dark recessed background with gradient for depth */
+            background: linear-gradient(180deg,
+                    #111114 0%,
+                    #19191d 40%,
+                    #1e1e22 100%);
+            /* Inset shadows = recessed groove effect */
+            box-shadow:
+                inset 0 2px 4px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px rgba(0, 0, 0, 0.3),
+                inset 0 -1px 2px rgba(255, 255, 255, 0.03),
+                0 1px 2px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+            /* Glow container */
+            overflow: visible;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* ON state — border glow + subtle inner amber tint */
+        .toggle-track.is-on {
+            border-color: rgba(210, 160, 60, 0.6);
+            background: linear-gradient(180deg,
+                    #141412 0%,
+                    #1c1a16 40%,
+                    #201e18 100%);
+            box-shadow:
+                0 0 12px rgba(210, 160, 60, 0.15),
+                inset 0 2px 4px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(0, 0, 0, 0.2),
+                inset 0 0 10px rgba(210, 160, 60, 0.04),
+                inset 0 -1px 2px rgba(210, 160, 60, 0.05);
+        }
+
+        /* ============================================
+           THE THUMB (SLIDER) — 3D raised look
+           ============================================ */
+        .toggle-thumb {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 38px;
+            height: 36px;
+            border-radius: 4px;
+            /* Multi-stop gradient for 3D volume */
+            background: linear-gradient(180deg,
+                    #4a4a52 0%,
+                    /* top highlight */
+                    #3c3c44 8%,
+                    /* upper face */
+                    #343438 50%,
+                    /* mid body */
+                    #2c2c30 85%,
+                    /* lower face */
+                    #242428 100%
+                    /* bottom shadow edge */
+                );
+            /* Top edge highlight + darker side/bottom edges */
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-top-color: rgba(255, 255, 255, 0.15);
+            border-bottom-color: rgba(0, 0, 0, 0.3);
+            /* Layered shadows for raised 3D effect */
+            box-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.4),
+                0 1px 1px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            /* Allow beams to extend beyond thumb edges */
+            overflow: visible;
+            /* Cubic bezier for accelerate-then-decelerate */
+            transition: left 0.45s cubic-bezier(0.76, 0, 0.24, 1),
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        /* ON position — warmer tones */
+        .toggle-track.is-on .toggle-thumb {
+            left: calc(100% - 38px - 4px);
+            background: linear-gradient(180deg,
+                    #555045 0%,
+                    #4a4438 8%,
+                    #3e3830 50%,
+                    #342e28 85%,
+                    #2c2620 100%);
+            border-top-color: rgba(210, 170, 80, 0.2);
+            border-color: rgba(210, 160, 60, 0.2);
+            box-shadow:
+                0 2px 6px rgba(0, 0, 0, 0.4),
+                0 1px 2px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(210, 170, 80, 0.12),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+                0 0 8px rgba(210, 160, 60, 0.08);
+        }
+
+        /* Gradient glow under the thumb — visible only when ON */
+        .toggle-thumb::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 34px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center,
+                    rgba(230, 180, 60, 0.5) 0%,
+                    rgba(220, 165, 40, 0.25) 40%,
+                    transparent 70%);
+            filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .toggle-track.is-on .toggle-thumb::after {
+            opacity: 1;
+        }
+
+        .toggle-track.is-transitioning .toggle-thumb::after {
+            opacity: 0 !important;
+        }
+
+        /* ============================================
+           VERTICAL INDICATOR LINE ON THUMB
+           ============================================ */
+        .thumb-indicator {
+            width: 3px;
+            height: 16px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.12);
+            transition: background 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        /* Indicator lit up */
+        .toggle-track.is-on .thumb-indicator {
+            background: rgba(230, 180, 70, 0.95);
+            box-shadow:
+                0 0 6px rgba(230, 180, 70, 0.6),
+                0 0 14px rgba(230, 180, 70, 0.3);
+        }
+
+        /* Initially hidden when transitioning ON — will be revealed by JS */
+        .toggle-track.is-transitioning .thumb-indicator {
+            background: rgba(255, 255, 255, 0.12) !important;
+            box-shadow: none !important;
+        }
+
+        /* ============================================
+           LIGHT BEAM — LEFT & RIGHT RAYS
+           Positioned inside .toggle-thumb so they
+           originate from the slider knob itself.
+           3x wider with vertical gradient from center.
+           Right beam is 6x shorter than left.
+           ============================================ */
+        .light-beam {
+            position: absolute;
+            top: 50%;
+            height: 24px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 20;
+            opacity: 0;
+            border-radius: 12px;
+        }
+
+        /* LEFT beam — full length (120px) */
+        .light-beam--left {
+            right: 100%;
+            width: 120px;
+            /* Vertical gradient: bright center, fading edges */
+            background: radial-gradient(ellipse 100% 50% at right center,
+                    rgba(255, 195, 60, 1) 0%,
+                    rgba(240, 180, 50, 0.7) 20%,
+                    rgba(230, 170, 40, 0.3) 50%,
+                    rgba(220, 160, 30, 0) 100%);
+        }
+
+        /* RIGHT beam — 6x shorter (20px) */
+        .light-beam--right {
+            left: 100%;
+            width: 20px;
+            background: radial-gradient(ellipse 100% 50% at left center,
+                    rgba(255, 195, 60, 1) 0%,
+                    rgba(240, 180, 50, 0.7) 30%,
+                    rgba(230, 170, 40, 0.3) 60%,
+                    rgba(220, 160, 30, 0) 100%);
+        }
+
+        /* Intense core beam — brighter center line */
+        .light-beam-core {
+            position: absolute;
+            top: 50%;
+            height: 12px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 21;
+            opacity: 0;
+            border-radius: 6px;
+        }
+
+        /* Core LEFT — full length */
+        .light-beam-core--left {
+            right: 100%;
+            width: 80px;
+            background: radial-gradient(ellipse 100% 50% at right center,
+                    rgba(255, 220, 120, 1) 0%,
+                    rgba(255, 210, 100, 0.5) 35%,
+                    rgba(255, 200, 80, 0) 100%);
+        }
+
+        /* Core RIGHT — 6x shorter */
+        .light-beam-core--right {
+            left: 100%;
+            width: 13px;
+            background: radial-gradient(ellipse 100% 50% at left center,
+                    rgba(255, 220, 120, 1) 0%,
+                    rgba(255, 210, 100, 0.5) 40%,
+                    rgba(255, 200, 80, 0) 100%);
+        }
+
+        /* Wide ambient glow — positioned on thumb edges */
+        .light-glow {
+            position: absolute;
+            top: 50%;
+            height: 48px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 19;
+            opacity: 0;
+            border-radius: 50%;
+            filter: blur(18px);
+        }
+
+        /* Glow LEFT — full spread */
+        .light-glow--left {
+            right: calc(100% - 5px);
+            width: 100px;
+            background: radial-gradient(ellipse at right center,
+                    rgba(240, 180, 50, 0.6) 0%,
+                    rgba(230, 170, 40, 0.25) 40%,
+                    transparent 75%);
+        }
+
+        /* Glow RIGHT — proportionally smaller */
+        .light-glow--right {
+            left: calc(100% - 5px);
+            width: 25px;
+            background: radial-gradient(ellipse at left center,
+                    rgba(240, 180, 50, 0.6) 0%,
+                    rgba(230, 170, 40, 0.25) 40%,
+                    transparent 75%);
+        }
+
+        /* Beam animation keyframes */
+        @keyframes beamFlash {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .light-beam.flash,
+        .light-beam-core.flash,
+        .light-glow.flash {
+            animation: beamFlash 1s ease-in-out forwards;
+        }
+
+        /* ============================================
+           LABEL
+           ============================================ */
+        .toggle-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            transition: color 0.4s ease;
+            display: flex;
+            gap: 0.3em;
+        }
+
+        .toggle-label .label-status {
+            color: rgba(255, 255, 255, 0.25);
+            transition: color 0.4s ease;
+        }
+
+        /* ON label state */
+        .toggle-wrapper.is-on .toggle-label {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .toggle-wrapper.is-on .label-status {
+            color: rgba(230, 180, 70, 0.9);
+        }
+
+        /* ============================================
+           TITLE
+           ============================================ */
+        .page-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-title">TOGGLE PROTOTYPE // V 1.0</div>
+
+    <div class="toggle-group">
+
+        <!-- SOUND Toggle -->
+        <div class="toggle-wrapper" id="sound-wrapper">
+            <div class="toggle-track" id="sound-toggle" onclick="toggleSwitch('sound')">
+                <!-- Thumb with beams inside (so beams move with thumb) -->
+                <div class="toggle-thumb">
+                    <div class="thumb-indicator"></div>
+                    <!-- Light Beams originate from thumb edges -->
+                    <div class="light-beam light-beam--left" id="sound-beam-left"></div>
+                    <div class="light-beam light-beam--right" id="sound-beam-right"></div>
+                    <div class="light-beam-core light-beam-core--left" id="sound-core-left"></div>
+                    <div class="light-beam-core light-beam-core--right" id="sound-core-right"></div>
+                    <div class="light-glow light-glow--left" id="sound-glow-left"></div>
+                    <div class="light-glow light-glow--right" id="sound-glow-right"></div>
+                </div>
+            </div>
+            <div class="toggle-label">
+                <span>SOUND:</span>
+                <span class="label-status" id="sound-label">OFF</span>
+            </div>
+        </div>
+
+        <!-- AMBIENCE Toggle -->
+        <div class="toggle-wrapper" id="ambience-wrapper">
+            <div class="toggle-track" id="ambience-toggle" onclick="toggleSwitch('ambience')">
+                <!-- Thumb with beams inside -->
+                <div class="toggle-thumb">
+                    <div class="thumb-indicator"></div>
+                    <!-- Light Beams originate from thumb edges -->
+                    <div class="light-beam light-beam--left" id="ambience-beam-left"></div>
+                    <div class="light-beam light-beam--right" id="ambience-beam-right"></div>
+                    <div class="light-beam-core light-beam-core--left" id="ambience-core-left"></div>
+                    <div class="light-beam-core light-beam-core--right" id="ambience-core-right"></div>
+                    <div class="light-glow light-glow--left" id="ambience-glow-left"></div>
+                    <div class="light-glow light-glow--right" id="ambience-glow-right"></div>
+                </div>
+            </div>
+            <div class="toggle-label">
+                <span>AMBIENCE:</span>
+                <span class="label-status" id="ambience-label">OFF</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // State tracking
+        const state = {
+            sound: false,
+            ambience: false
+        };
+
+        // Lock to prevent double-clicks during animation
+        const locked = {
+            sound: false,
+            ambience: false
+        };
+
+        // Thumb travel duration (must match CSS transition: 0.45s)
+        const THUMB_TRAVEL_MS = 450;
+
+        // Beam flash duration (must match CSS animation: 1s total — 0.5s in + 0.5s out)
+        const BEAM_FLASH_MS = 1000;
+
+        function toggleSwitch(name) {
+            // Prevent double-click during animation
+            if (locked[name]) return;
+            locked[name] = true;
+
+            const track = document.getElementById(`${name}-toggle`);
+            const wrapper = document.getElementById(`${name}-wrapper`);
+            const label = document.getElementById(`${name}-label`);
+            const beamLeft = document.getElementById(`${name}-beam-left`);
+            const beamRight = document.getElementById(`${name}-beam-right`);
+            const coreLeft = document.getElementById(`${name}-core-left`);
+            const coreRight = document.getElementById(`${name}-core-right`);
+            const glowLeft = document.getElementById(`${name}-glow-left`);
+            const glowRight = document.getElementById(`${name}-glow-right`);
+
+            const turningOn = !state[name];
+
+            if (turningOn) {
+                // === TURNING ON ===
+
+                // 1) Add transitioning class (keeps indicator dark during movement)
+                track.classList.add('is-transitioning');
+
+                // 2) Start thumb movement
+                track.classList.add('is-on');
+
+                // 3) After thumb arrives → light up indicator + fire beam
+                setTimeout(() => {
+                    // Remove transitioning → indicator lights up via CSS
+                    track.classList.remove('is-transitioning');
+
+                    // Wrapper ON state for label
+                    wrapper.classList.add('is-on');
+                    label.textContent = 'ON';
+
+                    // Fire the beam flash (all layers)
+                    fireBeam(beamLeft, beamRight, coreLeft, coreRight, glowLeft, glowRight);
+
+                    // Unlock after beam completes
+                    setTimeout(() => {
+                        locked[name] = false;
+                    }, BEAM_FLASH_MS);
+                }, THUMB_TRAVEL_MS);
+
+            } else {
+                // === TURNING OFF ===
+
+                // 1) Immediately dim indicator
+                track.classList.add('is-transitioning');
+
+                // 2) Remove is-on → thumb slides back
+                setTimeout(() => {
+                    track.classList.remove('is-on');
+                    track.classList.remove('is-transitioning');
+                    wrapper.classList.remove('is-on');
+                    label.textContent = 'OFF';
+
+                    setTimeout(() => {
+                        locked[name] = false;
+                    }, THUMB_TRAVEL_MS);
+                }, 60);
+            }
+
+            state[name] = turningOn;
+        }
+
+        function fireBeam(beamL, beamR, coreL, coreR, glowL, glowR) {
+            // All beam layers
+            const allEls = [beamL, beamR, coreL, coreR, glowL, glowR];
+
+            // Remove previous flash class (reset animation)
+            allEls.forEach(el => {
+                el.classList.remove('flash');
+                // Force reflow to restart animation
+                void el.offsetWidth;
+                el.classList.add('flash');
+            });
+
+            // Clean up class after animation
+            setTimeout(() => {
+                allEls.forEach(el => {
+                    el.classList.remove('flash');
+                });
+            }, BEAM_FLASH_MS + 50);
+        }
+    </script>
+</body>
+
+</html>
