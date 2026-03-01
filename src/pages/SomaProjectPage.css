@@ -2965,9 +2965,12 @@
     width: 100%;
     padding: 0 5vw;
     margin-top: calc(5vh + 5rem);
+    margin-bottom: 8rem;
+    /* Pushes footer far away so specs don't overlap */
     gap: 4vw;
     flex: 1;
     align-items: stretch;
+    /* Both columns will exactly match the taller column's height */
 }
 
 /* Left Column */
@@ -2977,6 +2980,11 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+}
+
+.s11-col-left .s11-img-wrapper:last-of-type {
+    margin-top: auto;
+    /* Force bottom image to align perfectly with opposite column bottom */
 }
 
 .s11-img-wrapper {
@@ -2993,19 +3001,21 @@
 
 /* Spec Labels Below Left Column */
 .s11-specs {
+    position: absolute;
+    bottom: -3rem;
+    /* Exact distance under the image */
+    left: 0;
+    width: 100%;
+    /* Spans only the left image width */
     display: flex;
-    justify-content: flex-start;
-    gap: 7vw;
+    justify-content: space-between;
+    /* Spreads from left to right edge */
     font-size: 0.6rem !important;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
     color: rgba(0, 0, 0, 0.5) !important;
-    padding-top: 1.5rem;
-    flex-wrap: wrap;
     pointer-events: none;
-    width: 200%;
-    /* Spans across to the right side */
 }
 
 /* Right Column */
@@ -3013,7 +3023,6 @@
     width: 52%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     padding-left: 2vw;
     position: relative;
 }
@@ -3073,6 +3082,7 @@
     gap: 1.5rem;
     width: 85%;
     margin-top: auto;
+    /* Force bottom images to align exactly below */
 }
 
 .s11-detail-img-wrapper {
@@ -3082,7 +3092,8 @@
 
 .s11-detail-img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    /* Uses aspect ratio properly without browser height bugs */
     object-fit: cover;
     aspect-ratio: 1.1 / 1;
     display: block;
