@@ -2921,16 +2921,18 @@
     height: auto;
     min-height: 100vh;
     padding-top: 5vh;
-    padding-bottom: 8vh;
+    padding-bottom: 10vh;
+    /* Fixed overlap */
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    position: relative;
 }
 
 /* Top Decorative Line */
 .s11-top-line {
     position: absolute;
-    top: calc(5vh + 2rem);
+    top: calc(5vh + 0.5rem);
     left: 5vw;
     right: 5vw;
     height: 1px;
@@ -2940,7 +2942,7 @@
 
 /* Top Labels */
 .s11-label-tl {
-    top: calc(5vh + 0.5rem) !important;
+    top: calc(5vh + 2rem) !important;
     left: 5vw !important;
     color: rgba(0, 0, 0, 0.5) !important;
     font-size: 0.55rem !important;
@@ -2948,7 +2950,7 @@
 }
 
 .s11-label-tr {
-    top: calc(5vh + 0.5rem) !important;
+    top: calc(5vh + 2rem) !important;
     right: 5vw !important;
     left: auto !important;
     text-align: right !important;
@@ -2970,6 +2972,7 @@
 
 /* Left Column */
 .s11-col-left {
+    position: relative;
     width: 48%;
     display: flex;
     flex-direction: column;
@@ -2992,13 +2995,17 @@
 .s11-specs {
     display: flex;
     justify-content: flex-start;
-    gap: 3rem;
-    font-size: 0.5rem !important;
+    gap: 7vw;
+    font-size: 0.6rem !important;
+    font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: rgba(0, 0, 0, 0.5) !important;
-    padding-top: 0.5rem;
+    padding-top: 1.5rem;
     flex-wrap: wrap;
+    pointer-events: none;
+    width: 200%;
+    /* Spans across to the right side */
 }
 
 /* Right Column */
@@ -3039,9 +3046,9 @@
 
 /* Main Title */
 .s11-title {
-    font-family: 'Manrope Bold', sans-serif;
-    font-weight: 700;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-family: var(--font-hero);
+    font-weight: 700 !important;
+    font-size: clamp(3rem, 5vw, 4.5rem);
     line-height: 0.9;
     text-transform: uppercase;
     color: #1A1A1A;
@@ -3053,9 +3060,9 @@
 .s11-description {
     font-family: 'Manrope', sans-serif;
     font-weight: 400;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     line-height: 1.8;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.7);
     max-width: 480px;
     margin-bottom: 3rem;
 }
@@ -3083,22 +3090,24 @@
 
 /* Footer Labels */
 .s11-label-bl {
-    bottom: 3rem !important;
+    bottom: 2rem !important;
     top: auto !important;
     left: 5vw !important;
     color: rgba(0, 0, 0, 0.5) !important;
-    font-size: 0.55rem !important;
+    font-size: 0.6rem !important;
+    font-weight: 500;
     letter-spacing: 0.12em !important;
 }
 
 .s11-label-br {
-    bottom: 3rem !important;
+    bottom: 2rem !important;
     top: auto !important;
     right: 5vw !important;
     left: auto !important;
     text-align: right !important;
     color: rgba(0, 0, 0, 0.5) !important;
-    font-size: 0.55rem !important;
+    font-size: 0.6rem !important;
+    font-weight: 500;
     letter-spacing: 0.12em !important;
 }
 
@@ -3152,6 +3161,7 @@
     }
 
     .s11-specs {
+        position: static;
         gap: 1.5rem;
     }
 }
@@ -3173,6 +3183,7 @@
     }
 
     .s11-specs {
+        position: static;
         flex-direction: column;
         gap: 0.3rem;
         font-size: 0.45rem !important;
