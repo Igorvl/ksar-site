@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOLECULA — Our Philosophy</title>
+<meta name="description" content="MOLECULA Alchemical Gastronomy — Our Philosophy. Deconstruct. Transform. Transcend.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   MOLECULA — LUXURY DIGITAL BRUTALISM
+   Our Philosophy Page
+   ============================================ */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Deep Void Black palette */
+    --void: #050505;
+    --void-surface: #0a0a0a;
+    --void-elevated: #111111;
+    
+    /* Copper palette */
+    --copper-dark: #6b3a2a;
+    --copper: #b87333;
+    --copper-light: #d4956b;
+    --copper-glow: #e8a87c;
+    --copper-hot: #ff8c42;
+    
+    /* Hairline grid */
+    --grid-line: rgba(255, 255, 255, 0.04);
+    --grid-line-accent: rgba(184, 115, 51, 0.08);
+    
+    /* Typography */
+    --font-display: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    
+    /* Spacing */
+    --grid-gap: 2vw;
+    --section-padding: 12vh;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--copper-dark) var(--void);
+}
+
+body {
+    background: var(--void);
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-display);
+    overflow-x: hidden;
+    cursor: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--copper-dark); border-radius: 0; }
+
+/* ============================================
+   LOADING STATE — ALCHEMICAL REACTOR CORE
+   ============================================ */
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: var(--void);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.reactor-core {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.reactor-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--copper);
+    border-radius: 50%;
+    animation: reactor-pulse 2s ease-in-out infinite;
+}
+
+.reactor-ring:nth-child(2) {
+    inset: 10px;
+    border-color: var(--copper-light);
+    animation-delay: 0.3s;
+    animation-duration: 1.6s;
+}
+
+.reactor-ring:nth-child(3) {
+    inset: 20px;
+    border-color: var(--copper-glow);
+    animation-delay: 0.6s;
+    animation-duration: 1.2s;
+}
+
+.reactor-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: var(--copper-hot);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        0 0 20px var(--copper-hot),
+        0 0 60px var(--copper),
+        0 0 100px rgba(184, 115, 51, 0.3);
+    animation: reactor-glow 1s ease-in-out infinite alternate;
+}
+
+.loader-text {
+    margin-top: 40px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: rgba(184, 115, 51, 0.6);
+    text-transform: uppercase;
+    animation: loader-text-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes reactor-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes reactor-glow {
+    0% { box-shadow: 0 0 20px var(--copper-hot), 0 0 60px var(--copper); }
+    100% { box-shadow: 0 0 40px var(--copper-hot), 0 0 100px var(--copper), 0 0 140px rgba(184, 115, 51, 0.2); }
+}
+
+@keyframes loader-text-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* ============================================
+   CURSOR REACTOR
+   ============================================ */
+#cursor-follower {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--copper);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
+    mix-blend-mode: screen;
+}
+
+#cursor-follower::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3px;
+    height: 3px;
+    background: var(--copper-glow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px var(--copper-hot), 0 0 30px rgba(184, 115, 51, 0.4);
+}
+
+#cursor-follower.hovering {
+    width: 50px;
+    height: 50px;
+    border-color: var(--copper-hot);
+    background: rgba(184, 115, 51, 0.05);
+}
+
+#cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(184, 115, 51, 0.06) 0%, transparent 70%);
+    filter: blur(20px);
+}
+
+/* ============================================
+   FILM GRAIN OVERLAY
+   ============================================ */
+#grain {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: screen;
+}
+
+/* ============================================
+   ARCHITECTURAL GRID — HAIRLINES
+   ============================================ */
+#grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+}
+
+/* Vertical hairlines */
+.grid-line-v {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--grid-line);
+}
+
+.grid-line-v:nth-child(1) { left: 4%; }
+.grid-line-v:nth-child(2) { left: 16.66%; }
+.grid-line-v:nth-child(3) { left: 33.33%; }
+.grid-line-v:nth-child(4) { left: 50%; background: var(--grid-line-accent); }
+.grid-line-v:nth-child(5) { left: 66.66%; }
+.grid-line-v:nth-child(6) { left: 83.33%; }
+.grid-line-v:nth-child(7) { right: 4%; }
+
+/* Horizontal hairlines */
+.grid-line-h {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--grid-line);
+}
+
+.grid-line-h:nth-child(8)  { top: 10vh; }
+.grid-line-h:nth-child(9)  { top: 50vh; background: var(--grid-line-accent); }
+.grid-line-h:nth-child(10) { top: 90vh; }
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 4%;
+    mix-blend-mode: difference;
+}
+
+.nav-brand {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+}
+
+.nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--copper);
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-links a:hover { color: var(--copper-light); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--copper); }
+.nav-links a.active::after { width: 100%; }
+
+/* ============================================
+   DATA BLOCKS — Technical monospace
+   ============================================ */
+.data-block {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.25);
+    text-transform: uppercase;
+    line-height: 1.8;
+}
+
+.data-block .highlight {
+    color: var(--copper);
+}
+
+.data-block .dim {
+    color: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+main {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 4%;
+    overflow: hidden;
+}
+
+.hero-data-top {
+    position: absolute;
+    top: 10vh;
+    right: 4%;
+}
+
+.hero-data-bottom {
+    position: absolute;
+    bottom: 6vh;
+    left: 4%;
+    display: flex;
+    gap: 6rem;
+}
+
+.hero-headline {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(4rem, 12vw, 14rem);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: #fff;
+    position: relative;
+}
+
+.hero-headline span {
+    display: block;
+}
+
+.hero-headline .line-2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+    margin-left: 16.66%;
+}
+
+.hero-sub {
+    margin-top: 4rem;
+    margin-left: 33.33%;
+    max-width: 380px;
+}
+
+.hero-sub p {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 300;
+    line-height: 2;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.hero-divider {
+    position: absolute;
+    bottom: 0;
+    left: 4%;
+    right: 4%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--copper-dark), transparent 50%);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 4vh;
+    right: 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.scroll-indicator span {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.2);
+    writing-mode: vertical-rl;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--copper), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scroll-pulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ============================================
+   MANIFESTO SECTION
+   ============================================ */
+.manifesto {
+    padding: var(--section-padding) 4%;
+    position: relative;
+}
+
+.manifesto-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--copper);
+    text-transform: uppercase;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+}
+
+.manifesto-label.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.manifesto-text {
+    font-family: var(--font-display);
+    font-weight: 100;
+    font-size: clamp(1.5rem, 3.5vw, 3.2rem);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 70%;
+    margin-left: 16.66%;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease 0.2s;
+}
+
+.manifesto-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.manifesto-text em {
+    font-style: normal;
+    color: var(--copper-light);
+    font-weight: 300;
+}
+
+.manifesto-data {
+    position: absolute;
+    top: var(--section-padding);
+    right: 4%;
+}
+
+/* ============================================
+   PILLARS SECTION — Three Alchemical Phases
+   ============================================ */
+.pillars {
+    padding: var(--section-padding) 0;
+    position: relative;
+}
+
+.pillars-header {
+    padding: 0 4%;
+    margin-bottom: 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.pillars-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 9rem);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.pillars-count {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pillar {
+    padding: 4rem 4%;
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+    position: relative;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: none;
+}
+
+.pillar.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pillar:nth-child(2) { transition-delay: 0.15s; }
+.pillar:nth-child(3) { transition-delay: 0.3s; border-right: none; }
+
+.pillar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(184, 115, 51, 0.03) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.pillar:hover::before { opacity: 1; }
+
+.pillar-index {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--copper-dark);
+    margin-bottom: 3rem;
+}
+
+.pillar-name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 3vw, 2.8rem);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 2rem;
+    transition: color 0.3s;
+}
+
+.pillar:hover .pillar-name {
+    color: var(--copper-light);
+}
+
+.pillar-symbol {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--copper-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    transition: border-color 0.5s, box-shadow 0.5s;
+}
+
+.pillar:hover .pillar-symbol {
+    border-color: var(--copper);
+    box-shadow: 0 0 30px rgba(184, 115, 51, 0.15), inset 0 0 20px rgba(184, 115, 51, 0.05);
+}
+
+.pillar-symbol svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--copper);
+    stroke-width: 1;
+    fill: none;
+}
+
+.pillar-desc {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 300;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 3rem;
+}
+
+.pillar-data {
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 1.5rem;
+}
+
+/* ============================================
+   QUOTE / STATEMENT SECTION
+   ============================================ */
+.statement {
+    padding: calc(var(--section-padding) * 1.5) 4%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+.statement-content {
+    text-align: center;
+    max-width: 800px;
+    position: relative;
+}
+
+.statement-marks {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 8rem;
+    line-height: 1;
+    color: var(--copper-dark);
+    opacity: 0.3;
+    position: absolute;
+    top: -4rem;
+    left: -3rem;
+    user-select: none;
+}
+
+.statement-quote {
+    font-family: var(--font-display);
+    font-weight: 100;
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.statement-quote.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.statement-author {
+    margin-top: 3rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--copper);
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.5s;
+}
+
+.statement-author.visible { opacity: 1; }
+
+.statement-line-l,
+.statement-line-r {
+    position: absolute;
+    top: 50%;
+    width: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--copper-dark));
+}
+
+.statement-line-l { left: 4%; }
+.statement-line-r { right: 4%; background: linear-gradient(90deg, var(--copper-dark), transparent); }
+
+/* ============================================
+   CTA SECTION — Copper Ingot Button
+   ============================================ */
+.cta-section {
+    padding: var(--section-padding) 4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.cta-text {
+    max-width: 400px;
+}
+
+.cta-text h3 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.cta-text p {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 300;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Copper Ingot Button */
+.btn-copper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 3rem;
+    background: linear-gradient(135deg, var(--copper-dark), var(--copper), var(--copper-light));
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--void);
+    cursor: none;
+    overflow: hidden;
+    transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.btn-copper::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, var(--copper), var(--copper-hot), var(--copper-light), var(--copper));
+    z-index: -1;
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.btn-copper:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 10px 40px rgba(184, 115, 51, 0.3),
+        0 0 80px rgba(184, 115, 51, 0.1);
+}
+
+.btn-copper:hover::before { opacity: 1; }
+
+.btn-copper .arrow {
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--void);
+    position: relative;
+    transition: width 0.3s;
+}
+
+.btn-copper .arrow::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -3px;
+    border: solid var(--void);
+    border-width: 0 1px 1px 0;
+    padding: 3px;
+    transform: rotate(-45deg);
+}
+
+.btn-copper:hover .arrow { width: 30px; }
+
+/* Glassmorphism card behind button */
+.cta-glass {
+    padding: 3rem;
+    background: rgba(184, 115, 51, 0.03);
+    border: 1px solid rgba(184, 115, 51, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+    padding: 3rem 4%;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-brand {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+}
+
+.footer-legal {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   CHEMICAL REACTION / SMOKE BACKGROUND
+   ============================================ */
+.smoke-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.smoke-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0;
+    animation: smoke-drift 20s ease-in-out infinite;
+}
+
+.smoke-orb:nth-child(1) {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(184, 115, 51, 0.06), transparent 70%);
+    top: 10%;
+    left: -10%;
+    animation-duration: 25s;
+}
+
+.smoke-orb:nth-child(2) {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(107, 58, 42, 0.08), transparent 70%);
+    top: 50%;
+    right: -5%;
+    animation-duration: 18s;
+    animation-delay: 5s;
+}
+
+.smoke-orb:nth-child(3) {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(212, 149, 107, 0.04), transparent 70%);
+    bottom: 10%;
+    left: 30%;
+    animation-duration: 22s;
+    animation-delay: 10s;
+}
+
+@keyframes smoke-drift {
+    0%, 100% { opacity: 0; transform: translate(0, 0) scale(1); }
+    25% { opacity: 0.6; }
+    50% { opacity: 0.8; transform: translate(50px, -30px) scale(1.2); }
+    75% { opacity: 0.5; }
+}
+
+/* ============================================
+   REVEAL ANIMATIONS
+   ============================================ */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   HEAT HAZE DISTORTION CANVAS
+   ============================================ */
+#distortion-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 9991;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    opacity: 0.4;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-headline { font-size: clamp(3rem, 14vw, 6rem); }
+    .hero-headline .line-2 { margin-left: 0; }
+    .hero-sub { margin-left: 0; }
+    .manifesto-text { margin-left: 0; max-width: 100%; }
+    .pillar-grid { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+    .cta-section { flex-direction: column; gap: 3rem; }
+    .hero-data-bottom { flex-direction: column; gap: 2rem; }
+    .statement-marks { font-size: 4rem; top: -2rem; left: -1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOADING STATE ============ -->
+<div id="loader">
+    <div class="reactor-core">
+        <div class="reactor-ring"></div>
+        <div class="reactor-ring"></div>
+        <div class="reactor-ring"></div>
+        <div class="reactor-dot"></div>
+    </div>
+    <div class="loader-text">Initializing Molecular Matrix</div>
+</div>
+
+<!-- ============ CURSOR ============ -->
+<div id="cursor-follower"></div>
+<div id="cursor-glow"></div>
+
+<!-- ============ FILM GRAIN ============ -->
+<canvas id="grain"></canvas>
+
+<!-- ============ HEAT HAZE CANVAS ============ -->
+<canvas id="distortion-canvas"></canvas>
+
+<!-- ============ SMOKE BACKGROUND ============ -->
+<div class="smoke-bg">
+    <div class="smoke-orb"></div>
+    <div class="smoke-orb"></div>
+    <div class="smoke-orb"></div>
+</div>
+
+<!-- ============ ARCHITECTURAL GRID ============ -->
+<div id="grid-overlay">
+    <div class="grid-line-v"></div>
+    <div class="grid-line-v"></div>
+    <div class="grid-line-v"></div>
+    <div class="grid-line-v"></div>
+    <div class="grid-line-v"></div>
+    <div class="grid-line-v"></div>
+    <div class="grid-line-v"></div>
+    <div class="grid-line-h"></div>
+    <div class="grid-line-h"></div>
+    <div class="grid-line-h"></div>
+</div>
+
+<!-- ============ NAVIGATION ============ -->
+<nav>
+    <div class="nav-brand">Molecula</div>
+    <ul class="nav-links">
+        <li><a href="#">Origin</a></li>
+        <li><a href="#" class="active">Philosophy</a></li>
+        <li><a href="#">Laboratory</a></li>
+        <li><a href="#">Protocols</a></li>
+        <li><a href="#">Reserve</a></li>
+    </ul>
+</nav>
+
+<!-- ============ MAIN CONTENT ============ -->
+<main>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-data-top">
+            <div class="data-block">
+                <span class="dim">SYS.REF —</span> <span class="highlight">MCL</span>-PHIL-001<br>
+                PROTOCOL: <span class="highlight">ACTIVE</span><br>
+                <span class="dim">LAT</span> 48.8566° N / <span class="dim">LON</span> 2.3522° E<br>
+                ATMOS: 1013.25 <span class="dim">hPa</span>
+            </div>
+        </div>
+
+        <h1 class="hero-headline reveal">
+            <span class="line-1">Our</span>
+            <span class="line-2">Philosophy</span>
+        </h1>
+
+        <div class="hero-sub reveal">
+            <p>Where molecular precision meets ancestral intuition. Every element deconstructed, every essence distilled, every experience transcended.</p>
+        </div>
+
+        <div class="hero-data-bottom">
+            <div class="data-block">
+                <span class="highlight">TEMP</span> 72.4°C<br>
+                VISCOSITY: 0.89 <span class="dim">mPa·s</span><br>
+                PH LEVEL: <span class="highlight">6.8</span>
+            </div>
+            <div class="data-block">
+                CATALYST: <span class="highlight">CU</span>-29<br>
+                REACTION TIME: 847 <span class="dim">ms</span><br>
+                <span class="dim">YIELD:</span> <span class="highlight">97.3%</span>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+
+        <div class="hero-divider"></div>
+    </section>
+
+    <!-- MANIFESTO -->
+    <section class="manifesto">
+        <div class="manifesto-data">
+            <div class="data-block">
+                CHAPTER <span class="highlight">01</span><br>
+                <span class="dim">—————————</span><br>
+                THE DOCTRINE<br>
+                <span class="dim">REV</span> 2024.11.07
+            </div>
+        </div>
+
+        <div class="manifesto-label reveal">01 — Doctrine</div>
+
+        <div class="manifesto-text reveal">
+            We do not cook. We <em>catalyze</em>. Every plate is a controlled reaction — a precise collision of molecules engineered to trigger memory, emotion, and sensation at the <em>atomic level</em>. The kitchen is not a kitchen. It is a <em>laboratory</em> where the boundaries between science, art, and philosophy dissolve into vapor.
+        </div>
+    </section>
+
+    <!-- PILLARS -->
+    <section class="pillars">
+        <div class="pillars-header">
+            <h2 class="pillars-title reveal">The<br>Three<br>Phases</h2>
+            <div class="pillars-count reveal">
+                <div class="data-block">
+                    PHASES: <span class="highlight">03</span><br>
+                    <span class="dim">SEQUENTIAL</span><br>
+                    STATUS: <span class="highlight">ACTIVE</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pillar-grid">
+            <!-- PILLAR 1: DECONSTRUCT -->
+            <div class="pillar reveal">
+                <div class="pillar-index">Phase 01</div>
+                <div class="pillar-symbol">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="12,2 22,20 2,20" />
+                        <line x1="12" y1="8" x2="12" y2="15" />
+                        <line x1="9" y1="13" x2="15" y2="13" />
+                    </svg>
+                </div>
+                <h3 class="pillar-name">Deconstruct</h3>
+                <p class="pillar-desc">Strip every ingredient to its molecular core. Understand the elemental architecture before daring to rebuild. Nothing is sacred — everything is substrate.</p>
+                <div class="pillar-data">
+                    <div class="data-block">
+                        PROCESS: <span class="highlight">MOLECULAR ANALYSIS</span><br>
+                        TOOLS: CENTRIFUGE / SPECTROMETER<br>
+                        TEMP RANGE: <span class="highlight">-196°C</span> TO <span class="highlight">1200°C</span><br>
+                        <span class="dim">DURATION: VARIABLE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PILLAR 2: TRANSFORM -->
+            <div class="pillar reveal">
+                <div class="pillar-index">Phase 02</div>
+                <div class="pillar-symbol">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M8,12 Q12,6 16,12 Q12,18 8,12" />
+                    </svg>
+                </div>
+                <h3 class="pillar-name">Transform</h3>
+                <p class="pillar-desc">Apply controlled energy to reshape reality. Spherification, fermentation, sublimation — each technique a vector of metamorphosis. The mundane becomes the extraordinary.</p>
+                <div class="pillar-data">
+                    <div class="data-block">
+                        PROCESS: <span class="highlight">CATALYTIC SYNTHESIS</span><br>
+                        METHODS: 47 <span class="dim">PROPRIETARY</span><br>
+                        PRECISION: <span class="highlight">±0.01g</span><br>
+                        <span class="dim">YIELD COEFFICIENT: 0.97</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PILLAR 3: TRANSCEND -->
+            <div class="pillar reveal">
+                <div class="pillar-index">Phase 03</div>
+                <div class="pillar-symbol">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="12,2 15,9 22,9 16,14 18,22 12,17 6,22 8,14 2,9 9,9" />
+                    </svg>
+                </div>
+                <h3 class="pillar-name">Transcend</h3>
+                <p class="pillar-desc">The final oscillation. When science serves the soul. When a single bite collapses the distance between the physical and the emotional. This is not food. This is frequency.</p>
+                <div class="pillar-data">
+                    <div class="data-block">
+                        PROCESS: <span class="highlight">NEURAL RESONANCE</span><br>
+                        TARGET: LIMBIC SYSTEM<br>
+                        SENSORY INDEX: <span class="highlight">9.7 / 10</span><br>
+                        <span class="dim">CLASSIFICATION: SUBLIME</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATEMENT -->
+    <section class="statement">
+        <div class="statement-line-l"></div>
+        <div class="statement-line-r"></div>
+        <div class="statement-content">
+            <div class="statement-marks">"</div>
+            <blockquote class="statement-quote reveal">
+                The distance between a molecule and a memory is a single vibration.
+            </blockquote>
+            <cite class="statement-author reveal">— Dr. Elara Voss, Founding Alchemist</cite>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-text">
+            <h3 class="reveal">Enter The<br>Laboratory</h3>
+            <p class="reveal">Reservations require a molecular compatibility assessment. Only 12 transmutations performed per evening.</p>
+        </div>
+        <div class="cta-glass reveal">
+            <div class="data-block">
+                AVAILABILITY: <span class="highlight">LIMITED</span><br>
+                SEATS PER SESSION: <span class="highlight">12</span><br>
+                NEXT OPEN CYCLE: <span class="highlight">2024.12.01</span><br>
+                <span class="dim">DRESS CODE: DARK FORMAL</span>
+            </div>
+            <button class="btn-copper" data-interactive>
+                Request Access <span class="arrow"></span>
+            </button>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+    <div class="footer-brand">Molecula</div>
+    <div class="footer-legal">© 2024 Molecula. All molecular compositions reserved.</div>
+</footer>
+
+<!-- ============================================
+     JAVASCRIPT — INTERACTIONS & EFFECTS
+     ============================================ -->
+<script>
+(function() {
+    'use strict';
+
+    // ========== LOADING STATE ==========
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('loader').classList.add('hidden');
+        }, 2200);
+    });
+
+    // ========== CUSTOM CURSOR ==========
+    const cursorFollower = document.getElementById('cursor-follower');
+    const cursorGlow = document.getElementById('cursor-glow');
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+    let glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+        // Smooth follow for cursor ring
+        followerX += (mouseX - followerX) * 0.15;
+        followerY += (mouseY - followerY) * 0.15;
+        cursorFollower.style.left = followerX + 'px';
+        cursorFollower.style.top = followerY + 'px';
+
+        // Slower follow for glow
+        glowX += (mouseX - glowX) * 0.08;
+        glowY += (mouseY - glowY) * 0.08;
+        cursorGlow.style.left = glowX + 'px';
+        cursorGlow.style.top = glowY + 'px';
+
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Hover states
+    const interactives = document.querySelectorAll('a, button, .pillar, [data-interactive]');
+    interactives.forEach(el => {
+        el.addEventListener('mouseenter', () => cursorFollower.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursorFollower.classList.remove('hovering'));
+    });
+
+    // ========== FILM GRAIN ==========
+    const grainCanvas = document.getElementById('grain');
+    const grainCtx = grainCanvas.getContext('2d');
+
+    function resizeGrain() {
+        grainCanvas.width = window.innerWidth;
+        grainCanvas.height = window.innerHeight;
+    }
+    resizeGrain();
+    window.addEventListener('resize', resizeGrain);
+
+    function renderGrain() {
+        const w = grainCanvas.width;
+        const h = grainCanvas.height;
+        const imageData = grainCtx.createImageData(w, h);
+        const data = imageData.data;
+
+        for (let i = 0; i < data.length; i += 4) {
+            const v = Math.random() * 255;
+            data[i] = v;
+            data[i + 1] = v;
+            data[i + 2] = v;
+            data[i + 3] = 255;
+        }
+
+        grainCtx.putImageData(imageData, 0, 0);
+        requestAnimationFrame(renderGrain);
+    }
+    renderGrain();
+
+    // ========== HEAT HAZE DISTORTION ==========
+    const distCanvas = document.getElementById('distortion-canvas');
+    const distCtx = distCanvas.getContext('2d');
+
+    function resizeDistortion() {
+        distCanvas.width = window.innerWidth;
+        distCanvas.height = window.innerHeight;
+    }
+    resizeDistortion();
+    window.addEventListener('resize', resizeDistortion);
+
+    let time = 0;
+    function renderDistortion() {
+        const w = distCanvas.width;
+        const h = distCanvas.height;
+        distCtx.clearRect(0, 0, w, h);
+        time += 0.01;
+
+        // Draw subtle heat haze circles around cursor
+        const radius = 80;
+        const waves = 5;
+
+        for (let i = 0; i < waves; i++) {
+            const r = radius + i * 15 + Math.sin(time + i) * 5;
+            const alpha = 0.015 - i * 0.003;
+            if (alpha <= 0) continue;
+
+            distCtx.beginPath();
+            distCtx.arc(mouseX, mouseY, r, 0, Math.PI * 2);
+            distCtx.strokeStyle = `rgba(184, 115, 51, ${alpha})`;
+            distCtx.lineWidth = 1;
+            distCtx.stroke();
+        }
+
+        requestAnimationFrame(renderDistortion);
+    }
+    renderDistortion();
+
+    // ========== SCROLL REVEAL ==========
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // ========== PARALLAX DATA BLOCKS ==========
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const dataBlocks = document.querySelectorAll('.hero-data-top, .manifesto-data');
+        dataBlocks.forEach(block => {
+            block.style.transform = `translateY(${scrollY * 0.05}px)`;
+        });
+    });
+
+    // ========== COPPER BUTTON RIPPLE ==========
+    document.querySelectorAll('.btn-copper').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.style.cssText = `
+                position: absolute;
+                top: ${e.clientY - rect.top}px;
+                left: ${e.clientX - rect.left}px;
+                width: 0;
+                height: 0;
+                background: rgba(255,255,255,0.3);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                animation: ripple-expand 0.6s ease-out forwards;
+            `;
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+
+    // Inject ripple keyframe
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple-expand {
+            to { width: 300px; height: 300px; opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+
+})();
+</script>
+
+</body>
+</html>

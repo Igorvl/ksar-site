@@ -2714,21 +2714,20 @@
    ============================================ */
 .soma-section-10 {
     background-color: #050505;
-    padding: 0;
+    padding: 4vh 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: auto;
     min-height: 100vh;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .soma-full-render-wrapper {
     width: 90%;
     max-width: 1800px;
-    height: 85vh;
-    /* Slightly taller */
     /* Frame effect */
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
@@ -2746,8 +2745,8 @@
 
 .soma-full-render-img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    display: block;
     transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -2809,7 +2808,6 @@
 
     .soma-full-render-wrapper {
         width: 100%;
-        height: 60vh;
         border-radius: 0;
         border-left: none;
         border-right: none;
@@ -2910,4 +2908,282 @@
     opacity: 0.5;
     pointer-events: none;
     z-index: 3;
+}
+
+
+/* ============================================
+   SECTION 11: SENSORY DEPRIVATION ZONES (Light Mode)
+   ============================================ */
+.soma-section-11 {
+    background-color: #D0CCC3;
+    color: #1A1A1A;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    height: auto;
+    min-height: 100vh;
+    padding-top: 5vh;
+    padding-bottom: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* Top Decorative Line */
+.s11-top-line {
+    position: absolute;
+    top: calc(5vh + 2rem);
+    left: 5vw;
+    right: 5vw;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 2;
+}
+
+/* Top Labels */
+.s11-label-tl {
+    top: calc(5vh + 0.5rem) !important;
+    left: 5vw !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+    font-size: 0.55rem !important;
+    letter-spacing: 0.12em !important;
+}
+
+.s11-label-tr {
+    top: calc(5vh + 0.5rem) !important;
+    right: 5vw !important;
+    left: auto !important;
+    text-align: right !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+    font-size: 0.55rem !important;
+    letter-spacing: 0.12em !important;
+}
+
+/* Main Grid */
+.s11-grid {
+    display: flex;
+    width: 100%;
+    padding: 0 5vw;
+    margin-top: calc(5vh + 5rem);
+    gap: 4vw;
+    flex: 1;
+    align-items: stretch;
+}
+
+/* Left Column */
+.s11-col-left {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.s11-img-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.s11-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+/* Spec Labels Below Left Column */
+.s11-specs {
+    display: flex;
+    justify-content: flex-start;
+    gap: 3rem;
+    font-size: 0.5rem !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5) !important;
+    padding-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Right Column */
+.s11-col-right {
+    width: 52%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 2vw;
+    position: relative;
+}
+
+.s11-right-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 8vh;
+}
+
+/* Decorative Content Line */
+.s11-content-line {
+    width: 100%;
+    max-width: 500px;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.25);
+    margin-bottom: 1.8rem;
+    transform-origin: left;
+}
+
+/* Sub-label */
+.s11-sublabel {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 1.2rem;
+}
+
+/* Main Title */
+.s11-title {
+    font-family: 'Manrope Bold', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    margin: 0 0 2rem 0;
+    letter-spacing: -0.02em;
+}
+
+/* Description */
+.s11-description {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: rgba(0, 0, 0, 0.6);
+    max-width: 480px;
+    margin-bottom: 3rem;
+}
+
+/* Detail Photos Row */
+.s11-detail-row {
+    display: flex;
+    gap: 1.5rem;
+    width: 85%;
+    margin-top: auto;
+}
+
+.s11-detail-img-wrapper {
+    flex: 1;
+    overflow: hidden;
+}
+
+.s11-detail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 1.1 / 1;
+    display: block;
+}
+
+/* Footer Labels */
+.s11-label-bl {
+    bottom: 3rem !important;
+    top: auto !important;
+    left: 5vw !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+    font-size: 0.55rem !important;
+    letter-spacing: 0.12em !important;
+}
+
+.s11-label-br {
+    bottom: 3rem !important;
+    top: auto !important;
+    right: 5vw !important;
+    left: auto !important;
+    text-align: right !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+    font-size: 0.55rem !important;
+    letter-spacing: 0.12em !important;
+}
+
+/* ============================================
+   SECTION 11: RESPONSIVE
+   ============================================ */
+
+/* Laptop */
+@media (max-width: 1440px) {
+    .s11-title {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .s11-description {
+        font-size: 0.8rem;
+        max-width: 420px;
+    }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .s11-grid {
+        flex-direction: column;
+        gap: 3rem;
+        padding: 0 2rem;
+    }
+
+    .s11-col-left {
+        width: 100%;
+    }
+
+    .s11-col-right {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .s11-right-content {
+        padding-top: 0;
+    }
+
+    .s11-detail-row {
+        width: 100%;
+    }
+
+    .s11-title {
+        font-size: 2rem;
+    }
+
+    .s11-description {
+        max-width: 100%;
+    }
+
+    .s11-specs {
+        gap: 1.5rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .s11-grid {
+        margin-top: calc(5vh + 3rem);
+        padding: 0 1.5rem;
+    }
+
+    .s11-title {
+        font-size: 1.5rem;
+    }
+
+    .s11-description {
+        font-size: 0.75rem;
+        line-height: 1.6;
+    }
+
+    .s11-specs {
+        flex-direction: column;
+        gap: 0.3rem;
+        font-size: 0.45rem !important;
+    }
+
+    .s11-label-bl,
+    .s11-label-br {
+        display: none !important;
+    }
+
+    .s11-detail-row {
+        gap: 0.8rem;
+    }
 }

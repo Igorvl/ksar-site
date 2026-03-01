@@ -16,6 +16,7 @@ export default function SomaProjectPage() {
     const section3Ref = useRef(null)
     const section5Ref = useRef(null)
     const section8Ref = useRef(null)
+    const section11Ref = useRef(null)
     const biometricsCardRef = useRef(null)
     const biometricsInView = useInView(biometricsCardRef, { amount: 0.4 })
 
@@ -132,6 +133,7 @@ export default function SomaProjectPage() {
         if (section3Ref.current) observer.observe(section3Ref.current)
         if (section5Ref.current) observer.observe(section5Ref.current)
         if (section8Ref.current) observer.observe(section8Ref.current)
+        if (section11Ref.current) observer.observe(section11Ref.current)
 
         return () => observer.disconnect()
     }, [])
@@ -908,11 +910,125 @@ export default function SomaProjectPage() {
                 >
                     <img src="/Projects/Soma/Soma10_1.webp" alt="Soma Full Web Render" className="soma-full-render-img" />
 
-                    {/* Overlay Frame/UI elements if needed, or just clean */}
-                    <div className="soma-render-overlay">
-                        <div className="render-label-tl font-mono">VIEW: LANDING_MAIN</div>
-                        <div className="render-label-br font-mono">STATUS: LIVE</div>
+
+                </motion.div>
+            </motion.section>
+
+            {/* ============================================
+                SECTION 11: SENSORY DEPRIVATION ZONES (Light Mode)
+                ============================================ */}
+            <motion.section
+                ref={section11Ref}
+                className="soma-section soma-section-11 light-mode"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.15 }}
+            >
+                {/* Top Decorative Line */}
+                <motion.div
+                    className="s11-top-line"
+                    variants={drawLineHoriz}
+                    style={{ originX: 0.5 }}
+                />
+
+                {/* Top Labels */}
+                <motion.div className="soma-label s11-label-tl font-nav text-dark" variants={fadeUp}>
+                    FIG 08: SENSORY DEPRIVATION ZONES
+                </motion.div>
+                <motion.div className="soma-label s11-label-tr font-nav text-dark" variants={fadeUp}>
+                    TACTILE SENSATION
+                </motion.div>
+
+                {/* Main Two-Column Grid */}
+                <div className="s11-grid">
+                    {/* Left Column: Two Stacked Photos */}
+                    <div className="s11-col-left">
+                        <motion.div
+                            className="s11-img-wrapper"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false }}
+                            transition={{ duration: 0.8, delay: 0.1 }}
+                        >
+                            <img src="/Projects/Soma/Soma11_1.webp" alt="Sensory Corridor" className="s11-img" />
+                        </motion.div>
+                        <motion.div
+                            className="s11-img-wrapper"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false }}
+                            transition={{ duration: 0.8, delay: 0.3 }}
+                        >
+                            <img src="/Projects/Soma/Soma11_2.webp" alt="Restoration Pod" className="s11-img" />
+                        </motion.div>
+
+                        {/* Spec Labels Below Photos */}
+                        <motion.div className="s11-specs font-nav text-dark" variants={fadeUp}>
+                            <span>LIGHTING: CIRCADIAN / SMART</span>
+                            <span>ACOUSTICS: SILENCE GRADE A</span>
+                            <span>ATMOSPHERE: WOMB-LIKE</span>
+                        </motion.div>
                     </div>
+
+                    {/* Right Column: Text + Detail Images */}
+                    <div className="s11-col-right">
+                        <div className="s11-right-content">
+                            {/* Decorative Line */}
+                            <motion.div
+                                className="s11-content-line"
+                                initial={{ scaleX: 0 }}
+                                whileInView={{ scaleX: 1 }}
+                                viewport={{ once: false }}
+                                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                                style={{ originX: 0 }}
+                            />
+
+                            {/* Sub-label */}
+                            <motion.div className="s11-sublabel font-nav" variants={fadeUp}>
+                                MATERIAL SYSTEM / V 1.0
+                            </motion.div>
+
+                            {/* Main Title */}
+                            <motion.h2 className="s11-title font-hero" variants={fadeUp}>
+                                SENSORY<br />DEPRIVATION
+                            </motion.h2>
+
+                            {/* Description */}
+                            <motion.p className="s11-description" variants={fadeUp}>
+                                The journey begins with haptic navigation through flowing corridors, leading to individual restoration pods. Each suite is an acoustic vacuum featuring circadian skylights and monolithic furniture carved from the building's shell.
+                            </motion.p>
+                        </div>
+
+                        {/* Detail Photos Row */}
+                        <div className="s11-detail-row">
+                            <motion.div
+                                className="s11-detail-img-wrapper"
+                                initial={{ opacity: 0, scale: 0.97 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: false }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                            >
+                                <img src="/Projects/Soma/Soma11_3.webp" alt="Stone Metal Detail" className="s11-detail-img" />
+                            </motion.div>
+                            <motion.div
+                                className="s11-detail-img-wrapper"
+                                initial={{ opacity: 0, scale: 0.97 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: false }}
+                                transition={{ duration: 0.8, delay: 0.4 }}
+                            >
+                                <img src="/Projects/Soma/Soma11_4.webp" alt="Stone Glass Detail" className="s11-detail-img" />
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer Labels */}
+                <motion.div className="soma-label s11-label-bl font-nav text-dark" variants={fadeUp}>
+                    PHYSICAL ASSETS
+                </motion.div>
+                <motion.div className="soma-label s11-label-br font-nav text-dark" variants={fadeUp}>
+                    TEXTURE: RAW / ORGANIC
                 </motion.div>
             </motion.section>
 
